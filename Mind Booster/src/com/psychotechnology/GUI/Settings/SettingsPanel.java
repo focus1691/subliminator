@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.io.File;
 
@@ -25,10 +26,15 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	private Controller controller;
 	private JPanel screenPanel;
 	private PictureLabel screenLabel;
+	private PictureLabel standLabel;
 	public static ImageIcon screen;
+	public static ImageIcon stand;
+	public static ImageIcon picture;
+	public static ImageIcon topLeftMsg;
+	public static JPanel standPanel;
 	public static JPanel picturePanel;
 	public static PictureLabel pictureLabel;
-	public static ImageIcon picture;
+	public static PictureLabel topLeftMsgLabel;
 	private JSlider speedSlider;
 	private JSlider durationSlider;
 	private JLabel speedLabel;
@@ -39,7 +45,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public SettingsPanel(Controller controller) {
 		this.controller = controller;
 		initComponents();
-		setupSettingsUI();
+		//tupSettingsUI();
 		setupUI();
 		styleUI();
 
@@ -78,11 +84,23 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public void initComponents() {
 		screenPanel = new JPanel();
 		screen = IconFetch.getInstance().getIcon("/com/psychotechnology/images/screen.png");
-		screenLabel = new PictureLabel(picture);
+		screenLabel = new PictureLabel(screen);
+		screenPanel.setLayout(new BorderLayout());
+		screenPanel.add(screenLabel, BorderLayout.CENTER);
+		
+		topLeftMsg = IconFetch.getInstance().getIcon("/com/psychotechnology/images/placeholder.png");
+		topLeftMsgLabel = new PictureLabel(topLeftMsg);
+		screenPanel.add(topLeftMsgLabel, BorderLayout.NORTH);
+		
+		standPanel = new JPanel();
+		stand = IconFetch.getInstance().getIcon("/com/psychotechnology/images/stand.png");
+		standLabel = new PictureLabel(stand);
 		
 		picturePanel = new JPanel();
 		picture = new ImageIcon();
 		pictureLabel = new PictureLabel(picture);
+		picturePanel.setLayout(new BorderLayout());
+		picturePanel.add(pictureLabel, BorderLayout.CENTER);
 
 		speedSlider = new JSlider(0, 1000, 50);
 		durationSlider = new JSlider(0, 5000, 50);
@@ -105,12 +123,6 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 	public void setupUI() {
 		
-		screenPanel.setLayout(new BorderLayout());
-		screenPanel.add(pictureLabel, BorderLayout.CENTER);
-		
-		picturePanel.setLayout(new BorderLayout());
-		picturePanel.add(pictureLabel, BorderLayout.CENTER);
-
 		/* GridBagLayout settings */
 		setLayout(new GridBagLayout());// set LayoutManager
 		setBackground(Color.decode("#efeff0"));
@@ -118,19 +130,31 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 		gc.gridx = 0;
 		gc.gridy = 0;
-		gc.gridwidth = 1;
+		gc.gridwidth = 3;
 		gc.gridheight = 1;
 		gc.weightx = 1;
-		gc.weighty = 0.1;
-		gc.insets = new Insets(90, 0, 30, 30);
+		gc.weighty = 0.6;
+		gc.insets = new Insets(90, 0, 0, 30);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.BOTH;
 		add(screenPanel, gc); // add component to the ContentPane
 		screenPanel.setBackground(Color.WHITE);
-
+		
 		gc.gridx = 0;
 		gc.gridy = 1;
 		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+		gc.insets = new Insets(0, 0, 30, 30);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.fill = GridBagConstraints.BOTH;
+		add(standLabel, gc); // add component to the ContentPane
+		
+
+		gc.gridx = 0;
+		gc.gridy = 2;
+		gc.gridwidth = 3;
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.2;
@@ -163,54 +187,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.anchor = GridBagConstraints.LINE_START;
 		gc.fill = GridBagConstraints.NONE;
-		screenPanel.add(speedLabel, gc);
-
-		/*
-		// Speed Label
-		gc.gridx = 0;
-		gc.gridy = 0;
-		gc.weightx = 0.1;
-		gc.weighty = 0.1;
-		gc.gridwidth = 1;
-		gc.gridheight = 1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.fill = GridBagConstraints.NONE;
-		settingsPanel.add(speedLabel, gc);
-
-		// Speed Slider
-		gc.gridx = 0;
-		gc.gridy = 1;
-		gc.weightx = 0.1;
-		gc.weighty = 0.4;
-		gc.gridwidth = 1;
-		gc.gridheight = 1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.fill = GridBagConstraints.BOTH;
-		settingsPanel.add(speedSlider, gc);
-
-		// Duration Label
-		gc.gridx = 0;
-		gc.gridy = 2;
-		gc.weightx = 0.1;
-		gc.weighty = 0.1;
-		gc.gridwidth = 1;
-		gc.gridheight = 1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.fill = GridBagConstraints.NONE;
-		settingsPanel.add(durationLabel, gc);
-
-		// Duration Slider
-		gc.gridx = 0;
-		gc.gridy = 3;
-		gc.weightx = 0.1;
-		gc.weighty = 0.4;
-		gc.gridwidth = 1;
-		gc.gridheight = 1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.fill = GridBagConstraints.BOTH;
-		settingsPanel.add(durationSlider, gc);
-		
-		*/
+		//screenPanel.add(speedLabel, gc);
 	}
 
 	public PictureLabel getPictureLabel() {
