@@ -10,6 +10,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -24,9 +25,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = -798661649041437371L;
 	private Controller controller;
+	private JLayeredPane screenContainer;
 	private JPanel screenPanel;
 	private PictureLabel screenLabel;
 	private PictureLabel standLabel;
+	private JPanel screenContent;
 	public static ImageIcon screen;
 	public static ImageIcon stand;
 	public static ImageIcon picture;
@@ -82,15 +85,32 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	 * This method initializes all Settings Panel components
 	 */
 	public void initComponents() {
+		screenContent = new JPanel();
+		screenContainer = new JLayeredPane();
+		
+		
 		screenPanel = new JPanel();
 		screen = IconFetch.getInstance().getIcon("/com/psychotechnology/images/screen.png");
-		screenLabel = new PictureLabel(screen);
-		screenPanel.setLayout(new BorderLayout());
-		screenPanel.add(screenLabel, BorderLayout.CENTER);
+		//screenPanel.setLayout(new BorderLayout());
+		//screenPanel.add(new PictureLabel(screen), BorderLayout.CENTER);
 		
-		topLeftMsg = IconFetch.getInstance().getIcon("/com/psychotechnology/images/placeholder.png");
-		topLeftMsgLabel = new PictureLabel(topLeftMsg);
-		screenPanel.add(topLeftMsgLabel, BorderLayout.NORTH);
+		ImageIcon messageOne = IconFetch.getInstance().getIcon("/com/psychotechnology/images/message_inactive.png");
+		JPanel messageOnePane = new JPanel();
+		JLabel messageOneLabel = new JLabel(messageOne);
+		//messageOnePane.setBounds(0, 0, 600, 400);
+		//messageOnePane.setLayout(new BorderLayout());
+
+		
+		screenContent.add(screenContainer, BorderLayout.CENTER);
+		screenContainer.setBounds(0, 0, 150, 300);
+		screenPanel.setBackground(Color.BLUE);
+		screenPanel.setBounds(0, 0, 150, 300);
+		screenPanel.setOpaque(true);
+		messageOnePane.setBackground(Color.GREEN);
+		messageOnePane.setBounds(50, 25, 25, 25	);
+		messageOnePane.setOpaque(true);
+		screenContainer.add(screenPanel, new Integer(0), 0);
+		screenContainer.add(messageOnePane, new Integer(1), 0);
 		
 		standPanel = new JPanel();
 		stand = IconFetch.getInstance().getIcon("/com/psychotechnology/images/stand.png");
@@ -137,7 +157,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.insets = new Insets(90, 0, 0, 30);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.BOTH;
-		add(screenPanel, gc); // add component to the ContentPane
+		add(screenContent, gc); // add component to the ContentPane
 		screenPanel.setBackground(Color.WHITE);
 		
 		gc.gridx = 0;
@@ -173,7 +193,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 		durationSlider.setMajorTickSpacing(5000);
 		durationSlider.setPaintLabels(true);
-
+		
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.insets = new Insets(3, 10, 3, 10);
