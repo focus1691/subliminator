@@ -2,11 +2,16 @@ package com.psychotechnology.GUI.Settings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -27,17 +32,16 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	private Controller controller;
 	private JLayeredPane screenContainer;
 	private JPanel screenPanel;
-	private JPanel outerContainer;
-	private PictureLabel screenLabel;
-	private PictureLabel standLabel;
 	public static ImageIcon screen;
-	public static ImageIcon stand;
 	public static ImageIcon picture;
 	public static ImageIcon topLeftMsg;
-	public static JPanel standPanel;
 	public static JPanel picturePanel;
 	public static PictureLabel pictureLabel;
 	public static PictureLabel topLeftMsgLabel;
+	private Rectangle screenRect = new Rectangle(0, 0, 650, 410);
+	private Rectangle containerRect;
+	private double screenToPanelWRatio;
+	private double screenToPanelHRatio;
 	private JSlider speedSlider;
 	private JSlider durationSlider;
 	private JLabel speedLabel;
@@ -54,6 +58,45 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 		speedSlider.addChangeListener((ChangeListener) this);
 		durationSlider.addChangeListener((ChangeListener) this);
+		
+		this.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Component c = e.getComponent();
+				if (containerRect != null) {
+			        System.out.println((double) screenToPanelWRatio * c.getWidth());
+			        screenRect.setRect(0, 0, (double) screenToPanelWRatio * c.getWidth(), (double) screenToPanelHRatio * c.getHeight());
+			        screenPanel.setBounds(screenRect);
+			        
+			        c.revalidate();
+			        c.repaint();
+				} else {
+					containerRect = new Rectangle(c.getX(), c.getY(), c.getWidth(), c.getHeight());
+					screenToPanelWRatio = (double) screenPanel.getWidth() / c.getWidth();
+					screenToPanelHRatio = (double) screenPanel.getHeight() / c.getHeight();
+				}
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	@Override
@@ -100,23 +143,30 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		screenContainer.add(screenPanel, JLayeredPane.DEFAULT_LAYER);
 		
-		ImageIcon messageOne = IconFetch.getInstance().getIcon("/com/psychotechnology/images/message_inactive.png");
+		ImageIcon messageOne = IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png");
 		JPanel messageOnePane = new JPanel();
-		JLabel messageOneLabel = new JLabel(messageOne);
+		messageOnePane.setLayout(new BorderLayout());
 		
-		screenPanel.setBounds(0, 0, 650, 410);
+		ImageIcon messageTwo = IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png");
+		PictureLabel messageTwoImg = new PictureLabel(messageTwo);
+		JPanel messageTwoPane = new JPanel();
+		messageTwoPane.setLayout(new BorderLayout());
+		messageTwoPane.setBounds(150, 25, 150, 50);
+		
+		messageTwoPane.setOpaque(true);
+		messageTwoPane.setBackground(Color.GREEN);
+		messageTwoPane.add(messageTwoImg, BorderLayout.CENTER);
+		
+		screenPanel.setBounds(screenRect);
 		screenPanel.setOpaque(true);
-		messageOnePane.setBounds(50, 25, 25, 25	);
+		
+		messageOnePane.setBounds(400, 25, 150, 50);
 		messageOnePane.setOpaque(true);
+		messageOnePane.add(new PictureLabel(messageOne), BorderLayout.CENTER);
 		
 		screenContainer.add(screenPanel, new Integer(0), 0);
 		screenContainer.add(messageOnePane, new Integer(1), 0);
-		
-		standPanel = new JPanel();
-		stand = IconFetch.getInstance().getIcon("/com/psychotechnology/images/stand.png");
-		standLabel = new PictureLabel(stand);
-		standLabel.setBounds(0, 0, 650, 410);
-		standLabel.setOpaque(true);
+		screenContainer.add(messageTwoPane, new Integer(1), 0);
 		
 		picturePanel = new JPanel();
 		picture = new ImageIcon();
@@ -162,20 +212,9 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		add(screenContainer, gc); // add component to the ContentPane
 		//screenPanel.setBackground(Color.WHITE);
 		
-		gc.gridx = 0;
-		gc.gridy = 1;
-		gc.gridwidth = 1;
-		gc.gridheight = 1;
-		gc.weightx = 1;
-		gc.weighty = 0.2;
-		gc.insets = new Insets(0, 0, 30, 30);
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		gc.fill = GridBagConstraints.BOTH;
-		add(standLabel, gc); // add component to the ContentPane
-		
 
 		gc.gridx = 0;
-		gc.gridy = 2;
+		gc.gridy = 1;
 		gc.gridwidth = 3;
 		gc.gridheight = 1;
 		gc.weightx = 1;
