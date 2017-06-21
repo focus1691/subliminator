@@ -10,18 +10,21 @@ import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
-import java.math.BigDecimal;
-import java.math.MathContext;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.psychotechnology.Controller.Controller;
+import com.psychotechnology.GUI.MessageButton;
 import com.psychotechnology.GUI.PictureLabel;
 import com.psychotechnology.util.CustomFont;
 import com.psychotechnology.util.IconFetch;
@@ -36,6 +39,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public static ImageIcon picture;
 	public static ImageIcon topLeftMsg;
 	public static JPanel picturePanel;
+	private MessageButton messageOneBtn, messageTwoBtn, messageThreeBtn, messageFourBtn, messageFiveBtn;
 	public static PictureLabel pictureLabel;
 	public static PictureLabel topLeftMsgLabel;
 	private Rectangle screenRect = new Rectangle(0, 0, 650, 410);
@@ -129,11 +133,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	 */
 	public void initComponents() {
 		
-		//outerContainer = new JPanel();
-		//outerContainer.setLayout(new BorderLayout());
-		
 		screenContainer = new JLayeredPane();
-		//outerContainer.add(screenContainer, BorderLayout.CENTER);
 		
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new BorderLayout());
@@ -143,30 +143,21 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		screenContainer.add(screenPanel, JLayeredPane.DEFAULT_LAYER);
 		
-		ImageIcon messageOne = IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png");
-		JPanel messageOnePane = new JPanel();
-		messageOnePane.setLayout(new BorderLayout());
-		
-		ImageIcon messageTwo = IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png");
-		PictureLabel messageTwoImg = new PictureLabel(messageTwo);
-		JPanel messageTwoPane = new JPanel();
-		messageTwoPane.setLayout(new BorderLayout());
-		messageTwoPane.setBounds(150, 25, 150, 50);
-		
-		messageTwoPane.setOpaque(true);
-		messageTwoPane.setBackground(Color.GREEN);
-		messageTwoPane.add(messageTwoImg, BorderLayout.CENTER);
+		MessageButton messageOneBtn = new MessageButton("Press me 1!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 400, 25, 185, 60);
+		MessageButton messageTwoBtn = new MessageButton("Press me!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 150, 25, 185, 60);
+		MessageButton messageThreeBtn = new MessageButton("Press me!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 150, 185, 185, 60);
+		MessageButton messageFourBtn = new MessageButton("Press me!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 350, 185, 185, 60);
+		MessageButton messageFiveBtn = new MessageButton("Press me!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 125, 125, 185, 60);
 		
 		screenPanel.setBounds(screenRect);
 		screenPanel.setOpaque(true);
 		
-		messageOnePane.setBounds(400, 25, 150, 50);
-		messageOnePane.setOpaque(true);
-		messageOnePane.add(new PictureLabel(messageOne), BorderLayout.CENTER);
-		
 		screenContainer.add(screenPanel, new Integer(0), 0);
-		screenContainer.add(messageOnePane, new Integer(1), 0);
-		screenContainer.add(messageTwoPane, new Integer(1), 0);
+		screenContainer.add(messageOneBtn, new Integer(1), 0);
+		screenContainer.add(messageTwoBtn, new Integer(1), 0);
+		screenContainer.add(messageThreeBtn, new Integer(1), 0);
+		screenContainer.add(messageFourBtn, new Integer(1), 0);
+		screenContainer.add(messageFiveBtn, new Integer(1), 0);
 		
 		picturePanel = new JPanel();
 		picture = new ImageIcon();
