@@ -11,15 +11,11 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -56,7 +52,6 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public SettingsPanel(Controller controller) {
 		this.controller = controller;
 		initComponents();
-		//tupSettingsUI();
 		setupUI();
 		styleUI();
 
@@ -71,14 +66,22 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 				if (containerRect != null) {
 			        System.out.println((double) screenToPanelWRatio * c.getWidth());
 			        screenRect.setRect(0, 0, (double) screenToPanelWRatio * c.getWidth(), (double) screenToPanelHRatio * c.getHeight());
+			        messageOneBtn.setAlignmentX(250);
 			        screenPanel.setBounds(screenRect);
-			        
+			        Rectangle btnTwoRect = new Rectangle();
+			        btnTwoRect.setRect(messageTwoBtn.getX(), messageTwoBtn.getY(), messageTwoBtn.getBtnToScreenWRatio() * screenPanel.getWidth(), messageTwoBtn.getBtnToScreenHRatio() * screenPanel.getHeight());
+			        messageTwoBtn.setBounds(btnTwoRect);
 			        c.revalidate();
 			        c.repaint();
 				} else {
 					containerRect = new Rectangle(c.getX(), c.getY(), c.getWidth(), c.getHeight());
 					screenToPanelWRatio = (double) screenPanel.getWidth() / c.getWidth();
 					screenToPanelHRatio = (double) screenPanel.getHeight() / c.getHeight();
+					messageTwoBtn.setBtnToScreenWRatio((double) messageTwoBtn.getWidth() / screenPanel.getWidth());
+					messageTwoBtn.setBtnToScreenHRatio((double) messageTwoBtn.getHeight() / screenPanel.getHeight());
+					System.out.println("messageTwoBtn width is " + messageTwoBtn.getWidth() + " and messageTwoBtn height is " + messageTwoBtn.getHeight());
+					System.out.println("messageTwoBtn to screen ratio for width is " + messageTwoBtn.getBtnToScreenWRatio());
+					System.out.println("messageTwoBtn to screen ratio for height is " + messageTwoBtn.getBtnToScreenHRatio());
 				}
 			}
 
@@ -137,20 +140,14 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new BorderLayout());
-		screen = IconFetch.getInstance().getIcon("/com/psychotechnology/images/screen.png");
-		screenPanel.setLayout(new BorderLayout());
-		screenPanel.add(new PictureLabel(screen), BorderLayout.CENTER);
-		
-		screenContainer.add(screenPanel, JLayeredPane.DEFAULT_LAYER);
-		
-		MessageButton messageOneBtn = new MessageButton("Press me 1!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 400, 25, 185, 60);
-		MessageButton messageTwoBtn = new MessageButton("Press me!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 150, 25, 185, 60);
-		MessageButton messageThreeBtn = new MessageButton("Press me!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 150, 185, 185, 60);
-		MessageButton messageFourBtn = new MessageButton("Press me!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 350, 185, 185, 60);
-		MessageButton messageFiveBtn = new MessageButton("Press me!", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 125, 125, 185, 60);
-		
 		screenPanel.setBounds(screenRect);
-		screenPanel.setOpaque(true);
+		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/com/psychotechnology/images/screen.png")), BorderLayout.CENTER);
+		
+		messageOneBtn = new MessageButton("Button 1", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 35, 25, 185, 60);
+		messageTwoBtn = new MessageButton("Button 2", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 400, 25, 185, 60);
+		messageThreeBtn = new MessageButton("Button 3", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 150, 185, 185, 60);
+		messageFourBtn = new MessageButton("Button 4", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 350, 185, 185, 60);
+		messageFiveBtn = new MessageButton("Button 5", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 125, 125, 185, 60);
 		
 		screenContainer.add(screenPanel, new Integer(0), 0);
 		screenContainer.add(messageOneBtn, new Integer(1), 0);

@@ -1,8 +1,13 @@
 package com.psychotechnology.util;
 
-import java.awt.*;
-import java.awt.geom.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 public class RoundButton extends JButton {
 

@@ -5,8 +5,6 @@ import java.net.BindException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
-import javax.swing.JOptionPane;
-
 public class Network {
 
 	private static final int PORT = 9999;
