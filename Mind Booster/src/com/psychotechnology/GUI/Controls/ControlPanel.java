@@ -95,7 +95,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 			}
 		}
 	}
-
+	
 	/**
 	 * This method initializes Control Panel components
 	 */

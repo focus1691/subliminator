@@ -1,25 +1,65 @@
 package com.psychotechnology.GUI;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class MessageButton extends JButton {
+import com.psychotechnology.util.CustomFont;
+
+public class MessageButton extends JLabel {
 	
 	private static final long serialVersionUID = -890456094498670386L;
 	private String categoryName;
 	private ImageIcon image;
-	private double x, y, w, h;
+	private int x, y, w, h;
 	private double btnToScreenWRatio, btnToScreenHRatio;
+	private boolean active = false;
+	private Font font = CustomFont.getFont(CustomFont.latoBlack, 20);
+	private Color colour;
+	
+	public Color getColour() {
+		return colour;
+	}
 
-	public MessageButton(String categoryName, ImageIcon image, int x, int y, int w, int h) {
-		super(categoryName, image);
-		setHorizontalTextPosition(SwingConstants.CENTER);
+	public void setColour(Color colour) {
+		this.colour = colour;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive() {
+		this.active = true;
+		setForeground(colour);
+	}
+	
+	public void setInactive() {
+		this.active = false;
+		setForeground(Color.GRAY);
+	}
+
+	public MessageButton(String categoryName, boolean active, Color colour, int x, int y, int w, int h) {
+		super(categoryName);
+		this.active = active;
+		this.colour = colour;
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
+		setupUI();
+	}
+	
+	private void setupUI() {
+		setHorizontalTextPosition(SwingConstants.CENTER);
 		setBounds(x, y, w, h);
+		setFont(font);
+		setForeground(colour);
+		if (isActive()) setActive();
+		else if (!isActive()) setInactive();
 	}
 	
 	public double getBtnToScreenWRatio() {
@@ -53,4 +93,5 @@ public class MessageButton extends JButton {
 	public void setImage(ImageIcon image) {
 		this.image = image;
 	}
+
 }

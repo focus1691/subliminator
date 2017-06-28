@@ -7,8 +7,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.ImageIcon;
@@ -25,7 +29,7 @@ import com.psychotechnology.GUI.PictureLabel;
 import com.psychotechnology.util.CustomFont;
 import com.psychotechnology.util.IconFetch;
 
-public class SettingsPanel extends JPanel implements ChangeListener {
+public class SettingsPanel extends JPanel implements ChangeListener, MouseListener {
 
 	private static final long serialVersionUID = -798661649041437371L;
 	private Controller controller;
@@ -35,7 +39,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public static ImageIcon picture;
 	public static ImageIcon topLeftMsg;
 	public static JPanel picturePanel;
-	private MessageButton messageOneBtn, messageTwoBtn, messageThreeBtn, messageFourBtn, messageFiveBtn;
+	private MessageButton msgOne, msgTwo, msgThree, msgFour, msgFive;
 	public static PictureLabel pictureLabel;
 	public static PictureLabel topLeftMsgLabel;
 	private Rectangle screenRect = new Rectangle(0, 0, 650, 410);
@@ -47,6 +51,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	private JLabel speedLabel;
 	private JLabel durationLabel;
 	private SettingsListener settingsListener;
+	private MultiMessageListener multiMessageListener;
 	private String absolutePath = new File(".").getAbsolutePath();
 
 	public SettingsPanel(Controller controller) {
@@ -58,6 +63,12 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		speedSlider.addChangeListener((ChangeListener) this);
 		durationSlider.addChangeListener((ChangeListener) this);
 		
+		msgOne.addMouseListener(this);
+		msgTwo.addMouseListener(this);
+		msgThree.addMouseListener(this);
+		msgFour.addMouseListener(this);
+		msgFive.addMouseListener(this);
+		
 		this.addComponentListener(new ComponentListener() {
 
 			@Override
@@ -66,22 +77,19 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 				if (containerRect != null) {
 			        System.out.println((double) screenToPanelWRatio * c.getWidth());
 			        screenRect.setRect(0, 0, (double) screenToPanelWRatio * c.getWidth(), (double) screenToPanelHRatio * c.getHeight());
-			        messageOneBtn.setAlignmentX(250);
+			        msgOne.setAlignmentX(250);
 			        screenPanel.setBounds(screenRect);
-			        Rectangle btnTwoRect = new Rectangle();
-			        btnTwoRect.setRect(messageTwoBtn.getX(), messageTwoBtn.getY(), messageTwoBtn.getBtnToScreenWRatio() * screenPanel.getWidth(), messageTwoBtn.getBtnToScreenHRatio() * screenPanel.getHeight());
-			        messageTwoBtn.setBounds(btnTwoRect);
+			        msgOne.setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 185, 60);
+			        msgTwo.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, screenPanel.getHeight() / 8, 185, 60);
+			        msgThree.setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2) - 20, 185, 60);
+			        msgFour.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, (screenPanel.getHeight() / 2) - 20, 185, 60);
+			        msgFive.setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 185, 60);
 			        c.revalidate();
 			        c.repaint();
 				} else {
 					containerRect = new Rectangle(c.getX(), c.getY(), c.getWidth(), c.getHeight());
 					screenToPanelWRatio = (double) screenPanel.getWidth() / c.getWidth();
 					screenToPanelHRatio = (double) screenPanel.getHeight() / c.getHeight();
-					messageTwoBtn.setBtnToScreenWRatio((double) messageTwoBtn.getWidth() / screenPanel.getWidth());
-					messageTwoBtn.setBtnToScreenHRatio((double) messageTwoBtn.getHeight() / screenPanel.getHeight());
-					System.out.println("messageTwoBtn width is " + messageTwoBtn.getWidth() + " and messageTwoBtn height is " + messageTwoBtn.getHeight());
-					System.out.println("messageTwoBtn to screen ratio for width is " + messageTwoBtn.getBtnToScreenWRatio());
-					System.out.println("messageTwoBtn to screen ratio for height is " + messageTwoBtn.getBtnToScreenHRatio());
 				}
 			}
 
@@ -130,6 +138,40 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 			}
 		}
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		MessageButton msg = (MessageButton) e.getSource();
+		if (msg.isActive()) {
+			msg.setInactive();
+		} else {
+			msg.setActive();
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 * This method initializes all Settings Panel components
@@ -138,23 +180,33 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		
 		screenContainer = new JLayeredPane();
 		
+		// The screen
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new BorderLayout());
 		screenPanel.setBounds(screenRect);
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/com/psychotechnology/images/screen.png")), BorderLayout.CENTER);
 		
-		messageOneBtn = new MessageButton("Button 1", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 35, 25, 185, 60);
-		messageTwoBtn = new MessageButton("Button 2", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 400, 25, 185, 60);
-		messageThreeBtn = new MessageButton("Button 3", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 150, 185, 185, 60);
-		messageFourBtn = new MessageButton("Button 4", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 350, 185, 185, 60);
-		messageFiveBtn = new MessageButton("Button 5", IconFetch.getInstance().getIcon("/com/psychotechnology/images/bb.png"), 125, 125, 185, 60);
+		// Message on the top left of the screen
+		msgOne = new MessageButton("Message 1", false, Color.decode("#29de31"), screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 185, 60);
+		
+		// Message on the top right of the screen
+		msgTwo = new MessageButton("Message 2", false, Color.decode("#f9a33a"), screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, screenPanel.getHeight() / 8, 185, 60);
+		
+		// Message on the bottom left of the screen
+		msgThree = new MessageButton("Message 3", false, Color.decode("#2140ff"), screenPanel.getWidth() / 8, ( screenPanel.getHeight() / 2) - 20, 185, 60);
+		
+		// Message on the bottom right of the screen
+		msgFour = new MessageButton("Message 4", false, Color.decode("#de57e6"), screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, (screenPanel.getHeight() / 2) - 20, 185, 60);
+		
+		// Message in the middle of the screen
+		msgFive = new MessageButton("Self-enhancement", true, Color.decode("#ff3121"), (screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 185, 60);
 		
 		screenContainer.add(screenPanel, new Integer(0), 0);
-		screenContainer.add(messageOneBtn, new Integer(1), 0);
-		screenContainer.add(messageTwoBtn, new Integer(1), 0);
-		screenContainer.add(messageThreeBtn, new Integer(1), 0);
-		screenContainer.add(messageFourBtn, new Integer(1), 0);
-		screenContainer.add(messageFiveBtn, new Integer(1), 0);
+		screenContainer.add(msgOne, new Integer(1), 0);
+		screenContainer.add(msgTwo, new Integer(1), 0);
+		screenContainer.add(msgThree, new Integer(1), 0);
+		screenContainer.add(msgFour, new Integer(1), 0);
+		screenContainer.add(msgFive, new Integer(1), 0);
 		
 		picturePanel = new JPanel();
 		picture = new ImageIcon();
@@ -175,16 +227,19 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 	public void styleUI() {
 		speedLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
-		durationLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
-
 		speedSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		speedSlider.setMajorTickSpacing(1000);
+		speedSlider.setPaintLabels(true);
+		
+		durationLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		durationSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		durationSlider.setMajorTickSpacing(1000);
+		durationSlider.setPaintLabels(true);
 	}
 
 	public void setupUI() {
 		
-		/* GridBagLayout settings */
-		setLayout(new GridBagLayout());// set LayoutManager
+		setLayout(new GridBagLayout());
 		setBackground(Color.decode("#efeff0"));
 		GridBagConstraints gc = new GridBagConstraints();
 
@@ -198,45 +253,61 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.BOTH;
 		add(screenContainer, gc); // add component to the ContentPane
-		//screenPanel.setBackground(Color.WHITE);
 		
-
 		gc.gridx = 0;
 		gc.gridy = 1;
-		gc.gridwidth = 3;
+		gc.gridwidth = 1;
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.2;
-		gc.insets = new Insets(0, 0, 10, 30);
+		gc.insets = new Insets(40, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.fill = GridBagConstraints.NONE;
+		add(speedLabel, gc); // add component to the ContentPane
+		
+		gc.gridx = 0;
+		gc.gridy = 1;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+		gc.insets = new Insets(30, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.fill = GridBagConstraints.NONE;
+		add(speedSlider, gc); // add component to the ContentPane
+		
+		gc.gridx = 0;
+		gc.gridy = 1;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+		gc.insets = new Insets(100, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.fill = GridBagConstraints.NONE;
+		add(durationLabel, gc); // add component to the ContentPane
+		
+		gc.gridx = 0;
+		gc.gridy = 1;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+		gc.insets = new Insets(30, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.fill = GridBagConstraints.NONE;
+		add(durationSlider, gc); // add component to the ContentPane
+		
+		gc.gridx = 1;
+		gc.gridy = 1;
+		gc.gridwidth = 1;
+		gc.gridheight = 1;
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+		gc.insets = new Insets(40, 0, 10, 30);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.BOTH;
 		add(picturePanel, gc); // add component to the ContentPane
-	}
-
-	/**
-	 * This method sets the UI for the message settings
-	 */
-	public void setupSettingsUI() {
-		speedSlider.setMajorTickSpacing(1000);
-		speedSlider.setPaintLabels(true);
-
-		durationSlider.setMajorTickSpacing(5000);
-		durationSlider.setPaintLabels(true);
-		
-		GridBagLayout gbl = new GridBagLayout();
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.insets = new Insets(3, 10, 3, 10);
-		screenPanel.setLayout(gbl);
-		
-		gc.gridx = 0;
-		gc.gridy = 0;
-		gc.weightx = 1;
-		gc.weighty = 1;
-		gc.gridwidth = 1;
-		gc.gridheight = 1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.fill = GridBagConstraints.NONE;
-		//screenPanel.add(speedLabel, gc);
 	}
 
 	public PictureLabel getPictureLabel() {
@@ -256,5 +327,9 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	 */
 	public void setSettingsListener(SettingsListener settingsListener) {
 		this.settingsListener = settingsListener;
+	}
+	
+	public void setmultiMessageListener(MultiMessageListener multiMessageListener) {
+		this.multiMessageListener = multiMessageListener;
 	}
 }
