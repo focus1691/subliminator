@@ -12,6 +12,7 @@ import javax.swing.border.CompoundBorder;
 
 public class CategoryListCellRenderer extends DefaultListCellRenderer {
 
+	
 	Border faintGreyBorder = BorderFactory.createMatteBorder(2, 0, 2, 0, Color.decode("#ecf1f5"));
 
 	CompoundBorder compoundBorder = new CompoundBorder(

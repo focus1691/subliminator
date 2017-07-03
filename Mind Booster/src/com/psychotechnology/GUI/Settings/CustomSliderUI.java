@@ -28,6 +28,7 @@ public class CustomSliderUI extends BasicSliderUI {
 
 	public CustomSliderUI(JSlider b) {
 		super(b);
+		b.setBackground(Color.decode("#efeff0"));
 	}
 
 	@Override

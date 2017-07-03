@@ -3,6 +3,7 @@ package com.psychotechnology.GUI.Settings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -215,7 +216,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		picturePanel.add(pictureLabel, BorderLayout.CENTER);
 
 		speedSlider = new JSlider(0, 1000, 50);
-		durationSlider = new JSlider(0, 5000, 50);
+		durationSlider = new JSlider(0, 1000, 50);
 		speedSlider.setValue(controller.getMessageSpeed());
 		durationSlider.setValue(controller.getMessageInterval());
 		speedLabel = new JLabel("Display Every (ms):");
@@ -230,11 +231,13 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		speedSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		speedSlider.setMajorTickSpacing(1000);
 		speedSlider.setPaintLabels(true);
+		speedSlider.setPreferredSize(new Dimension(350, 50));
 		
 		durationLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		durationSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		durationSlider.setMajorTickSpacing(1000);
 		durationSlider.setPaintLabels(true);
+		durationSlider.setPreferredSize(new Dimension(350, 50));
 	}
 
 	public void setupUI() {
@@ -248,8 +251,8 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.gridwidth = 3;
 		gc.gridheight = 1;
 		gc.weightx = 1;
-		gc.weighty = 0.6;
-		gc.insets = new Insets(90, 0, 0, 0);
+		gc.weighty = 1;
+		gc.insets = new Insets(20, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.BOTH;
 		add(screenContainer, gc); // add component to the ContentPane
@@ -259,8 +262,8 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.gridwidth = 1;
 		gc.gridheight = 1;
 		gc.weightx = 1;
-		gc.weighty = 0.2;
-		gc.insets = new Insets(40, 0, 0, 0);
+		gc.weighty = 0.1;
+		gc.insets = new Insets(30, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(speedLabel, gc); // add component to the ContentPane
@@ -270,42 +273,42 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.gridwidth = 1;
 		gc.gridheight = 1;
 		gc.weightx = 1;
-		gc.weighty = 0.2;
-		gc.insets = new Insets(30, 0, 0, 0);
+		gc.weighty = 0.1;
+		gc.insets = new Insets(60, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(speedSlider, gc); // add component to the ContentPane
 		
 		gc.gridx = 0;
-		gc.gridy = 1;
+		gc.gridy = 2;
 		gc.gridwidth = 1;
 		gc.gridheight = 1;
 		gc.weightx = 1;
-		gc.weighty = 0.2;
-		gc.insets = new Insets(100, 0, 0, 0);
+		gc.weighty = 0.1;
+		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(durationLabel, gc); // add component to the ContentPane
 		
 		gc.gridx = 0;
-		gc.gridy = 1;
+		gc.gridy = 2;
 		gc.gridwidth = 1;
 		gc.gridheight = 1;
 		gc.weightx = 1;
-		gc.weighty = 0.2;
+		gc.weighty = 0.1;
 		gc.insets = new Insets(30, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(durationSlider, gc); // add component to the ContentPane
 		
-		gc.gridx = 1;
+		gc.gridx = 0;
 		gc.gridy = 1;
-		gc.gridwidth = 1;
-		gc.gridheight = 1;
+		gc.gridwidth = 2;
+		gc.gridheight = 2;
 		gc.weightx = 1;
-		gc.weighty = 0.2;
-		gc.insets = new Insets(40, 0, 10, 30);
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.weighty = 0.1;
+		gc.insets = new Insets(60, 430, 10, 20);
+		gc.anchor = GridBagConstraints.LINE_START;
 		gc.fill = GridBagConstraints.BOTH;
 		add(picturePanel, gc); // add component to the ContentPane
 	}

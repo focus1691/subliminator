@@ -107,7 +107,7 @@ public class MainFrame implements CategorySelectionListener, MessageListener, Se
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.weightx = 0.1;
+		gbc.weightx = 0.4;
 		gbc.weighty = 0.8;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -118,7 +118,7 @@ public class MainFrame implements CategorySelectionListener, MessageListener, Se
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.weightx = 0.1;
+		gbc.weightx = 0.4;
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		frame.add(messagePanel, gbc);
