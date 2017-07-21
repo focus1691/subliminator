@@ -10,6 +10,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.psychotechnology.GUI.SubliminalFrame;
+import com.psychotechnology.Model.MessageLocation;
 import com.psychotechnology.util.MathFunctions;
 
 public class MessageRunnable implements Runnable {
@@ -25,7 +26,8 @@ public class MessageRunnable implements Runnable {
 
 	public MessageRunnable(Controller controller) {
 		this.controller = controller;
-		subliminalFrame = new SubliminalFrame(absolutePath);
+		subliminalFrame = new SubliminalFrame(absolutePath, MessageLocation.TOPLEFT);
+		subliminalFrame.setMessageTopLeft();
 	}
 
 	public int getMessageIndex() {
