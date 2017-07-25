@@ -26,12 +26,14 @@ public class SubliminalFrame {
 	JLabel messageImage = new JLabel(new ImageIcon());
 	private MessageLocation messageLocation;
 	private Rectangle messageBounds;
+	private final int messageImageHeight = 250;
+	private final int messageImageWidth = 250;
+	
 	String absolutePath;
 
 	public SubliminalFrame(String absolutePath, MessageLocation messageLocation) {
 		this.absolutePath = absolutePath;
 		this.messageLocation = messageLocation;
-		messageLocation = MessageLocation.TOPLEFT;
 		frame.setFocusable(false);
 		frame.setUndecorated(true);
 		frame.setBackground(new Color(0, 255, 0, 0));
@@ -39,7 +41,7 @@ public class SubliminalFrame {
 		frame.setFocusableWindowState(false);
 		frame.setFocusable(false);
 		message.setFont(new Font("Courier New", Font.BOLD, 36));
-
+		
 		message.setText("");
 		message.setOpaque(true);
 		ContentPane pane = new ContentPane();
@@ -110,6 +112,8 @@ public class SubliminalFrame {
 		}
 
 		message.setAlignmentX(SwingConstants.CENTER);
+		
+		messageImage.setBounds(message.getWidth() / 2, 50, messageImageWidth, messageImageHeight);
 	}
 
 	public void setMessageTopRight() {
@@ -125,12 +129,14 @@ public class SubliminalFrame {
 		}
 
 		message.setAlignmentX(SwingConstants.CENTER);
+
+		messageImage.setBounds(message.getWidth(), 50, messageImageWidth, messageImageHeight);
 	}
 
 	public void setMessageCenter() {
 		Dimension size = message.getPreferredSize();
 
-		message.setBounds((frame.getWidth() - size.width) / 2, 0, size.width, size.height);
+		message.setBounds((frame.getWidth() - size.width) / 2, (frame.getHeight() - size.height) / 2, size.width, size.height);
 
 		if (message.getSize().getWidth() > frame.getSize().getWidth()) {
 			Rectangle rect = message.getBounds();
@@ -138,8 +144,46 @@ public class SubliminalFrame {
 			rect.width = (int) frame.getSize().getWidth();
 			message.setBounds(rect);
 		}
-
+		
 		message.setAlignmentX(SwingConstants.CENTER);
+		
+		messageImage.setBounds(frame.getWidth() / 2, frame.getHeight() / 2, messageImageWidth, messageImageHeight);
+	}
+	
+	public void setMessageBotLeft() {
+		Dimension msgSize = message.getPreferredSize();
+		Dimension imgSize = messageImage.getPreferredSize();
+
+		message.setBounds(0, frame.getHeight() - msgSize.height - imgSize.height - 50, msgSize.width, msgSize.height);
+
+		if (message.getSize().getWidth() > frame.getSize().getWidth()) {
+			Rectangle rect = message.getBounds();
+			rect.x = 0;
+			rect.width = (int) frame.getSize().getWidth();
+			message.setBounds(rect);
+		}
+		
+		message.setAlignmentX(SwingConstants.CENTER);
+		
+		messageImage.setBounds(msgSize.width / 2, frame.getHeight() - imgSize.height, messageImageWidth, messageImageHeight);
+	}
+	
+	public void setMessageBotRight() {
+		Dimension size = message.getPreferredSize();
+		Dimension imgSize = messageImage.getPreferredSize();
+
+		message.setBounds((frame.getWidth() - size.width), (frame.getHeight() - size.height - imgSize.height - 50), size.width, size.height);
+
+		if (message.getSize().getWidth() > frame.getSize().getWidth()) {
+			Rectangle rect = message.getBounds();
+			rect.x = 0;
+			rect.width = (int) frame.getSize().getWidth();
+			message.setBounds(rect);
+		}
+		
+		message.setAlignmentX(SwingConstants.CENTER);
+		
+		messageImage.setBounds(frame.getWidth() - size.width, (frame.getHeight() - imgSize.height), messageImageWidth, messageImageHeight);
 	}
 
 	private void setMessageLabelLocation() {
@@ -179,17 +223,33 @@ public class SubliminalFrame {
 		message.setText(msg.getMessage());
 
 		messageImage.setVisible(true);
-		int messageImageHeight = 250;
-		int messageImageWidth = 250;
 
 		Image img = new ImageIcon(absolutePath + msg.getImagePath()).getImage();
 		img = img.getScaledInstance(messageImageWidth, messageImageHeight, Image.SCALE_SMOOTH);
 		messageImage.setIcon(new ImageIcon(img));
-
-		System.out.println("a");
-
-		messageImage.setBounds((frame.getWidth() - messageImageWidth) / 2, message.getHeight() + 50, messageImageWidth,
-				messageImageHeight);
+		
+		switch (messageLocation) {
+		case TOPLEFT:
+			setMessageTopLeft();
+			System.out.println("Top LEFT");
+			break;
+		case TOPRIGHT:
+			setMessageTopRight();
+			System.out.println("Top RIGHT");
+			break;
+		case CENTER:
+			setMessageCenter();
+			System.out.println("CENTER");
+			break;
+		case BOTLEFT:
+			setMessageBotLeft();
+			break;
+		case BOTRIGHT:
+			setMessageBotRight();
+			break;
+		default:
+			break;
+		}
 
 	}
 }

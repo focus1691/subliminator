@@ -26,7 +26,7 @@ public class MessageRunnable implements Runnable {
 
 	public MessageRunnable(Controller controller) {
 		this.controller = controller;
-		subliminalFrame = new SubliminalFrame(absolutePath, MessageLocation.TOPLEFT);
+		subliminalFrame = new SubliminalFrame(absolutePath, MessageLocation.BOTLEFT);
 		subliminalFrame.setMessageTopLeft();
 	}
 
