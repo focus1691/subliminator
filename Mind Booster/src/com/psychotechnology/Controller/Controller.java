@@ -7,35 +7,45 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.psychotechnology.Model.Category;
 import com.psychotechnology.Model.InBuiltCategory;
 import com.psychotechnology.Model.Message;
+import com.psychotechnology.Model.MessageLocation;
 import com.psychotechnology.Model.MessageTense;
+import com.psychotechnology.util.MathFunctions;
 
 public class Controller {
+	private boolean messagesOn = false;
+	private boolean userPremium = false;
+	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 	private int startDelay = 30;
-	private int messageSpeed = 250;
-	private int messageInterval = 2000;
+	private int messageSpeed = 1000;
+	private int messageInterval = 3000;
 	private int categoryIndex;
+	private int messageIndex;
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
-	private MessageRunnable messageRunnable;
+	private MathFunctions mathFunctions = new MathFunctions();
+	private PlayMessageTask topLeftMsg, topRightMsg, centerMsg, botLeftMsg, botRightMsg;
 	private List<Message> activeMessages;
 	private Network network;
-	
+
 	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
-    private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
+	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
 
 	public Controller() {
 		network = new Network();
 		// network.checkIfRunning();
 		messageTense = MessageTense.FIRST_PERSON;
 		categoryIndex = 0;
-		messageRunnable = new MessageRunnable(this);
 		activeMessages = new ArrayList<Message>();
 		load();
-    }
+	}
+
 	@SuppressWarnings("unchecked")
 	private void load() {
 		try {
@@ -77,22 +87,44 @@ public class Controller {
 	 * @throws InterruptedException
 	 *             check for multithreading exceptions
 	 */
-	public synchronized void changeMessageActivity() throws InterruptedException {
-		Thread t = new Thread(messageRunnable);
-
-		if (activeMessages.isEmpty()) {
-			// return;
-		}
-		if (messageRunnable.isShutdown() == true) {
-			t.start();
-			messageRunnable.setShutdown(false);
-			return;
+	public synchronized void changeMessageActivity(boolean msgLocationsSelected[]) throws InterruptedException {
+		messagesOn = (messagesOn == true) ? false : true;
+		if (messagesOn) {
+			if (scheduledExecutorService.isShutdown()) {
+				scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+			}
+			if (msgLocationsSelected[0] == true) {
+				topLeftMsg = new PlayMessageTask(this, MessageLocation.TOPLEFT);
+				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				System.out.println("topLeftMsg");
+			}
+			if (msgLocationsSelected[1] == true) {
+				topRightMsg = new PlayMessageTask(this, MessageLocation.TOPRIGHT);
+				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				System.out.println("topRightMsg");
+			}
+			if (msgLocationsSelected[2] == true) {
+				botLeftMsg = new PlayMessageTask(this, MessageLocation.BOTLEFT);
+				scheduledExecutorService.scheduleWithFixedDelay(botLeftMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				System.out.println("botLeftMsg");
+			}
+			if (msgLocationsSelected[3] == true) {
+				botRightMsg = new PlayMessageTask(this, MessageLocation.BOTRIGHT);
+				scheduledExecutorService.scheduleWithFixedDelay(botRightMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				System.out.println("botRightMsg");
+			}
+			if (msgLocationsSelected[4] == true) {
+				centerMsg = new PlayMessageTask(this, MessageLocation.CENTER);
+				scheduledExecutorService.scheduleWithFixedDelay(centerMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				System.out.println("centerMsg");
+			}
 		} else {
-			t.join();
-			messageRunnable.stop();
-			messageRunnable.getFuture().clear();
-			messageRunnable.setShutdown(true);
+			 scheduledExecutorService.shutdown();
 		}
+	}
+	
+	public void setMessageIndex(int messageIndex) {
+		this.messageIndex = messageIndex;
 	}
 
 	/**
@@ -117,9 +149,9 @@ public class Controller {
 		}
 		return categoryNames;
 	}
-	
+
 	public String getActiveCategoryName() {
-		
+
 		return categories.get(categoryIndex).getCategoryName();
 	}
 
@@ -149,11 +181,11 @@ public class Controller {
 		}
 		return messages;
 	}
-	
+
 	public List<Message> getMessagesFromCategory(int categoryIdx, MessageTense tense) {
 		return categories.get(categoryIdx).getMessages().get(tense.getTenseVal());
 	}
-	
+
 	public Message getMessageFromCategory(int categoryIdx, int msgIdx, MessageTense tense) {
 		return categories.get(categoryIdx).getMessages().get(tense.getTenseVal()).get(msgIdx);
 	}
@@ -165,7 +197,6 @@ public class Controller {
 			for (int j = i; j > 0; j--) {
 				if (input[j] < input[j - 1]) {
 					temp = input[j];
-					//System.out.println("Moving " + input[j] + " to the left of " + input[j - 1]);
 					input[j] = input[j - 1];
 					input[j - 1] = temp;
 				}
@@ -214,12 +245,12 @@ public class Controller {
 		this.messageTense = messageTense;
 	}
 
-	public MessageRunnable getMessageRunnable() {
-		return messageRunnable;
+	public PlayMessageTask getMessageRunnable() {
+		return topLeftMsg;
 	}
 
-	public void setMessageRunnable(MessageRunnable messageRunnable) {
-		this.messageRunnable = messageRunnable;
+	public void setMessageRunnable(PlayMessageTask messageRunnable) {
+		this.topLeftMsg = messageRunnable;
 	}
 
 	/**

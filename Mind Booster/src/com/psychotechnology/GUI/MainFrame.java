@@ -21,8 +21,8 @@ import javax.swing.UIManager;
 
 import com.psychotechnology.Controller.Controller;
 import com.psychotechnology.GUI.Category.CategoryPanel;
-import com.psychotechnology.GUI.Category.CategorySelectionEvent;
-import com.psychotechnology.GUI.Category.CategorySelectionListener;
+import com.psychotechnology.GUI.Category.CategoryEvent;
+import com.psychotechnology.GUI.Category.CategoryListener;
 import com.psychotechnology.GUI.Controls.ControlPanel;
 import com.psychotechnology.GUI.Controls.MessageEvent;
 import com.psychotechnology.GUI.Controls.MessageListener;
@@ -32,7 +32,7 @@ import com.psychotechnology.GUI.Settings.SettingsListener;
 import com.psychotechnology.GUI.Settings.SettingsPanel;
 import com.psychotechnology.util.IconFetch;
 
-public class MainFrame implements CategorySelectionListener, MessageListener, SettingsListener {
+public class MainFrame implements CategoryListener, MessageListener, SettingsListener {
 
 	private Controller controller;
 	private static JFrame frame;
@@ -78,7 +78,7 @@ public class MainFrame implements CategorySelectionListener, MessageListener, Se
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
+	
 	/**
 	 * This method initializes the three main containers, and the controller.
 	 */
@@ -216,12 +216,12 @@ public class MainFrame implements CategorySelectionListener, MessageListener, Se
 		int y = (int) ((dimension.getHeight() - dialog.getHeight()) / 2);
 		dialog.setLocation(x, y);
 	}
-
+ 
 	@Override
 	public void messageEventOccurred(MessageEvent event) {
 		try {
 			controller.setActiveMessages(messagePanel.getSelectedMessages());
-			controller.changeMessageActivity();
+			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -229,7 +229,7 @@ public class MainFrame implements CategorySelectionListener, MessageListener, Se
 
 	@Override
 	public void addMessageEventOccurred(MessageEvent e) {
-		new AddDialog(controller, messagePanel);
+		new AddMessage(controller, messagePanel);
 		controller.save();
 	}
 
@@ -238,8 +238,7 @@ public class MainFrame implements CategorySelectionListener, MessageListener, Se
 
 		if (messagePanel.getMessageListSelectionModel()
 				.isSelectedIndex(messagePanel.getMessageListSelectionModel().getLastSelection())) {
-			System.out.println(messagePanel.getMessageListSelectionModel().getLastSelection());
-			new EditMessageDialog(controller, messagePanel,
+			new EditMessage(controller, messagePanel,
 					messagePanel.getMessageListSelectionModel().getLastSelection());
 			controller.save();
 		} else {
@@ -256,7 +255,7 @@ public class MainFrame implements CategorySelectionListener, MessageListener, Se
 			JOptionPane.showMessageDialog(frame, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
 		} else {
 			controller.doInsertionSort(selectedMsgs);
-			new DeleteDialog(controller, messagePanel, selectedMsgs);
+			new DeleteMessage(controller, messagePanel, selectedMsgs);
 			controller.save();
 		}
 	}
@@ -278,25 +277,25 @@ public class MainFrame implements CategorySelectionListener, MessageListener, Se
 	@Override
 	public void settingsEventOccurred(SettingsEvent e) {
 		try {
-			controller.changeMessageActivity();
+			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 			controller.setMessageSpeed(e.getMessageSpeed());
 			controller.setMessageInterval(e.getMessageInterval());
-			controller.changeMessageActivity();
+			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
 	}
 
 	@Override
-	public void categorySelectionEventOccurred(CategorySelectionEvent e) {
+	public void categorySelectionEventOccurred(CategoryEvent e) {
 		messagePanel.clearMessageList();
 		controller.setCategoryIndex(e.getCategoryIndex());
 		messagePanel.setMessageList(controller.getAllMessagesFromActiveTenseCategory());
 		if (controller.getMessageRunnable().isShutdown() == false) {
 			try {
-				controller.changeMessageActivity();
+				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 				controller.setCategoryIndex(e.getCategoryIndex());
-				controller.changeMessageActivity();
+				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}

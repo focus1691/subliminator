@@ -2,23 +2,24 @@ package com.psychotechnology.GUI;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.psychotechnology.Controller.Controller;
 import com.psychotechnology.Controller.Validation;
 import com.psychotechnology.GUI.Message.MessagePanel;
+import com.psychotechnology.Model.Message;
 import com.psychotechnology.Model.MessageTense;
 
-public class EditMessageDialog extends JDialog {
-
-	private static final long serialVersionUID = 5470112838506529493L;
+public class AddMessage extends JDialog {
+	
+	private static final long serialVersionUID = 1447537632437945694L;
 	private Controller controller;
 	private JLabel firstPersonLabel;
 	private JLabel secondPersonLabel;
@@ -26,53 +27,57 @@ public class EditMessageDialog extends JDialog {
 	private JTextField secondPersonMsg;
 	private JButton submitBtn;
 
-	public EditMessageDialog(Controller controller, MessagePanel messagePanel, int index) {
+	public AddMessage(Controller controller, MessagePanel messagePanel) {
 		this.controller = controller;
-		initComponents(index);
+		initComponents();
 		setupUI();
 
 		submitBtn.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				String msg1 = firstPersonMsg.getText();
 				String msg2 = secondPersonMsg.getText();
 
 				if (Validation.isMoreThanThreeChars(msg1) && Validation.isMoreThanThreeChars(msg2)) {
-					
-					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).get(index).setMessage(msg1);
-					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).get(index).setMessage(msg2);
+					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).add(new Message(msg1, "/Images/7.jpg"));
+					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).add(new Message(msg2, "/Images/7.jpg"));
 					
 					messagePanel.clearMessageList();
 					messagePanel.setMessageList(controller.getAllMessagesFromActiveTenseCategory());
+
+					submitBtn.setEnabled(false);
+					JOptionPane
+							.showMessageDialog(null,
+									"\"" + msg1 + "\"" + " and " + "\"" + msg2 + "\"" + "\n"
+											+ "Successfully Added.",
+									"Congratulations", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "Enter a Message with More than 3 Characters.",
+							"Short Message", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
-
+		
 		MainFrame.centerFrame(this);
-		setSize(400, 225);
+		setSize(400, 150);
 		setModal(true);
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
-	public void initComponents(int index) {
-		setTitle("Edit Message");
+	public void initComponents() {
+		setTitle("New Messages : " +  controller.getActiveCategoryName());
 
-		firstPersonLabel = new JLabel("<html><b>1st Person</b></html>");
-		secondPersonLabel = new JLabel("<html><b>2nd Person</b></html>");
+		firstPersonLabel = new JLabel("New 1st person message:");
+		secondPersonLabel = new JLabel("New 2nd person message:");
 
-		firstPersonMsg = new JTextField(30);
-		secondPersonMsg = new JTextField(30);
+		firstPersonMsg = new JTextField(20);
+		secondPersonMsg = new JTextField(20);
 
-		firstPersonMsg
-				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).get(index).getMessage());
-		secondPersonMsg
-				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).get(index).getMessage());
-
-		submitBtn = new JButton("Change");
+		submitBtn = new JButton("Add");
 	}
 
 	public void setupUI() {
@@ -82,20 +87,21 @@ public class EditMessageDialog extends JDialog {
 
 		gc.gridx = 0;
 		gc.gridy = 0;
-		gc.insets = new Insets(10, 0, 10, 0);
 		add(firstPersonLabel, gc);
 
-		gc.gridy++;
-		gc.insets = new Insets(0, 0, 10, 0);
+		gc.gridx++;
 		add(firstPersonMsg, gc);
 
 		gc.gridy++;
+		gc.gridx = 0;
 		add(secondPersonLabel, gc);
 
-		gc.gridy++;
+		gc.gridx++;
 		add(secondPersonMsg, gc);
 
 		gc.gridy++;
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.CENTER;
 		add(submitBtn, gc);
 	}
 }

@@ -14,7 +14,7 @@ import com.psychotechnology.Controller.Controller;
 import com.psychotechnology.GUI.Message.MessagePanel;
 import com.psychotechnology.Model.MessageTense;
 
-public class DeleteDialog extends JDialog {
+public class DeleteMessage extends JDialog {
 	
 	private static final long serialVersionUID = 5549429493881002578L;
 	private Controller controller;
@@ -23,7 +23,7 @@ public class DeleteDialog extends JDialog {
 	private JLabel deleteMsg;
 	private JButton deleteBtn;
 
-	public DeleteDialog(Controller controller, MessagePanel messagePanel, int[] selectedMsgs) {
+	public DeleteMessage(Controller controller, MessagePanel messagePanel, int[] selectedMsgs) {
 
 		this.controller = controller;
 		initComponents();
@@ -73,7 +73,6 @@ public class DeleteDialog extends JDialog {
 		int i;
 
 		for (i = 0; i < selectedMsgs.length; i++) {
-			System.out.println(controller.getMessageFromCategory(controller.getCategoryIndex(), selectedMsgs[i], MessageTense.FIRST_PERSON).getMessage());
 			messagesToDelete.append(controller.getMessageFromCategory(controller.getCategoryIndex(), selectedMsgs[i], MessageTense.FIRST_PERSON).getMessage());
 			messagesToDelete.append("\\");
 			messagesToDelete.append(controller.getMessageFromCategory(controller.getCategoryIndex(), selectedMsgs[i], MessageTense.SECOND_PERSON).getMessage());

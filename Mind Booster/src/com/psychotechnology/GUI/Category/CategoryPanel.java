@@ -26,7 +26,7 @@ public class CategoryPanel extends JPanel {
 	private JScrollPane scroller;
 	private JLabel header;
 	private JList<Object> categoryList;
-	private CategorySelectionListener categorySelectionListener;
+	private CategoryListener categorySelectionListener;
 
 	public CategoryPanel(Controller controller) {
 		this.controller = controller;
@@ -41,7 +41,7 @@ public class CategoryPanel extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (e.getValueIsAdjusting()) {
-					CategorySelectionEvent catgorySelectionEvent = new CategorySelectionEvent(this,
+					CategoryEvent catgorySelectionEvent = new CategoryEvent(this,
 							categoryList.getSelectedIndex());
 
 					if (categorySelectionListener != null) {
@@ -130,10 +130,10 @@ public class CategoryPanel extends JPanel {
 	 * Used by anonymous class in MainFrame to listen for Category Selection
 	 * Event
 	 * 
-	 * @param CategorySelectionListener
+	 * @param CategoryListener
 	 *            interface object used to alert anonymous class in MainFrame
 	 */
-	public void setCategorySelectionListener(CategorySelectionListener categorySelectionListener) {
+	public void setCategorySelectionListener(CategoryListener categorySelectionListener) {
 		this.categorySelectionListener = categorySelectionListener;
 	}
 }

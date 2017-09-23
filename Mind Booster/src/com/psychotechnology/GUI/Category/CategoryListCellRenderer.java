@@ -27,7 +27,7 @@ public class CategoryListCellRenderer extends DefaultListCellRenderer {
 				cellHasFocus);
 		listCellRendererComponent.setBorder(compoundBorder);
 		if (isSelected) {
-			c.setBackground(Color.decode("#ff3121"));
+			c.setBackground(Color.decode("#2388d9"));
 			setForeground(Color.WHITE);
 		}
 		return c;

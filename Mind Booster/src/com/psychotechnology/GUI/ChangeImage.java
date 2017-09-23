@@ -10,13 +10,13 @@ import javax.swing.JTextArea;
 
 import com.psychotechnology.Controller.Controller;
 
-public class ChangeImageDialog extends JDialog {
+public class ChangeImage extends JDialog {
 
 	private static final long serialVersionUID = 8614724076980880135L;
 	private Controller controller;
 	private JPanel oldImg, newImg;
 	
-	public ChangeImageDialog(Controller controller) {
+	public ChangeImage(Controller controller) {
 		this.controller = controller;
 		
 		initComponents();

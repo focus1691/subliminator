@@ -5,9 +5,12 @@ import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
+import com.psychotechnology.util.CustomColors;
 import com.psychotechnology.util.CustomFont;
+import com.psychotechnology.util.IconFetch;
 
 public class MessageButton extends JLabel {
 
@@ -17,6 +20,7 @@ public class MessageButton extends JLabel {
 	private int x, y, w, h;
 	private double btnToScreenWRatio, btnToScreenHRatio;
 	private boolean active = false;
+	private boolean locked = true;
 	private Font font = CustomFont.getFont(CustomFont.latoBlack, 20);
 
 	public boolean isActive() {
@@ -25,18 +29,20 @@ public class MessageButton extends JLabel {
 
 	public void setActive() {
 		this.active = true;
-		setForeground(Color.decode("#29de31"));
+		setForeground(CustomColors.green);
 	}
-	
+
 	public void setInactive() {
 		this.active = false;
-		setForeground(Color.GRAY);
+		setForeground(CustomColors.lightGrey);
 		setBackground(Color.WHITE);
 	}
 
-	public MessageButton(String categoryName, boolean active, int x, int y, int w, int h) {
+	public MessageButton(String categoryName, boolean active, boolean locked, int x, int y, int w, int h) {
 		super(categoryName, SwingConstants.CENTER);
+		this.categoryName = categoryName;
 		this.active = active;
+		this.locked = locked;
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -48,13 +54,13 @@ public class MessageButton extends JLabel {
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setBounds(x, y, w, h);
 		setFont(font);
-		setForeground(Color.decode("#29de31"));
+		setForeground(CustomColors.green);
 		setBackground(Color.WHITE);
 		setOpaque(true);
-		if (isActive())
-			setActive();
-		else if (!isActive())
-			setInactive();
+		if (isActive()) setActive();
+		else setInactive();
+		if (isLocked()) lock();
+		else unlock();
 	}
 
 	public double getBtnToScreenWRatio() {
@@ -89,4 +95,16 @@ public class MessageButton extends JLabel {
 		this.image = image;
 	}
 
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void lock() {
+		this.locked = true;
+		this.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/lock2.png"));
+	}
+	
+	public void unlock() {
+		this.locked = false;
+	}
 }

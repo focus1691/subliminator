@@ -1,5 +1,7 @@
 package com.psychotechnology.GUI.Settings;
 
+import java.util.Arrays;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +21,7 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -76,7 +79,6 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 			public void componentResized(ComponentEvent e) {
 				Component c = e.getComponent();
 				if (containerRect != null) {
-					System.out.println((double) screenToPanelWRatio * c.getWidth());
 					screenRect.setRect(0, 0, (double) screenToPanelWRatio * c.getWidth(),
 							(double) screenToPanelHRatio * c.getHeight());
 					msgOne.setAlignmentX(250);
@@ -147,7 +149,10 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		MessageButton msg = (MessageButton) e.getSource();
 
 		if (e.getClickCount() == 1) {
-			if (msg.isActive()) {
+			if (msg.isLocked()) {
+				JOptionPane.showMessageDialog(this, "Error", "Warning", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if (msg.isActive()) {
 				msg.setInactive();
 			} else {
 				msg.setActive();
@@ -194,23 +199,23 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 				BorderLayout.CENTER);
 
 		// Message on the top left of the screen
-		msgOne = new MessageButton("Message 1", false, screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 185,
+		msgOne = new MessageButton("Message 1", false, true, screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 185,
 				60);
 
 		// Message on the top right of the screen
-		msgTwo = new MessageButton("Message 2", false, screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
+		msgTwo = new MessageButton("Message 2", false, true, screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
 				screenPanel.getHeight() / 8, 185, 60);
 
 		// Message on the bottom left of the screen
-		msgThree = new MessageButton("Message 4", false, screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2) - 20,
+		msgThree = new MessageButton("Message 4", false, true, screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2) - 20,
 				185, 60);
 
 		// Message on the bottom right of the screen
-		msgFour = new MessageButton("Message 5", false, screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
+		msgFour = new MessageButton("Message 5", false, true, screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
 				(screenPanel.getHeight() / 2) - 20, 185, 60);
 
 		// Message in the middle of the screen
-		msgFive = new MessageButton("Message 3", true, (screenPanel.getWidth() / 2) - 100,
+		msgFive = new MessageButton("Message 3", true, false, (screenPanel.getWidth() / 2) - 100,
 				(screenPanel.getHeight() / 2) - 85, 185, 60);
 
 		screenContainer.add(screenPanel, new Integer(0), 0);
@@ -345,5 +350,24 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 
 	public void setmultiMessageListener(MultiMessageListener multiMessageListener) {
 		this.multiMessageListener = multiMessageListener;
+	}
+
+	public boolean[] getMsgLocationsSelected() {
+
+		boolean msgLocationsSelected[] = new boolean[5];
+		Arrays.fill(msgLocationsSelected, false);
+
+		if (msgOne.isActive())
+			msgLocationsSelected[0] = true;
+		if (msgTwo.isActive())
+			msgLocationsSelected[1] = true;
+		if (msgThree.isActive())
+			msgLocationsSelected[2] = true;
+		if (msgFour.isActive())
+			msgLocationsSelected[3] = true;
+		if (msgFive.isActive())
+			msgLocationsSelected[4] = true;
+
+		return msgLocationsSelected;
 	}
 }

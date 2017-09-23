@@ -9,7 +9,7 @@ import java.util.EventListener;
  * @author Joshua
  *
  */
-public interface CategorySelectionListener extends EventListener {
+public interface CategoryListener extends EventListener {
 	/**
 	 * The loginEventOccurred abstract method is used by MainFrame to listen to
 	 * a possible button click on 'Logout' inside either the admin or user
@@ -18,5 +18,5 @@ public interface CategorySelectionListener extends EventListener {
 	 * @param e
 	 *            the event of a button click on 'Logout'
 	 */
-	public void categorySelectionEventOccurred(CategorySelectionEvent e);
+	public void categorySelectionEventOccurred(CategoryEvent e);
 }
