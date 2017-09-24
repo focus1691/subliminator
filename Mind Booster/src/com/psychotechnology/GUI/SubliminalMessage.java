@@ -1,6 +1,7 @@
 package com.psychotechnology.GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -46,7 +47,11 @@ public class SubliminalMessage extends JPanel {
 	}
 
 	public void setImage(Image image) {
+
+		remove((Component) this.image.getIcon());
 		this.image.setIcon(new ImageIcon(image));
+		this.repaint();
+		this.revalidate();
 	}
 	
 	public ImageIcon getIcon() {

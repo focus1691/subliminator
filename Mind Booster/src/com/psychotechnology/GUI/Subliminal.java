@@ -68,12 +68,15 @@ public class Subliminal {
 		Image img = getScaledImage(IconFetch.getInstance().getIcon(message.getImagePath()).getImage(), w, h);
 		subliminalMessage.setImage(img);
 		
+		subliminalContainer.pack();
+		
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - subliminalContainer.getWidth()) / 2);
 		int y = (int) ((dimension.getHeight() - subliminalContainer.getHeight()) / 2);
 		subliminalContainer.setLocation(x, y);
 		
-		subliminalContainer.pack();
+		subliminalContainer.repaint();
+		subliminalContainer.revalidate();
 	}
 	
 	private Image getScaledImage(Image srcImg, int w, int h){
