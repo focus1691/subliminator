@@ -25,6 +25,7 @@ public class SubliminalMessage extends JPanel {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 		this.image.setHorizontalAlignment(JLabel.CENTER);
+		this.image.setIcon(icon);
 		add(message, BorderLayout.NORTH);
 		add(image, BorderLayout.CENTER);
 	}
@@ -37,21 +38,18 @@ public class SubliminalMessage extends JPanel {
 	public JLabel getMessage() {
 		return message;
 	}
-
+	
 	public void setMessage(JLabel message) {
 		this.message = message;
 	}
-
+	
 	public JLabel getImage() {
 		return image;
 	}
-
+	
 	public void setImage(Image image) {
-
-		remove((Component) this.image.getIcon());
-		this.image.setIcon(new ImageIcon(image));
-		this.repaint();
-		this.revalidate();
+		icon = new ImageIcon(image);
+		this.image.setIcon(icon);
 	}
 	
 	public ImageIcon getIcon() {

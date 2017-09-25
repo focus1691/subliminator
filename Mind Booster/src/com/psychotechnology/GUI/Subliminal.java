@@ -74,15 +74,12 @@ public class Subliminal {
 		int x = (int) ((dimension.getWidth() - subliminalContainer.getWidth()) / 2);
 		int y = (int) ((dimension.getHeight() - subliminalContainer.getHeight()) / 2);
 		subliminalContainer.setLocation(x, y);
-		
-		subliminalContainer.repaint();
-		subliminalContainer.revalidate();
 	}
 	
 	private Image getScaledImage(Image srcImg, int w, int h){
 	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 	    Graphics2D g2 = resizedImg.createGraphics();
-
+	    
 	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 	    g2.drawImage(srcImg, 0, 0, w, h, null);
 	    g2.dispose();
