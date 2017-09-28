@@ -5,16 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSliderUI;
 
 /**
@@ -36,13 +34,32 @@ public class CustomSliderUI extends BasicSliderUI {
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		super.paint(g, c);
+        Rectangle clip = g.getClipBounds();
+        
+        if ( slider.getPaintTrack() && clip.intersects( trackRect ) ) {
+            paintTrack( g );
+        }
+        if ( slider.getPaintTicks() && clip.intersects( tickRect ) ) {
+            paintTicks( g );
+        }
+        if ( slider.getPaintLabels() && clip.intersects( labelRect ) ) {
+            paintLabels( g );
+        }
+        if ( slider.hasFocus() && clip.intersects( focusRect ) ) {
+            paintFocus( g );      
+        }
+        if ( clip.intersects( thumbRect ) ) {
+            Color savedColor = slider.getBackground();
+            slider.setBackground(Color.WHITE);
+            paintThumb( g );
+            slider.setBackground(savedColor);
+        }
+        super.paint(g, c);
 	}
 
 	@Override
 	protected Dimension getThumbSize() {
-		return new Dimension(12, 16);
+		return new Dimension(8, 12);
 	}
 
 	@Override
@@ -86,30 +103,5 @@ public class CustomSliderUI extends BasicSliderUI {
 		x = x - (r / 2);
 		y = y - (r / 2);
 		g.fillOval(x, y, r, r);
-	}
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		JSlider slider = new JSlider(0, 100);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		slider.setMinorTickSpacing(5);
-		slider.setMajorTickSpacing(25);
-		slider.setUI(new CustomSliderUI(slider));
-
-		slider.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				slider.getValue();
-				// slider.getUI().paint(g, c);
-			}
-
-		});
-
-		frame.add(slider);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
 	}
 }

@@ -291,13 +291,13 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		messagePanel.clearMessageList();
 		controller.setCategoryIndex(e.getCategoryIndex());
 		messagePanel.setMessageList(controller.getAllMessagesFromActiveTenseCategory());
-		if (controller.getMessageRunnable().isShutdown() == false) {
+		if (Controller.messagesOn == false) {
 			try {
 				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 				controller.setCategoryIndex(e.getCategoryIndex());
 				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
 			}
 		}
 	}

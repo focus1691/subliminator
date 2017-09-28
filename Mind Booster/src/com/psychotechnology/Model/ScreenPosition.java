@@ -1,6 +1,6 @@
 package com.psychotechnology.Model;
 
-public enum MessageLocation {
+public enum ScreenPosition {
 	TOPLEFT,
 	TOPRIGHT,
 	CENTER,

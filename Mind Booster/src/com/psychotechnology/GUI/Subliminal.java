@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -13,57 +12,47 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import com.psychotechnology.Model.Message;
-import com.psychotechnology.Model.MessageLocation;
+import com.psychotechnology.Model.ScreenPosition;
 import com.psychotechnology.util.IconFetch;
 
-public class Subliminal {
+public class Subliminal extends JFrame {
+	
+	private static final long serialVersionUID = 2931841309711143361L;
+	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private SubliminalMessage subliminalMessage;
-	private JFrame subliminalContainer = new JFrame();
-	private MessageLocation messageLocation;
-	private Rectangle messageBounds;
-	private Dimension screenSize;
-	private Rectangle rect1;
 	private final int h = 200;
 	private final int w = 200;
 
-	String absolutePath;
-
-	public Subliminal(String absolutePath, MessageLocation messageLocation) {
-		this.absolutePath = absolutePath;
-		this.messageLocation = messageLocation;
-
+	public Subliminal(ScreenPosition screenPosition) {
 		initComponents();
-		styleUI();
+		styleUI(screenPosition);
 	}
 
 	private void initComponents() {
-
-		// Message window
 		subliminalMessage = new SubliminalMessage();
-		subliminalContainer = new JFrame();
-		subliminalContainer.add(subliminalMessage);
+		add(subliminalMessage);
 	}
 
-	private void styleUI() {
+	private void styleUI(ScreenPosition messageLocation) {
 		// Subliminal Message
 		subliminalMessage.getMessage().setFont(new Font("Courier New", Font.BOLD, 24));
 		subliminalMessage.getMessage().setBackground(Color.WHITE);
 		subliminalMessage.getMessage().setOpaque(true);
 		subliminalMessage.setPreferredSize(new Dimension(600, 300));
 
-		subliminalContainer.setFocusable(false);
-		subliminalContainer.setUndecorated(true);
-		subliminalContainer.setBackground(new Color(0, 255, 0, 0));
-		subliminalContainer.setAlwaysOnTop(true);
-		subliminalContainer.setSize(500, 700);
-		subliminalContainer.setFocusableWindowState(false);
-		subliminalContainer.setEnabled(false);
-		subliminalContainer.pack();
+		setFocusable(false);
+		setUndecorated(true);
+		setBackground(new Color(0, 255, 0, 0));
+		setAlwaysOnTop(true);
+		setSize(500, 700);
+		setFocusableWindowState(false);
+		setEnabled(false);
+		pack();
 
 		setMessageLocation(messageLocation);
 	}
 
-	private void setMessageLocation(MessageLocation messageLocation) {
+	private void setMessageLocation(ScreenPosition messageLocation) {
 
 		switch (messageLocation) {
 		case CENTER:
@@ -87,46 +76,39 @@ public class Subliminal {
 	}
 
 	private void setCenter() {
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (int) ((dimension.getWidth() - subliminalContainer.getWidth()) / 2);
-		int y = (int) ((dimension.getHeight() - subliminalContainer.getHeight()) / 2);
-		subliminalContainer.setLocation(x, y);
+		int x = (int) ((screenSize.getWidth() - getWidth()) / 2);
+		int y = (int) ((screenSize.getHeight() - getHeight()) / 2);
+		setLocation(x, y);
 	}
 
 	private void setTopLeft() {
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = 0;
-		int y = 0;
-		subliminalContainer.setLocation(x, y);
+		setLocation(0, 0);
 	}
 	
 	private void setTopRight() {
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (int) ((dimension.getWidth() - subliminalContainer.getWidth()));
-		int y = 0;
-		subliminalContainer.setLocation(x, y);
+		int x = (int) ((screenSize.getWidth() - getWidth()));
+		setLocation(x, 0);
 	}
 	
 	private void setBotLeft() {
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = 0;
-		int y = (int) ((dimension.getHeight() - subliminalContainer.getHeight()));
-		subliminalContainer.setLocation(x, y);
+		int y = (int) ((screenSize.getHeight() - getHeight()));
+		setLocation(0, y);
 	}
 	
 	private void setBotRight() {
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (int) ((dimension.getWidth() - subliminalContainer.getWidth()));
-		int y = (int) ((dimension.getHeight() - subliminalContainer.getHeight()));
-		subliminalContainer.setLocation(x, y);
+		int x = (int) ((screenSize.getWidth() - getWidth()));
+		int y = (int) ((screenSize.getHeight() - getHeight()));
+		setLocation(x, y);
 	}
 
 	public void setMessage(Message message) {
 		subliminalMessage.getMessage().setText(message.getMessage());
 		Image img = getScaledImage(IconFetch.getInstance().getIcon(message.getImagePath()).getImage(), w, h);
+		if (img == null) {
+			System.out.println("Image is null");
+		}
 		subliminalMessage.setImage(img);
-		subliminalContainer.pack();
-
+		pack();
 	}
 
 	private Image getScaledImage(Image srcImg, int w, int h) {
@@ -138,13 +120,5 @@ public class Subliminal {
 		g2.dispose();
 
 		return resizedImg;
-	}
-
-	public void show() {
-		subliminalContainer.setVisible(true);
-	}
-
-	public void hide() {
-		subliminalContainer.setVisible(false);
 	}
 }

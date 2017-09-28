@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -14,22 +15,19 @@ import java.util.concurrent.TimeUnit;
 import com.psychotechnology.Model.Category;
 import com.psychotechnology.Model.InBuiltCategory;
 import com.psychotechnology.Model.Message;
-import com.psychotechnology.Model.MessageLocation;
+import com.psychotechnology.Model.ScreenPosition;
 import com.psychotechnology.Model.MessageTense;
-import com.psychotechnology.util.MathFunctions;
 
 public class Controller {
-	private boolean messagesOn = false;
+	public static boolean messagesOn = false;
 	private boolean userPremium = false;
 	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 	private int startDelay = 30;
 	private int messageSpeed = 1000;
 	private int messageInterval = 3000;
 	private int categoryIndex;
-	private int messageIndex;
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
-	private MathFunctions mathFunctions = new MathFunctions();
 	private PlayMessageTask topLeftMsg, topRightMsg, centerMsg, botLeftMsg, botRightMsg;
 	private List<Message> activeMessages;
 	private Network network;
@@ -84,47 +82,57 @@ public class Controller {
 	/**
 	 * Start/Stop the messages
 	 * 
-	 * @throws InterruptedException
-	 *             check for multithreading exceptions
+	 * @throws InterruptedException check for multithreading exceptions
 	 */
 	public synchronized void changeMessageActivity(boolean msgLocationsSelected[]) throws InterruptedException {
+		System.out.println("messageSpeed = " + messageSpeed);
 		messagesOn = (messagesOn == true) ? false : true;
 		if (messagesOn) {
 			if (scheduledExecutorService.isShutdown()) {
 				scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 			}
 			if (msgLocationsSelected[0] == true) {
-				topLeftMsg = new PlayMessageTask(this, MessageLocation.TOPLEFT);
+				topLeftMsg = new PlayMessageTask(this, ScreenPosition.TOPLEFT);
 				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
-				System.out.println("topLeftMsg");
 			}
 			if (msgLocationsSelected[1] == true) {
-				topRightMsg = new PlayMessageTask(this, MessageLocation.TOPRIGHT);
+				topRightMsg = new PlayMessageTask(this, ScreenPosition.TOPRIGHT);
 				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
-				System.out.println("topRightMsg");
 			}
 			if (msgLocationsSelected[2] == true) {
-				botLeftMsg = new PlayMessageTask(this, MessageLocation.BOTLEFT);
+				botLeftMsg = new PlayMessageTask(this, ScreenPosition.BOTLEFT);
 				scheduledExecutorService.scheduleWithFixedDelay(botLeftMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
 				System.out.println("botLeftMsg");
 			}
 			if (msgLocationsSelected[3] == true) {
-				botRightMsg = new PlayMessageTask(this, MessageLocation.BOTRIGHT);
+				botRightMsg = new PlayMessageTask(this, ScreenPosition.BOTRIGHT);
 				scheduledExecutorService.scheduleWithFixedDelay(botRightMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
-				System.out.println("botRightMsg");
 			}
 			if (msgLocationsSelected[4] == true) {
-				centerMsg = new PlayMessageTask(this, MessageLocation.CENTER);
+				centerMsg = new PlayMessageTask(this, ScreenPosition.CENTER);
 				scheduledExecutorService.scheduleWithFixedDelay(centerMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
-				System.out.println("centerMsg");
+				topLeftMsg = new PlayMessageTask(this, ScreenPosition.TOPLEFT);
+				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				topRightMsg = new PlayMessageTask(this, ScreenPosition.TOPRIGHT);
+				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
 			}
 		} else {
 			 scheduledExecutorService.shutdown();
 		}
 	}
 	
-	public void setMessageIndex(int messageIndex) {
-		this.messageIndex = messageIndex;
+	public synchronized int randInt(int min, int max) {
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+		return randomNum;
+	}
+	
+	public static boolean isMessagesOn() {
+		return messagesOn;
+	}
+
+	public static void setMessagesOn(boolean messagesOn) {
+		Controller.messagesOn = messagesOn;
 	}
 
 	/**
@@ -158,7 +166,6 @@ public class Controller {
 	/**
 	 * 
 	 * @param messageIndex
-	 *            message index
 	 * @return A message from the selected category, message index, and tense
 	 */
 	public Message getMessageFromActiveTenseCategory(int messageIndex) {
@@ -167,8 +174,7 @@ public class Controller {
 
 	/**
 	 * 
-	 * @param catIndex
-	 *            category index
+	 * @param catIndex 	category index
 	 * @return List of all messages in a selected category
 	 */
 	public List<Message> getAllMessagesFromActiveTenseCategory() {
@@ -244,15 +250,27 @@ public class Controller {
 	public void setMessageTense(MessageTense messageTense) {
 		this.messageTense = messageTense;
 	}
-
-	public PlayMessageTask getMessageRunnable() {
-		return topLeftMsg;
+	
+	public boolean isMessagesRunning() {
+		
+		if (topLeftMsg != null && topLeftMsg.isShutdown() == false) {
+			return false;
+		}
+		if (topRightMsg != null && topRightMsg.isShutdown() == false) {
+			return false;
+		}
+		if (centerMsg != null && centerMsg.isShutdown() == false) {
+			return false;
+		}
+		if (botLeftMsg != null && botLeftMsg.isShutdown() == false) {
+			return false;
+		} 
+		if (botRightMsg != null && botRightMsg.isShutdown() == false) {
+			return false;
+		} 
+		return true;
 	}
-
-	public void setMessageRunnable(PlayMessageTask messageRunnable) {
-		this.topLeftMsg = messageRunnable;
-	}
-
+	
 	/**
 	 * 
 	 * @return all selected messages
@@ -263,8 +281,7 @@ public class Controller {
 
 	/**
 	 * 
-	 * @param activeMessages
-	 *            list of selected messages
+	 * @param activeMessages list of selected messages
 	 */
 	public void setActiveMessages(List<Message> activeMessages) {
 		this.activeMessages = activeMessages;

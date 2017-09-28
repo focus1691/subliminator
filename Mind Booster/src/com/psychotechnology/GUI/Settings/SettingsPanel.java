@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -231,11 +232,12 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		picturePanel.setLayout(new BorderLayout());
 		picturePanel.add(pictureLabel, BorderLayout.CENTER);
 
-		speedSlider = new JSlider(0, 1000, 50);
-		durationSlider = new JSlider(0, 1000, 50);
+		speedSlider = new JSlider(0, 1000);
 		speedSlider.setValue(controller.getMessageSpeed());
-		durationSlider.setValue(controller.getMessageInterval());
 		speedLabel = new JLabel("Display Every (ms):");
+		
+		durationSlider = new JSlider(0, 1000);
+		durationSlider.setValue(controller.getMessageInterval());
 		durationLabel = new JLabel("Duration (ms):");
 
 		speedSlider.setUI(new CustomSliderUI(speedSlider));
@@ -245,15 +247,19 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 	public void styleUI() {
 		speedLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		speedSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		speedSlider.setMinorTickSpacing(50);
 		speedSlider.setMajorTickSpacing(1000);
+		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
-		speedSlider.setPreferredSize(new Dimension(350, 50));
+		speedSlider.setPreferredSize(new Dimension(375, 75));
 
 		durationLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		durationSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		durationSlider.setMinorTickSpacing(50);
 		durationSlider.setMajorTickSpacing(1000);
+		durationSlider.setPaintTicks(true);
 		durationSlider.setPaintLabels(true);
-		durationSlider.setPreferredSize(new Dimension(350, 50));
+		durationSlider.setPreferredSize(new Dimension(375, 75));
 	}
 
 	public void setupUI() {
