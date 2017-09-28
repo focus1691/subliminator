@@ -33,7 +33,7 @@ public class Controller {
 	private PlayMessageTask topLeftMsg, topRightMsg, centerMsg, botLeftMsg, botRightMsg;
 	private List<Message> activeMessages;
 	private Network network;
-
+	
 	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
 	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
 

@@ -49,7 +49,6 @@ public class CategoryPanel extends JPanel {
 					}
 				}
 			}
-
 		});
 	}
 

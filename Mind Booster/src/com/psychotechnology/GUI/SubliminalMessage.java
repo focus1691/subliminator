@@ -1,12 +1,9 @@
 package com.psychotechnology.GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,45 +15,35 @@ public class SubliminalMessage extends JPanel {
 
 	private static final long serialVersionUID = -7806435918984466627L;
 	private JLabel message = new JLabel();
-	private JLabel image  = new JLabel();
-	private ImageIcon icon = new ImageIcon();
-	
+	private Image img;
+
 	public SubliminalMessage() {
 		setOpaque(false);
-		setLayout(new BorderLayout());
-		this.image.setHorizontalAlignment(JLabel.CENTER);
-		this.image.setIcon(icon);
-		add(message, BorderLayout.NORTH);
-		add(image, BorderLayout.CENTER);
+		add(message);
 	}
-
+	
 	@Override
-	public void paintComponent(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		if (img != null) {
+		    Graphics2D g2d = (Graphics2D) g;
+		    int x = (this.getWidth() - img.getWidth(null)) / 2;
+		    int y = (this.getHeight() - img.getHeight(null)) / 2;
+		    g2d.drawImage(img, x, y, this);
+		}
 	}
 	
 	public JLabel getMessage() {
 		return message;
 	}
-	
+
 	public void setMessage(JLabel message) {
 		this.message = message;
 	}
-	
-	public JLabel getImage() {
-		return image;
-	}
-	
+
 	public void setImage(Image image) {
-		icon = new ImageIcon(image);
-		this.image.setIcon(icon);
-	}
-	
-	public ImageIcon getIcon() {
-		return icon;
-	}
-	
-	public void setIcon(ImageIcon icon) {
-		this.icon = icon;
+		this.img = image;
+		repaint();
 	}
 }
