@@ -59,7 +59,7 @@ public class Subliminal {
 		subliminalContainer.setFocusableWindowState(false);
 		subliminalContainer.setEnabled(false);
 		subliminalContainer.pack();
-		
+
 		setMessageLocation(messageLocation);
 	}
 
@@ -71,6 +71,16 @@ public class Subliminal {
 			break;
 		case TOPLEFT:
 			setTopLeft();
+			break;
+		case TOPRIGHT:
+			setTopRight();
+			break;
+		case BOTLEFT:
+			setBotLeft();
+			break;
+		case BOTRIGHT:
+			setBotRight();
+			break;
 		default:
 			break;
 		}
@@ -82,11 +92,32 @@ public class Subliminal {
 		int y = (int) ((dimension.getHeight() - subliminalContainer.getHeight()) / 2);
 		subliminalContainer.setLocation(x, y);
 	}
-	
+
 	private void setTopLeft() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = 0;
 		int y = 0;
+		subliminalContainer.setLocation(x, y);
+	}
+	
+	private void setTopRight() {
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - subliminalContainer.getWidth()));
+		int y = 0;
+		subliminalContainer.setLocation(x, y);
+	}
+	
+	private void setBotLeft() {
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = 0;
+		int y = (int) ((dimension.getHeight() - subliminalContainer.getHeight()));
+		subliminalContainer.setLocation(x, y);
+	}
+	
+	private void setBotRight() {
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - subliminalContainer.getWidth()));
+		int y = (int) ((dimension.getHeight() - subliminalContainer.getHeight()));
 		subliminalContainer.setLocation(x, y);
 	}
 
