@@ -43,8 +43,8 @@ public class EditMessage extends JDialog {
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).get(index).setMessage(msg1);
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).get(index).setMessage(msg2);
 					
-					messagePanel.clearMessageList();
-					messagePanel.setMessageList(controller.getAllMessagesFromActiveTenseCategory());
+					messagePanel.getModel().clear();
+					messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 					dispose();
 				}
 			}

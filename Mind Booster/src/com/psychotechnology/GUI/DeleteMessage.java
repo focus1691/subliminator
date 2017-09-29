@@ -37,10 +37,8 @@ public class DeleteMessage extends JDialog {
 				deleteMessages(selectedMsgs);
 				deleteBtn.setEnabled(false);
 				
-				
-				
-				messagePanel.clearMessageList();
-				messagePanel.setMessageList(controller.getAllMessagesFromActiveTenseCategory());
+				messagePanel.getModel().clear();
+				messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 			}
 		});
 

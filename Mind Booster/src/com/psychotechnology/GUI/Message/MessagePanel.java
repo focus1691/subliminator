@@ -88,31 +88,32 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 			}
 		});
 	}
-
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
 		if ((e.getSource() == firstPersonBtn || e.getSource() == firstPersonLabel)
 				&& controller.getMessageTense() != MessageTense.FIRST_PERSON) {
 			int[] selectedIndices = messageListSelectionModel.getSelectedMsgIndices();
-			clearMessageList();
+			model.clear();
 			controller.setMessageTense(MessageTense.FIRST_PERSON);
 			firstPersonBtn.setIcon(activeIcon);
 			secondPersonBtn.setIcon(inactiveIcon);
-			setMessageList(controller.getAllMessagesFromActiveTenseCategory());
+			setMessageList(controller.getMessagesFromTenseCategory(MessageTense.FIRST_PERSON));
 			messageListSelectionModel.setMgsSelected(selectedIndices);
 		} else if ((e.getSource() == secondPersonBtn || e.getSource() == secondPersonLabel)
 				&& controller.getMessageTense() != MessageTense.SECOND_PERSON) {
 			int[] selectedIndices = messageListSelectionModel.getSelectedMsgIndices();
-			clearMessageList();
+			//clearMessageList();
+			model.clear();
 			controller.setMessageTense(MessageTense.SECOND_PERSON);
 			firstPersonBtn.setIcon(inactiveIcon);
 			secondPersonBtn.setIcon(activeIcon);
-			setMessageList(controller.getAllMessagesFromActiveTenseCategory());
+			setMessageList(controller.getMessagesFromTenseCategory(MessageTense.SECOND_PERSON));
 			messageListSelectionModel.setMgsSelected(selectedIndices);
 		}
 	}
-
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
@@ -137,8 +138,8 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	 */
 	private void initComponents() {
 		messageMenu = createMessageMenu();
-		setMessageList(controller.getAllMessagesFromActiveTenseCategory());
-		messageListSelectionModel = new MessageListSelectionModel(controller.getAllMessagesFromActiveTenseCategory().size());
+		setMessageList(controller.getMessagesFromActiveTenseCategory());
+		messageListSelectionModel = new MessageListSelectionModel(controller.getMessagesFromActiveTenseCategory().size());
 		messageList = new JList<Message>(model);
 		header = new JLabel("Select Messages");
 
@@ -332,7 +333,6 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 			if (messageListener != null) {
 				messageListener.deleteMessageEventOccurred(messageEvent);
 			}
-			//model.removeElementAt(messageListSelectionModel.getLastSelection());
 		}
 		else if (e.getSource() == change) {
 			MessageEvent messageEvent = new MessageEvent(this);
@@ -351,16 +351,6 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	}
 
 	/**
-	 * Remove messages from list
-	 */
-	public void clearMessageList() {
-		
-		if (model != null && !model.isEmpty()) {
-			model.removeAllElements();
-		}
-	}
-
-	/**
 	 * Set list with all messages from chosen category
 	 * 
 	 * @param categoryIndex
@@ -371,6 +361,14 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		for (i = 0; i < messages.size(); i++) {
 			model.addElement(messages.get(i));
 		}
+	}
+	
+	public DefaultListModel<Message> getModel() {
+		return model;
+	}
+
+	public void setModel(DefaultListModel<Message> model) {
+		this.model = model;
 	}
 
 	/**
@@ -389,7 +387,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 
 		List<Message> selectedMessages = new ArrayList<Message>();
 
-		for (i = 0; i < controller.getAllMessagesFromActiveTenseCategory().size(); i++) {
+		for (i = 0; i < controller.getMessagesFromActiveTenseCategory().size(); i++) {
 			if (messageListSelectionModel.isSelectedIndex(i)) {
 				Message message = controller.getMessageFromActiveTenseCategory(i);
 				selectedMessages.add(message);

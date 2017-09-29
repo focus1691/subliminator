@@ -23,7 +23,7 @@ public class Controller {
 	private boolean userPremium = false;
 	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 	private int startDelay = 30;
-	private int messageSpeed = 1000;
+	private int messageSpeed = 50;
 	private int messageInterval = 3000;
 	private int categoryIndex;
 	private ArrayList<Category> categories;
@@ -177,7 +177,23 @@ public class Controller {
 	 * @param catIndex 	category index
 	 * @return List of all messages in a selected category
 	 */
-	public List<Message> getAllMessagesFromActiveTenseCategory() {
+	public List<Message> getMessagesFromActiveTenseCategory() {
+		int i;
+		List<Message> messages = new ArrayList<Message>();
+		int numMessagesInCategory = categories.get(categoryIndex).getMessages().get(messageTense.getTenseVal()).size();
+
+		for (i = 0; i < numMessagesInCategory; i++) {
+			messages.add(categories.get(categoryIndex).getMessages().get(messageTense.getTenseVal()).get(i));
+		}
+		return messages;
+	}
+	
+	/**
+	 * 
+	 * @param catIndex 	category index
+	 * @return List of all messages in a selected category
+	 */
+	public List<Message> getMessagesFromTenseCategory(MessageTense messageTense) {
 		int i;
 		List<Message> messages = new ArrayList<Message>();
 		int numMessagesInCategory = categories.get(categoryIndex).getMessages().get(messageTense.getTenseVal()).size();

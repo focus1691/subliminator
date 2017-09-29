@@ -186,7 +186,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 			public void actionPerformed(ActionEvent e) {
 				controller.loadInBuiltCategories();
 				controller.save();
-				messagePanel.clearMessageList();
+				messagePanel.getModel().clear();
 				messagePanel.setMessageList(controller.getActiveMessages());
 			}
 		});
@@ -221,6 +221,9 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 	@Override
 	public void messageEventOccurred(MessageEvent event) {
 		try {
+			if (event.isAllMessagesSelected() == false) {
+				
+			}
 			controller.setActiveMessages(messagePanel.getSelectedMessages());
 			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e) {
@@ -292,9 +295,9 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 
 	@Override
 	public void categorySelectionEventOccurred(CategoryEvent e) {
-		messagePanel.clearMessageList();
+		messagePanel.getModel().clear();
 		controller.setCategoryIndex(e.getCategoryIndex());
-		messagePanel.setMessageList(controller.getAllMessagesFromActiveTenseCategory());
+		messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 		if (Controller.messagesOn == false) {
 			try {
 				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());

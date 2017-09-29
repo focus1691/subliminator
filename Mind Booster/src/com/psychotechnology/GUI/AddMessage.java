@@ -43,8 +43,8 @@ public class AddMessage extends JDialog {
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).add(new Message(msg1, "/Images/7.jpg"));
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).add(new Message(msg2, "/Images/7.jpg"));
 					
-					messagePanel.clearMessageList();
-					messagePanel.setMessageList(controller.getAllMessagesFromActiveTenseCategory());
+					messagePanel.getModel().clear();
+					messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 
 					submitBtn.setEnabled(false);
 					JOptionPane
