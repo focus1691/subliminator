@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.psychotechnology.Model.Message;
@@ -16,7 +17,7 @@ import com.psychotechnology.Model.ScreenPosition;
 import com.psychotechnology.util.IconFetch;
 
 public class Subliminal extends JFrame {
-	
+
 	private static final long serialVersionUID = 2931841309711143361L;
 	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private SubliminalMessage subliminalMessage;
@@ -84,17 +85,17 @@ public class Subliminal extends JFrame {
 	private void setTopLeft() {
 		setLocation(0, 0);
 	}
-	
+
 	private void setTopRight() {
 		int x = (int) ((screenSize.getWidth() - getWidth()));
 		setLocation(x, 0);
 	}
-	
+
 	private void setBotLeft() {
 		int y = (int) ((screenSize.getHeight() - getHeight()));
 		setLocation(0, y);
 	}
-	
+
 	private void setBotRight() {
 		int x = (int) ((screenSize.getWidth() - getWidth()));
 		int y = (int) ((screenSize.getHeight() - getHeight()));
@@ -102,12 +103,13 @@ public class Subliminal extends JFrame {
 	}
 
 	public void setMessage(Message message) {
+		System.out.println(message.getMessage());
 		subliminalMessage.getMessage().setText(message.getMessage());
-		Image img = getScaledImage(IconFetch.getInstance().getIcon(message.getImagePath()).getImage(), w, h);
-		if (img == null) {
-			System.out.println("Image is null");
+		ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
+		if (icon != null) {
+			Image img = getScaledImage(icon.getImage(), w, h);
+			subliminalMessage.setImage(img);
 		}
-		subliminalMessage.setImage(img);
 		pack();
 	}
 

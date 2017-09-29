@@ -26,6 +26,7 @@ public class SubliminalMessage extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		System.out.println("paintcomponent");
 		if (img != null) {
 		    Graphics2D g2d = (Graphics2D) g;
 		    int x = (this.getWidth() - img.getWidth(null)) / 2;

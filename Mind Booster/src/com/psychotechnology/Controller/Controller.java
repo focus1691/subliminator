@@ -85,7 +85,6 @@ public class Controller {
 	 * @throws InterruptedException check for multithreading exceptions
 	 */
 	public synchronized void changeMessageActivity(boolean msgLocationsSelected[]) throws InterruptedException {
-		System.out.println("messageSpeed = " + messageSpeed);
 		messagesOn = (messagesOn == true) ? false : true;
 		if (messagesOn) {
 			if (scheduledExecutorService.isShutdown()) {
