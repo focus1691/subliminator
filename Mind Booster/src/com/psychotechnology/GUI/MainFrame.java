@@ -30,6 +30,7 @@ import com.psychotechnology.GUI.Message.MessagePanel;
 import com.psychotechnology.GUI.Settings.SettingsEvent;
 import com.psychotechnology.GUI.Settings.SettingsListener;
 import com.psychotechnology.GUI.Settings.SettingsPanel;
+import com.psychotechnology.Model.Message;
 import com.psychotechnology.util.IconFetch;
 
 public class MainFrame implements CategoryListener, MessageListener, SettingsListener {
@@ -262,7 +263,10 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 	
 	@Override
 	public void editImageEventOccurred(MessageEvent e) {
-
+		int index = messagePanel.getMessageListSelectionModel().getLeadSelectionIndex();
+		Message message = (Message) messagePanel.getMessageList().getSelectedValue();
+		System.out.println(messagePanel.getMessageList().getSelectedValue());
+		new EditImage(controller, message.getImagePath());
 	}
 
 	@Override

@@ -46,12 +46,9 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private MessageListCellRenderer messageListCellRenderer;
 	private MessageListSelectionModel messageListSelectionModel;
 	private DefaultListModel<Message> model = new DefaultListModel<>();
-	private JLabel firstPersonLabel;
-	private JLabel secondPersonLabel;
-	private JButton firstPersonBtn;
-	private JButton secondPersonBtn;
-	private ImageIcon activeIcon;
-	private ImageIcon inactiveIcon;
+	private JLabel firstPersonLabel, secondPersonLabel;
+	private JButton firstPersonBtn, secondPersonBtn;
+	private ImageIcon activeIcon, inactiveIcon;
 	private JPopupMenu messageMenu;
 	private JMenuItem add, edit, delete, change;
 	private Controller controller;

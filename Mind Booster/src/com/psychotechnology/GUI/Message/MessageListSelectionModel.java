@@ -45,12 +45,16 @@ public class MessageListSelectionModel extends DefaultListSelectionModel {
 	}
 
 	public int[] getSelectedMsgIndices() {
-		int i = 0;
-		int j = 0;
+		int i = 0, j = 0;
 		
-		if (activeMessages == 0) return null;
+		int[] selectedIndices;
 		
-		int[] selectedIndices = new int[activeMessages - 1];
+		if (activeMessages == 0) {
+			selectedIndices = new int[0];
+			return selectedIndices;
+		}
+		
+		selectedIndices = new int[activeMessages - 1];
 
 		while (i < messageCount) {
 			if (isSelectedIndex(i)) {
