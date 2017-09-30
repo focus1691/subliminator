@@ -14,7 +14,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -25,7 +24,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.psychotechnology.Controller.Controller;
 import com.psychotechnology.GUI.MessageButton;
 import com.psychotechnology.GUI.PictureLabel;
 import com.psychotechnology.util.CustomFont;
@@ -34,31 +32,22 @@ import com.psychotechnology.util.IconFetch;
 public class SettingsPanel extends JPanel implements ChangeListener, MouseListener {
 
 	private static final long serialVersionUID = -798661649041437371L;
-	private Controller controller;
 	private JLayeredPane screenContainer;
 	private JPanel screenPanel;
-	public static ImageIcon screen;
-	public static ImageIcon picture;
-	public static ImageIcon topLeftMsg;
+	public static ImageIcon screen, picture;
 	public static JPanel picturePanel;
 	private MessageButton msgOne, msgTwo, msgThree, msgFour, msgFive;
 	public static PictureLabel pictureLabel;
-	public static PictureLabel topLeftMsgLabel;
-	private Rectangle screenRect = new Rectangle(0, 0, 650, 410);
+	private Rectangle screenRect;
 	private Rectangle containerRect;
-	private double screenToPanelWRatio;
-	private double screenToPanelHRatio;
-	private JSlider speedSlider;
-	private JSlider durationSlider;
-	private JLabel speedLabel;
-	private JLabel durationLabel;
+	private double screenToPanelWRatio, screenToPanelHRatio;
+	private JSlider speedSlider, durationSlider;
+	private JLabel speedLabel, durationLabel;
 	private SettingsListener settingsListener;
 	private MultiMessageListener multiMessageListener;
-	private String absolutePath = new File(".").getAbsolutePath();
 
-	public SettingsPanel(Controller controller) {
-		this.controller = controller;
-		initComponents();
+	public SettingsPanel(int speed, int interval) {
+		initComponents(speed, interval);
 		setupUI();
 		styleUI();
 
@@ -185,8 +174,9 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 	/**
 	 * This method initializes all Settings Panel components
 	 */
-	public void initComponents() {
+	public void initComponents(int speed, int interval) {
 
+		screenRect = new Rectangle(0, 0, 650, 410);
 		screenContainer = new JLayeredPane();
 
 		// The screen
@@ -230,11 +220,11 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		picturePanel.add(pictureLabel, BorderLayout.CENTER);
 
 		speedSlider = new JSlider(0, 1000);
-		speedSlider.setValue(controller.getMessageSpeed());
+		speedSlider.setValue(speed);
 		speedLabel = new JLabel("Display Every (ms):");
 		
 		durationSlider = new JSlider(0, 20);
-		durationSlider.setValue(controller.getMessageInterval());
+		durationSlider.setValue(interval);
 		durationLabel = new JLabel("Duration (s):");
 
 		speedSlider.setUI(new CustomSliderUI(speedSlider));
@@ -360,17 +350,21 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		boolean msgLocationsSelected[] = new boolean[5];
 		Arrays.fill(msgLocationsSelected, false);
 
-		if (msgOne.isActive())
+		if (msgOne.isActive()) {
 			msgLocationsSelected[0] = true;
-		if (msgTwo.isActive())
+		}
+		if (msgTwo.isActive()) {
 			msgLocationsSelected[1] = true;
-		if (msgThree.isActive())
+		}
+		if (msgThree.isActive()) {
 			msgLocationsSelected[2] = true;
-		if (msgFour.isActive())
+		}
+		if (msgFour.isActive()) {
 			msgLocationsSelected[3] = true;
-		if (msgFive.isActive())
+		}
+		if (msgFive.isActive()) {
 			msgLocationsSelected[4] = true;
-
+		}
 		return msgLocationsSelected;
 	}
 }

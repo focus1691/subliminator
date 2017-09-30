@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import com.psychotechnology.GUI.Subliminal;
 import com.psychotechnology.Model.ScreenPosition;
 
-public class PlayMessageTask implements Runnable {
+public class SubliminalTask implements Runnable {
 
 	private Controller controller;
 	private Subliminal subliminal;
@@ -15,9 +15,9 @@ public class PlayMessageTask implements Runnable {
 	private volatile boolean shutdown = true;
 	private int messageIndex;
 
-	public PlayMessageTask(Controller controller, ScreenPosition screenPosition) {
+	public SubliminalTask(Controller controller, Subliminal subliminal) {
 		this.controller = controller;
-		subliminal = new Subliminal(screenPosition);
+		this.subliminal = subliminal;
 	}
 	
 	@Override
@@ -26,7 +26,7 @@ public class PlayMessageTask implements Runnable {
 		subliminal.setMessage(controller.getActiveMessages().get(messageIndex));
 		subliminal.setVisible(true);
 		try {
-			TimeUnit.MILLISECONDS.sleep(controller.getMessageSpeed());
+			TimeUnit.MILLISECONDS.sleep(controller.getSpeed());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

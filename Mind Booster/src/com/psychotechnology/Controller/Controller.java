@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.psychotechnology.GUI.Subliminal;
 import com.psychotechnology.Model.Category;
 import com.psychotechnology.Model.InBuiltCategory;
 import com.psychotechnology.Model.Message;
@@ -22,13 +23,13 @@ public class Controller {
 	public static boolean messagesOn = false;
 	private boolean userPremium = false;
 	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-	private int startDelay = 30;
-	private int messageSpeed = 1000;
-	private int messageInterval = 5;
+	private int startDelay = 30; // Milliseconds
+	private int speed = 1000; // Milliseconds
+	private int interval = 5; // Seconds
 	private int categoryIndex;
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
-	private PlayMessageTask topLeftMsg, topRightMsg, centerMsg, botLeftMsg, botRightMsg;
+	private Subliminal topLeftMessage, topRightMessage, centerMessage, botLeftMessage, botRightMessage;
 	private List<Message> activeMessages;
 	private Network network;
 	
@@ -38,9 +39,17 @@ public class Controller {
 	public Controller() {
 		network = new Network();
 		// network.checkIfRunning();
+		
+		topLeftMessage = new Subliminal(ScreenPosition.TOPLEFT);
+		topRightMessage = new Subliminal(ScreenPosition.TOPRIGHT);
+		centerMessage = new Subliminal(ScreenPosition.CENTER);
+		botLeftMessage = new Subliminal(ScreenPosition.BOTLEFT);
+		botRightMessage = new Subliminal(ScreenPosition.BOTRIGHT);
+		
 		messageTense = MessageTense.FIRST_PERSON;
 		categoryIndex = 0;
 		activeMessages = new ArrayList<Message>();
+		
 		load();
 	}
 
@@ -91,29 +100,21 @@ public class Controller {
 				scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 			}
 			if (msgLocationsSelected[0] == true) {
-				topLeftMsg = new PlayMessageTask(this, ScreenPosition.TOPLEFT);
-				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(new SubliminalTask(this, topLeftMessage), 0, interval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[1] == true) {
-				topRightMsg = new PlayMessageTask(this, ScreenPosition.TOPRIGHT);
-				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(new SubliminalTask(this, topRightMessage), 0, interval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[2] == true) {
-				botLeftMsg = new PlayMessageTask(this, ScreenPosition.BOTLEFT);
-				scheduledExecutorService.scheduleWithFixedDelay(botLeftMsg, 0, messageInterval, TimeUnit.SECONDS);
-				System.out.println("botLeftMsg");
+				scheduledExecutorService.scheduleWithFixedDelay(new SubliminalTask(this, botLeftMessage), 0, interval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[3] == true) {
-				botRightMsg = new PlayMessageTask(this, ScreenPosition.BOTRIGHT);
-				scheduledExecutorService.scheduleWithFixedDelay(botRightMsg, 0, messageInterval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(new SubliminalTask(this, botRightMessage), 0, interval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[4] == true) {
-				centerMsg = new PlayMessageTask(this, ScreenPosition.CENTER);
-				scheduledExecutorService.scheduleWithFixedDelay(centerMsg, 0, messageInterval, TimeUnit.SECONDS);
-				topLeftMsg = new PlayMessageTask(this, ScreenPosition.TOPLEFT);
-				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.SECONDS);
-				topRightMsg = new PlayMessageTask(this, ScreenPosition.TOPRIGHT);
-				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(new SubliminalTask(this, centerMessage), 0, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(new SubliminalTask(this, topLeftMessage), 0, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(new SubliminalTask(this, topRightMessage), 0, interval, TimeUnit.SECONDS);
 			}
 		} else {
 			 scheduledExecutorService.shutdown();
@@ -234,20 +235,20 @@ public class Controller {
 		this.startDelay = startDelay;
 	}
 
-	public int getMessageSpeed() {
-		return messageSpeed;
+	public int getSpeed() {
+		return speed;
 	}
 
-	public void setMessageSpeed(int messageSpeed) {
-		this.messageSpeed = messageSpeed;
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
 
-	public int getMessageInterval() {
-		return messageInterval;
+	public int getInterval() {
+		return interval;
 	}
 
-	public void setMessageInterval(int messageInterval) {
-		this.messageInterval = messageInterval;
+	public void setInterval(int interval) {
+		this.interval = interval;
 	}
 
 	public int getCategoryIndex() {
@@ -264,26 +265,6 @@ public class Controller {
 
 	public void setMessageTense(MessageTense messageTense) {
 		this.messageTense = messageTense;
-	}
-	
-	public boolean isMessagesRunning() {
-		
-		if (topLeftMsg != null && topLeftMsg.isShutdown() == false) {
-			return false;
-		}
-		if (topRightMsg != null && topRightMsg.isShutdown() == false) {
-			return false;
-		}
-		if (centerMsg != null && centerMsg.isShutdown() == false) {
-			return false;
-		}
-		if (botLeftMsg != null && botLeftMsg.isShutdown() == false) {
-			return false;
-		} 
-		if (botRightMsg != null && botRightMsg.isShutdown() == false) {
-			return false;
-		} 
-		return true;
 	}
 	
 	/**

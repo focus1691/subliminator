@@ -90,7 +90,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		frame.setJMenuBar(menuBar);
 		categoryPanel = new CategoryPanel(controller);
 		messagePanel = new MessagePanel(controller);
-		settingsPanel = new SettingsPanel(controller);
+		settingsPanel = new SettingsPanel(controller.getSpeed(), controller.getInterval());
 		controlPanel = new ControlPanel();
 	}
 
@@ -301,8 +301,8 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 	public void settingsEventOccurred(SettingsEvent e) {
 		try {
 			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
-			controller.setMessageSpeed(e.getMessageSpeed());
-			controller.setMessageInterval(e.getMessageInterval());
+			controller.setSpeed(e.getMessageSpeed());
+			controller.setInterval(e.getMessageInterval());
 			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();

@@ -59,7 +59,6 @@ public class MessageListSelectionModel extends DefaultListSelectionModel {
 			}
 			i++;
 		}
-		//messageCount -= selectedIndices.length;
 		activeMessages = selectedIndices.length;
 		return selectedIndices;
 	}

@@ -16,10 +16,6 @@ public class IconFetch {
 		java.net.URL imgUrl = getClass().getResource(iconName);
 		if (imgUrl != null) {
 			return new ImageIcon(imgUrl);
-		} else {
-			System.err.println("Icon " + iconName + " does not exist");
-			// throw new IllegalArgumentException("This icon file does not
-			// exist");
 		}
 		return null;
 	}

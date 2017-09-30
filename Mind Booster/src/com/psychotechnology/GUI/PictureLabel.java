@@ -18,7 +18,9 @@ public class PictureLabel extends JLabel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+		if (imageIcon != null) {
+			g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+		}
 	}
 
 	public ImageIcon getImageIcon() {
