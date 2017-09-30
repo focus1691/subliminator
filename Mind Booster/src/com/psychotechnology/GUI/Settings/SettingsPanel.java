@@ -251,7 +251,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		speedSlider.setMajorTickSpacing(1000);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
-		speedSlider.setPreferredSize(new Dimension(375, 75));
+		speedSlider.setPreferredSize(new Dimension(300, 75));
 
 		durationLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		durationSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
@@ -259,7 +259,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		durationSlider.setMajorTickSpacing(1000);
 		durationSlider.setPaintTicks(true);
 		durationSlider.setPaintLabels(true);
-		durationSlider.setPreferredSize(new Dimension(375, 75));
+		durationSlider.setPreferredSize(new Dimension(300, 30));
 	}
 
 	public void setupUI() {

@@ -23,7 +23,7 @@ public class Controller {
 	private boolean userPremium = false;
 	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 	private int startDelay = 30;
-	private int messageSpeed = 50;
+	private int messageSpeed = 1000;
 	private int messageInterval = 3000;
 	private int categoryIndex;
 	private ArrayList<Category> categories;

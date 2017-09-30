@@ -33,17 +33,18 @@ public class Subliminal extends JFrame {
 		subliminalMessage = new SubliminalMessage();
 		add(subliminalMessage);
 	}
-
+	
 	private void styleUI(ScreenPosition messageLocation) {
 		// Subliminal Message
-		subliminalMessage.getMessage().setFont(new Font("Courier New", Font.BOLD, 24));
-		subliminalMessage.getMessage().setBackground(Color.WHITE);
-		subliminalMessage.getMessage().setOpaque(true);
+		//subliminalMessage.getMessage().setFont(new Font("Courier New", Font.BOLD, 24));
+		//subliminalMessage.getMessage().setBackground(Color.WHITE);
+		//subliminalMessage.getMessage().setOpaque(true);
 		subliminalMessage.setPreferredSize(new Dimension(600, 300));
 
 		setFocusable(false);
 		setUndecorated(true);
 		setBackground(new Color(0, 255, 0, 0));
+		setBackground(Color.pink);
 		setAlwaysOnTop(true);
 		setSize(500, 700);
 		setFocusableWindowState(false);
@@ -103,8 +104,7 @@ public class Subliminal extends JFrame {
 	}
 
 	public void setMessage(Message message) {
-		System.out.println(message.getMessage());
-		subliminalMessage.getMessage().setText(message.getMessage());
+		subliminalMessage.setMessage(message.getMessage());
 		ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
 		if (icon != null) {
 			Image img = getScaledImage(icon.getImage(), w, h);
