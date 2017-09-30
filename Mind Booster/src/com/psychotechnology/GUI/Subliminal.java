@@ -2,7 +2,6 @@ package com.psychotechnology.GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -19,39 +18,36 @@ import com.psychotechnology.util.IconFetch;
 public class Subliminal extends JFrame {
 
 	private static final long serialVersionUID = 2931841309711143361L;
-	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private static Dimension screenSize;
 	private SubliminalMessage subliminalMessage;
 	private final int h = 200;
 	private final int w = 200;
 
 	public Subliminal(ScreenPosition screenPosition) {
 		initComponents();
-		styleUI(screenPosition);
-	}
-
-	private void initComponents() {
-		subliminalMessage = new SubliminalMessage();
-		add(subliminalMessage);
-	}
-	
-	private void styleUI(ScreenPosition messageLocation) {
+		
 		// Subliminal Message
 		//subliminalMessage.getMessage().setFont(new Font("Courier New", Font.BOLD, 24));
 		//subliminalMessage.getMessage().setBackground(Color.WHITE);
 		//subliminalMessage.getMessage().setOpaque(true);
-		subliminalMessage.setPreferredSize(new Dimension(600, 300));
-
+		//subliminalMessage.setPreferredSize(new Dimension(600, 300));
+		
 		setFocusable(false);
 		setUndecorated(true);
 		setBackground(new Color(0, 255, 0, 0));
-		setBackground(Color.pink);
 		setAlwaysOnTop(true);
-		setSize(500, 700);
+		setSize(600, 500);
 		setFocusableWindowState(false);
 		setEnabled(false);
 		pack();
 
-		setMessageLocation(messageLocation);
+		setMessageLocation(screenPosition);
+	}
+
+	private void initComponents() {
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		subliminalMessage = new SubliminalMessage();
+		add(subliminalMessage);
 	}
 
 	private void setMessageLocation(ScreenPosition messageLocation) {

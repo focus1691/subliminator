@@ -1,5 +1,7 @@
 package com.psychotechnology.GUI;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -20,7 +22,7 @@ public class SubliminalMessage extends JPanel {
 
 	public SubliminalMessage() {
 		setOpaque(false);
-		//add(message);
+		setPreferredSize(new Dimension(600, 300));
 	}
 	
 	@Override
@@ -28,18 +30,21 @@ public class SubliminalMessage extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		int x, y;
+		
+	    FontMetrics metrics = g2d.getFontMetrics(new Font("Courier New", Font.BOLD, 24));
+	    x = this.getX() + (getWidth() - metrics.stringWidth(message)) / 2;
+	    g2d.setFont(new Font("TimesRoman", Font.BOLD, 24));
+	    g2d.setColor(Color.BLACK);
+	    
+	    //g.setFont(new Font("TimesRoman", Font.BOLD, 24));
+	   
+	    g2d.drawString(message, x, 40);
 
 		if (img != null) {
 		    x = (this.getWidth() - img.getWidth(null)) / 2;
 		    y = (this.getHeight() - img.getHeight(null)) / 2;
 		    g2d.drawImage(img, x, y, this);
 		}
-		
-	    FontMetrics metrics = g2d.getFontMetrics(new Font("Courier New", Font.BOLD, 24));
-	    x = this.getX() + (getWidth() - metrics.stringWidth(message)) / 2;
-	    y = (this.getHeight() - img.getHeight(null)) / 2;
-	    g2d.setFont(new Font("Courier New", Font.BOLD, 24));
-	    g2d.drawString(message, x, 30);
 	}
 
 	public void setMessage(String message) {

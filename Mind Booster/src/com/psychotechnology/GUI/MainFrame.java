@@ -217,6 +217,22 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		int y = (int) ((dimension.getHeight() - dialog.getHeight()) / 2);
 		dialog.setLocation(x, y);
 	}
+	
+	@Override
+	public void categorySelectionEventOccurred(CategoryEvent e) {
+		messagePanel.getModel().clear();
+		controller.setCategoryIndex(e.getCategoryIndex());
+		messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
+		if (Controller.messagesOn == false) {
+			try {
+				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+				controller.setCategoryIndex(e.getCategoryIndex());
+				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
+			}
+		}
+	}
  
 	@Override
 	public void messageEventOccurred(MessageEvent event) {
@@ -228,6 +244,15 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void messageSelectionEventOccurred(MessageEvent e) {
+		if (e.isAllMessagesSelected() == true) {
+			messagePanel.getMessageListSelectionModel().setAllMessagesActive();
+		} else {
+			messagePanel.getMessageListSelectionModel().clearSelection();
 		}
 	}
 
@@ -273,15 +298,6 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 	}
 
 	@Override
-	public void messageSelectionEventOccurred(MessageEvent e) {
-		if (e.isAllMessagesSelected() == true) {
-			messagePanel.getMessageListSelectionModel().setAllMessagesActive();
-		} else {
-			messagePanel.getMessageListSelectionModel().clearSelection();
-		}
-	}
-
-	@Override
 	public void settingsEventOccurred(SettingsEvent e) {
 		try {
 			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
@@ -290,22 +306,6 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
-		}
-	}
-
-	@Override
-	public void categorySelectionEventOccurred(CategoryEvent e) {
-		messagePanel.getModel().clear();
-		controller.setCategoryIndex(e.getCategoryIndex());
-		messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
-		if (Controller.messagesOn == false) {
-			try {
-				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
-				controller.setCategoryIndex(e.getCategoryIndex());
-				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
-			} catch (InterruptedException ie) {
-				ie.printStackTrace();
-			}
 		}
 	}
 }

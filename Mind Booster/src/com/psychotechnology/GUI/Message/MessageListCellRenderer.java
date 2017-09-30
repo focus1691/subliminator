@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.psychotechnology.GUI.Settings.SettingsPanel;
 import com.psychotechnology.Model.Message;
+import com.psychotechnology.util.IconFetch;
 
 public class MessageListCellRenderer extends DefaultListCellRenderer {
 
@@ -43,11 +44,11 @@ public class MessageListCellRenderer extends DefaultListCellRenderer {
 		listCellRendererComponent.setText("  " + message.getMessage());
 		
 		if (isSelected) {
-			String absolutePath = new File(".").getAbsolutePath();
-			ImageIcon icon = new ImageIcon(absolutePath + message.getImagePath());
+			ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
+			
 			SettingsPanel.pictureLabel.setImageIcon(icon);
 			SettingsPanel.pictureLabel.repaint();
-
+			
 			setBackground(Color.decode("#f5f5f5"));
 			setForeground(Color.decode("#0a95dd"));
 			listCellRendererComponent.setBorder(compoundBorder);

@@ -10,15 +10,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -340,7 +337,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 	}
 
 	public void setPictureLabel(PictureLabel pictureLabel) {
-		this.pictureLabel = pictureLabel;
+		SettingsPanel.pictureLabel = pictureLabel;
 	}
 
 	/**
