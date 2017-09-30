@@ -233,9 +233,9 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		speedSlider.setValue(controller.getMessageSpeed());
 		speedLabel = new JLabel("Display Every (ms):");
 		
-		durationSlider = new JSlider(0, 1000);
+		durationSlider = new JSlider(0, 20);
 		durationSlider.setValue(controller.getMessageInterval());
-		durationLabel = new JLabel("Duration (ms):");
+		durationLabel = new JLabel("Duration (s):");
 
 		speedSlider.setUI(new CustomSliderUI(speedSlider));
 		durationSlider.setUI(new CustomSliderUI(durationSlider));
@@ -252,11 +252,11 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 
 		durationLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		durationSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
-		durationSlider.setMinorTickSpacing(50);
-		durationSlider.setMajorTickSpacing(1000);
+		durationSlider.setMinorTickSpacing(20);
+		durationSlider.setMajorTickSpacing(2);
 		durationSlider.setPaintTicks(true);
 		durationSlider.setPaintLabels(true);
-		durationSlider.setPreferredSize(new Dimension(300, 30));
+		durationSlider.setPreferredSize(new Dimension(300, 75));
 	}
 
 	public void setupUI() {
@@ -282,7 +282,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(30, 0, 0, 0);
+		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(speedLabel, gc); // add component to the ContentPane
@@ -293,29 +293,29 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(60, 0, 0, 0);
+		gc.insets = new Insets(30, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(speedSlider, gc); // add component to the ContentPane
 
 		gc.gridx = 0;
-		gc.gridy = 2;
+		gc.gridy = 1;
 		gc.gridwidth = 1;
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(0, 0, 0, 0);
+		gc.insets = new Insets(100, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(durationLabel, gc); // add component to the ContentPane
 
 		gc.gridx = 0;
-		gc.gridy = 2;
+		gc.gridy = 1;
 		gc.gridwidth = 1;
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(30, 0, 0, 0);
+		gc.insets = new Insets(130, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(durationSlider, gc); // add component to the ContentPane
@@ -326,7 +326,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.gridheight = 2;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(60, 430, 10, 20);
+		gc.insets = new Insets(30, 430, 10, 20);
 		gc.anchor = GridBagConstraints.LINE_START;
 		gc.fill = GridBagConstraints.BOTH;
 		add(picturePanel, gc); // add component to the ContentPane

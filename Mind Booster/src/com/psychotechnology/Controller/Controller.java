@@ -24,7 +24,7 @@ public class Controller {
 	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 	private int startDelay = 30;
 	private int messageSpeed = 1000;
-	private int messageInterval = 3000;
+	private int messageInterval = 5;
 	private int categoryIndex;
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
@@ -92,28 +92,28 @@ public class Controller {
 			}
 			if (msgLocationsSelected[0] == true) {
 				topLeftMsg = new PlayMessageTask(this, ScreenPosition.TOPLEFT);
-				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[1] == true) {
 				topRightMsg = new PlayMessageTask(this, ScreenPosition.TOPRIGHT);
-				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[2] == true) {
 				botLeftMsg = new PlayMessageTask(this, ScreenPosition.BOTLEFT);
-				scheduledExecutorService.scheduleWithFixedDelay(botLeftMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(botLeftMsg, 0, messageInterval, TimeUnit.SECONDS);
 				System.out.println("botLeftMsg");
 			}
 			if (msgLocationsSelected[3] == true) {
 				botRightMsg = new PlayMessageTask(this, ScreenPosition.BOTRIGHT);
-				scheduledExecutorService.scheduleWithFixedDelay(botRightMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(botRightMsg, 0, messageInterval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[4] == true) {
 				centerMsg = new PlayMessageTask(this, ScreenPosition.CENTER);
-				scheduledExecutorService.scheduleWithFixedDelay(centerMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(centerMsg, 0, messageInterval, TimeUnit.SECONDS);
 				topLeftMsg = new PlayMessageTask(this, ScreenPosition.TOPLEFT);
-				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(topLeftMsg, 0, messageInterval, TimeUnit.SECONDS);
 				topRightMsg = new PlayMessageTask(this, ScreenPosition.TOPRIGHT);
-				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.MILLISECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(topRightMsg, 0, messageInterval, TimeUnit.SECONDS);
 			}
 		} else {
 			 scheduledExecutorService.shutdown();
