@@ -12,7 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-public class MyScrollBarUI extends BasicScrollBarUI {
+public class BlueCurvedScrollBar extends BasicScrollBarUI {
 
 	private final Dimension d = new Dimension();
 

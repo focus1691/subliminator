@@ -1,5 +1,6 @@
 package com.psychotechnology.GUI;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -62,6 +63,7 @@ public class EditImage extends JDialog {
 	}
 
 	public void setupUI() {
+		
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);

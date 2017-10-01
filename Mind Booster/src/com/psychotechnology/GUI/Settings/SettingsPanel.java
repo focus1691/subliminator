@@ -205,6 +205,12 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		// Message in the middle of the screen
 		msgFive = new MessageButton("Message 3", true, false, (screenPanel.getWidth() / 2) - 100,
 				(screenPanel.getHeight() / 2) - 85, 185, 60);
+		
+		msgOne.setToolTipText("Message top left of screen");
+		msgTwo.setToolTipText("Message top right of screen");
+		msgThree.setToolTipText("Message bottom left of screen");
+		msgFour.setToolTipText("Message bottom right of screen");
+		msgFive.setToolTipText("Message center of screen");
 
 		screenContainer.add(screenPanel, new Integer(0), 0);
 		screenContainer.add(msgOne, new Integer(1), 0);
@@ -220,10 +226,12 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		picturePanel.add(pictureLabel, BorderLayout.CENTER);
 
 		speedSlider = new JSlider(0, 1000);
+		speedSlider.setToolTipText("Time for message to disappear");
 		speedSlider.setValue(speed);
 		speedLabel = new JLabel("Display Every (ms):");
 		
 		durationSlider = new JSlider(0, 20);
+		durationSlider.setToolTipText("Time between messages in seconds");
 		durationSlider.setValue(interval);
 		durationLabel = new JLabel("Duration (s):");
 

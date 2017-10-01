@@ -28,7 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import com.psychotechnology.Controller.Controller;
-import com.psychotechnology.GUI.MyScrollBarUI;
+import com.psychotechnology.GUI.BlueCurvedScrollBar;
 import com.psychotechnology.GUI.Controls.MessageEvent;
 import com.psychotechnology.GUI.Controls.MessageListener;
 import com.psychotechnology.Model.Message;
@@ -149,6 +149,9 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 
 		firstPersonBtn = new RoundButton(activeIcon);
 		secondPersonBtn = new RoundButton(inactiveIcon);
+		
+		firstPersonBtn.setToolTipText("Message list in first person");
+		secondPersonBtn.setToolTipText("Message list in second person");
 
 		scroller = new JScrollPane(messageList);
 	}
@@ -168,7 +171,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		messageList.setCellRenderer(messageListCellRenderer);
 		
 		// Vertical ScrollBar
-		scroller.getVerticalScrollBar().setUI(new MyScrollBarUI());
+		scroller.getVerticalScrollBar().setUI(new BlueCurvedScrollBar());
 		scroller.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
 		scroller.getVerticalScrollBar().setBackground(Color.decode("#efeff0"));
 		scroller.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);

@@ -1,6 +1,10 @@
 package com.psychotechnology.GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import com.psychotechnology.Controller.Controller;
@@ -18,7 +23,8 @@ public class DeleteMessage extends JDialog {
 	
 	private static final long serialVersionUID = 5549429493881002578L;
 	private Controller controller;
-	private JTextArea messagesToDelete;
+	private JScrollPane scroller;
+	private JTextArea selectedMessagesTxt;
 	private JPanel panel;
 	private JLabel deleteMsg;
 	private JButton deleteBtn;
@@ -43,6 +49,7 @@ public class DeleteMessage extends JDialog {
 		});
 
 		MainFrame.centerFrame(this);
+		setSize(1000, 350);
 		setModal(true);
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -53,28 +60,41 @@ public class DeleteMessage extends JDialog {
 		panel = new JPanel();
 		deleteMsg = new JLabel("Delete Messages?");
 		deleteBtn = new JButton("Yes");
+		deleteBtn.setToolTipText("Delete the messages below");
 		panel.add(deleteMsg);
 		panel.add(deleteBtn);
 
-		messagesToDelete = new JTextArea();
+		selectedMessagesTxt = new JTextArea();
+		
+		scroller = new JScrollPane(selectedMessagesTxt);
 	}
 
 	public void setupUI() {
-		setSize(400, 350);
+		
+		// Vertical ScrollBar
+		scroller.getVerticalScrollBar().setUI(new BlueCurvedScrollBar());
+		scroller.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
+		scroller.getVerticalScrollBar().setBackground(Color.decode("#efeff0"));
+		scroller.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		
+		// Fonts
+		deleteMsg.setFont(new Font("Courier New", Font.BOLD, 20));
+		selectedMessagesTxt.setFont(new Font("Courier New", Font.BOLD, 16));
+		
 		setLayout(new BorderLayout());
 
 		add(panel, BorderLayout.NORTH);
-		add(messagesToDelete, BorderLayout.CENTER);
+		add(scroller, BorderLayout.CENTER);
 	}
 
 	public void appendMessagesToDelete(int[] selectedMsgs) {
 		int i;
 
 		for (i = 0; i < selectedMsgs.length; i++) {
-			messagesToDelete.append(controller.getMessageFromCategory(controller.getCategoryIndex(), selectedMsgs[i], MessageTense.FIRST_PERSON).getMessage());
-			messagesToDelete.append("\\");
-			messagesToDelete.append(controller.getMessageFromCategory(controller.getCategoryIndex(), selectedMsgs[i], MessageTense.SECOND_PERSON).getMessage());
-			messagesToDelete.append("\n");
+			selectedMessagesTxt.append(controller.getMessageFromCategory(controller.getCategoryIndex(), selectedMsgs[i], MessageTense.FIRST_PERSON).getMessage());
+			selectedMessagesTxt.append("\\");
+			selectedMessagesTxt.append(controller.getMessageFromCategory(controller.getCategoryIndex(), selectedMsgs[i], MessageTense.SECOND_PERSON).getMessage());
+			selectedMessagesTxt.append("\n");
 		}
 	}
 

@@ -1,5 +1,7 @@
 package com.psychotechnology.GUI;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -45,7 +47,7 @@ public class AddMessage extends JDialog {
 					
 					messagePanel.getModel().clear();
 					messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
-
+					
 					submitBtn.setEnabled(false);
 					JOptionPane
 							.showMessageDialog(null,
@@ -71,8 +73,8 @@ public class AddMessage extends JDialog {
 	public void initComponents() {
 		setTitle("New Messages : " +  controller.getActiveCategoryName());
 
-		firstPersonLabel = new JLabel("New 1st person message:");
-		secondPersonLabel = new JLabel("New 2nd person message:");
+		firstPersonLabel = new JLabel("1st person message:");
+		secondPersonLabel = new JLabel("2nd person message:");
 
 		firstPersonMsg = new JTextField(20);
 		secondPersonMsg = new JTextField(20);
@@ -81,6 +83,10 @@ public class AddMessage extends JDialog {
 	}
 
 	public void setupUI() {
+		
+		submitBtn.setPreferredSize(new Dimension(75, 50));
+		submitBtn.setToolTipText("Add this message to " + controller.getActiveCategoryName());
+		
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
@@ -101,7 +107,7 @@ public class AddMessage extends JDialog {
 
 		gc.gridy++;
 		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.CENTER;
+		gc.anchor = GridBagConstraints.EAST;
 		add(submitBtn, gc);
 	}
 }

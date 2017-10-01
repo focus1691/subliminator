@@ -1,5 +1,7 @@
 package com.psychotechnology.GUI;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -20,10 +22,8 @@ public class EditMessage extends JDialog {
 
 	private static final long serialVersionUID = 5470112838506529493L;
 	private Controller controller;
-	private JLabel firstPersonLabel;
-	private JLabel secondPersonLabel;
-	private JTextField firstPersonMsg;
-	private JTextField secondPersonMsg;
+	private JLabel firstPersonLbl, secondPersonLbl;
+	private JTextField firstPersonMsg, secondPersonMsg;
 	private JButton submitBtn;
 
 	public EditMessage(Controller controller, MessagePanel messagePanel, int index) {
@@ -61,11 +61,13 @@ public class EditMessage extends JDialog {
 	public void initComponents(int index) {
 		setTitle("Edit Message");
 
-		firstPersonLabel = new JLabel("<html><b>1st Person</b></html>");
-		secondPersonLabel = new JLabel("<html><b>2nd Person</b></html>");
+		firstPersonLbl = new JLabel("1st Person");
+		secondPersonLbl = new JLabel("2nd Person");
 
 		firstPersonMsg = new JTextField(30);
+		firstPersonMsg.setToolTipText("First Person Message");
 		secondPersonMsg = new JTextField(30);
+		secondPersonMsg.setToolTipText("Second Person Message");
 
 		firstPersonMsg
 				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).get(index).getMessage());
@@ -73,9 +75,15 @@ public class EditMessage extends JDialog {
 				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).get(index).getMessage());
 
 		submitBtn = new JButton("Change");
+		submitBtn.setToolTipText("Edit this message");
 	}
 
 	public void setupUI() {
+		
+		// Fonts
+		firstPersonLbl.setFont(new Font("Courier New", Font.BOLD, 20));
+		secondPersonLbl.setFont(new Font("Courier New", Font.BOLD, 20));
+		
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
@@ -83,14 +91,14 @@ public class EditMessage extends JDialog {
 		gc.gridx = 0;
 		gc.gridy = 0;
 		gc.insets = new Insets(10, 0, 10, 0);
-		add(firstPersonLabel, gc);
+		add(firstPersonLbl, gc);
 
 		gc.gridy++;
 		gc.insets = new Insets(0, 0, 10, 0);
 		add(firstPersonMsg, gc);
 
 		gc.gridy++;
-		add(secondPersonLabel, gc);
+		add(secondPersonLbl, gc);
 
 		gc.gridy++;
 		add(secondPersonMsg, gc);

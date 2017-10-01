@@ -38,7 +38,7 @@ public class SubliminalMessage extends JPanel {
 		
 		g2d.clearRect(0, 0, getWidth(), getHeight());
 		
-		g2d.setFont(new Font("TimesRoman", Font.BOLD, 24));
+		g2d.setFont(new Font("Courier New", Font.BOLD, 24));
 		g2d.setColor(Color.WHITE);
         g2d.fillRect(x,
                 40 - metrics.getAscent(),

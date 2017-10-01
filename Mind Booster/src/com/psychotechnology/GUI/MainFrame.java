@@ -20,9 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import com.psychotechnology.Controller.Controller;
-import com.psychotechnology.GUI.Category.CategoryPanel;
 import com.psychotechnology.GUI.Category.CategoryEvent;
 import com.psychotechnology.GUI.Category.CategoryListener;
+import com.psychotechnology.GUI.Category.CategoryPanel;
 import com.psychotechnology.GUI.Controls.ControlPanel;
 import com.psychotechnology.GUI.Controls.MessageEvent;
 import com.psychotechnology.GUI.Controls.MessageListener;

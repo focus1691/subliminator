@@ -16,8 +16,8 @@ import com.psychotechnology.GUI.Subliminal;
 import com.psychotechnology.Model.Category;
 import com.psychotechnology.Model.InBuiltCategory;
 import com.psychotechnology.Model.Message;
-import com.psychotechnology.Model.ScreenPosition;
 import com.psychotechnology.Model.MessageTense;
+import com.psychotechnology.Model.ScreenPosition;
 
 public class Controller {
 	public static boolean messagesOn = false;

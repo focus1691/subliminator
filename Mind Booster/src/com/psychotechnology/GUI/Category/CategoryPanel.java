@@ -16,7 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.psychotechnology.Controller.Controller;
-import com.psychotechnology.GUI.MyScrollBarUI;
+import com.psychotechnology.GUI.BlueCurvedScrollBar;
 import com.psychotechnology.util.CustomFont;
 
 public class CategoryPanel extends JPanel {
@@ -31,9 +31,7 @@ public class CategoryPanel extends JPanel {
 	public CategoryPanel(Controller controller) {
 		this.controller = controller;
 		initComponents();
-		setupHeaderUI();
-		styleList();
-		styleScrollBar();
+		styleUI();
 		setupUI();
 
 		categoryList.addListSelectionListener(new ListSelectionListener() {
@@ -61,33 +59,26 @@ public class CategoryPanel extends JPanel {
 		scroller = new JScrollPane();
 		scroller.setViewportView(categoryList);
 	}
-
-	/**
-	 * This method sets the UI for the header at the very top of the panel
-	 */
-	private void setupHeaderUI() {
+	
+	private void styleUI() {
+		// UI for the header
 		header.setFont(CustomFont.getFont(CustomFont.latoBlack, 20));
-	}
-
-	/**
-	 * This method sets the UI for the Category list
-	 */
-	private void styleList() {
+		
+		// Category List
 		categoryList.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		categoryList.setFixedCellHeight(55);
 		categoryList.setFixedCellWidth(350);
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
 		categoryList.setSelectedIndex(0);
-	}
-
-	private void styleScrollBar() {
-		scroller.getVerticalScrollBar().setUI(new MyScrollBarUI());
+		
+		// ScrollBar
+		scroller.getVerticalScrollBar().setUI(new BlueCurvedScrollBar());
 		scroller.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
 		scroller.getVerticalScrollBar().setBackground(Color.decode("#efeff0"));
 		scroller.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		scroller.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}
-
+	
 	/**
 	 * This method uses GridBagLayout to position components onto the Category
 	 * Panel

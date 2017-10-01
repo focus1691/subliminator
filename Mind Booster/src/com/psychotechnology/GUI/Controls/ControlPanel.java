@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import com.psychotechnology.Controller.Controller;
 import com.psychotechnology.util.IconFetch;
 
 public class ControlPanel extends JPanel implements ActionListener {
@@ -101,10 +102,15 @@ public class ControlPanel extends JPanel implements ActionListener {
 	 */
 	private void initComponents() {
 		startBtn = new JButton(IconFetch.getInstance().getIcon("/com/psychotechnology/images/start.jpg"));
+		startBtn.setToolTipText("Play subliminal messages");
 		addBtn = new JButton("Add");
+		addBtn.setToolTipText("Add a new message");
 		editBtn = new JButton("Edit");
+		editBtn.setToolTipText("Edit message");
 		deleteBtn = new JButton("Delete");
+		deleteBtn.setToolTipText("Delete messages");
 		changeBtn = new JButton("Change Image");
+		changeBtn.setToolTipText("Change messages");
 		separator = new JSeparator(SwingConstants.VERTICAL);
 		separator2 = new JSeparator(SwingConstants.VERTICAL);
 		separator3 = new JSeparator(SwingConstants.VERTICAL);
