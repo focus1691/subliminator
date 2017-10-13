@@ -9,7 +9,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private JLabel firstPersonLabel, secondPersonLabel;
 	private JButton firstPersonBtn, secondPersonBtn;
 	private ImageIcon activeIcon, inactiveIcon;
-	private JPopupMenu messageMenu;
+	private JPopupMenu popupMenu;
 	private JMenuItem addItem, editItem, deleteItem, changeItem;
 	private Controller controller;
 	private MessageListener messageListener;
@@ -64,27 +63,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		secondPersonLabel.addMouseListener(this);
 		firstPersonBtn.addMouseListener(this);
 		secondPersonBtn.addMouseListener(this);
-
-		messageList.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-				if (e.getButton() == MouseEvent.BUTTON3) {
-
-					@SuppressWarnings("unchecked")
-					JList<Message> list = (JList<Message>) e.getSource();
-					int row = list.locationToIndex(e.getPoint());
-					if (!messageListSelectionModel.isSelectedIndex(row)) {
-						list.setSelectedIndex(row);
-					} else {
-						list.removeSelectionInterval(row, row);
-						list.setSelectedIndex(row);
-					}
-
-					messageMenu.show(e.getComponent(), e.getX(), e.getY());
-				}
-			}
-		});
+		messageList.addMouseListener(this);
 	}
 
 	@Override
@@ -103,6 +82,37 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		}
 	}
 	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if (e.getButton() == MouseEvent.BUTTON3) {
+
+			@SuppressWarnings("unchecked")
+			JList<Message> list = (JList<Message>) e.getSource();
+			int row = list.locationToIndex(e.getPoint());
+			if (!messageListSelectionModel.isSelectedIndex(row)) {
+				list.setSelectedIndex(row);
+			} else {
+				list.removeSelectionInterval(row, row);
+				list.setSelectedIndex(row);
+			}
+			popupMenu.show(e.getComponent(), e.getX(), e.getY());
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+	
 	private void switchPersonMode(MessageTense messageTense) {
 		int[] selectedIndices = messageList.getSelectedIndices();
 		model.clear();
@@ -113,38 +123,19 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		messageListSelectionModel.setMgsSelected(selectedIndices);
 	}
 
-	public void setMessageList(JList<Message> messageList) {
-		this.messageList = messageList;
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
-
 	/**
 	 * This method initializes all Message Panel components
 	 */
 	private void initComponents() {
-		messageMenu = createMessageMenu();
+		popupMenu = createMessageMenu();
+		
+		
 		setMessageList(controller.getMessagesFromActiveTenseCategory());
 		messageListSelectionModel = new MessageListSelectionModel(
 				controller.getMessagesFromActiveTenseCategory().size());
 		messageList = new JList<Message>(model);
+		
+		
 		header = new JLabel("Select Messages");
 
 		firstPersonLabel = new JLabel("1st Person");
@@ -155,10 +146,10 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		
 		firstPersonBtn = new RoundButton(activeIcon);
 		secondPersonBtn = new RoundButton(inactiveIcon);
-		
+
 		firstPersonBtn.setToolTipText("Message list in first person");
 		secondPersonBtn.setToolTipText("Message list in second person");
-		
+
 		scroller = new JScrollPane(messageList);
 	}
 
@@ -175,7 +166,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		messageList.setSelectionModel(messageListSelectionModel);
 		messageListCellRenderer = new MessageListCellRenderer();
 		messageList.setCellRenderer(messageListCellRenderer);
-		
+
 		// Vertical ScrollBar
 		scroller.getVerticalScrollBar().setUI(new BlueCurvedScrollBar());
 		scroller.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
@@ -183,7 +174,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		scroller.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		scroller.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}
-	
+
 	/**
 	 * Setup Layout Manager
 	 */
@@ -295,39 +286,38 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 
 		return messageMenu;
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		if (e.getSource() == addItem) {
-			MessageEvent messageEvent = new MessageEvent(this);
-			if (messageListener != null) {
+		
+		MessageEvent messageEvent = new MessageEvent(this);
+		
+		if (messageListener != null) {
+			if (e.getSource() == addItem) {
 				messageListener.addMessageEventOccurred(messageEvent);
-			}
-		} else if (e.getSource() == editItem) {
-			MessageEvent messageEvent = new MessageEvent(this);
-			if (messageListener != null) {
+				
+			} else if (e.getSource() == editItem) {
 				messageListener.editMessageEventOccurred(messageEvent);
-			}
-		} else if (e.getSource() == deleteItem) {
-			MessageEvent messageEvent = new MessageEvent(this);
-			if (messageListener != null) {
+				
+			} else if (e.getSource() == deleteItem) {
+				
 				messageListener.deleteMessageEventOccurred(messageEvent);
-			}
-		} else if (e.getSource() == changeItem) {
-			MessageEvent messageEvent = new MessageEvent(this);
-			if (messageListener != null) {
+			} else if (e.getSource() == changeItem) {
 				messageListener.editImageEventOccurred(messageEvent);
 			}
 		}
 	}
-
+	
 	/**
 	 *
 	 * @return All Message objects inside the JList
 	 */
 	public JList<Message> getMessageList() {
 		return messageList;
+	}
+	
+	public void setMessageList(JList<Message> messageList) {
+		this.messageList = messageList;
 	}
 
 	/**

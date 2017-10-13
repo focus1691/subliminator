@@ -4,20 +4,11 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
 
 import com.psychotechnology.Controller.Controller;
@@ -33,7 +24,6 @@ import com.psychotechnology.GUI.Settings.SettingsListener;
 import com.psychotechnology.GUI.Settings.SettingsPanel;
 import com.psychotechnology.MenuBar.CreateMenuBar;
 import com.psychotechnology.Model.Message;
-import com.psychotechnology.util.IconFetch;
 
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 	
@@ -220,9 +210,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	
 	@Override
 	public void editImageEventOccurred(MessageEvent e) {
-		int index = messagePanel.getMessageListSelectionModel().getLeadSelectionIndex();
+		//int index = messagePanel.getMessageListSelectionModel().getLeadSelectionIndex();
 		Message message = (Message) messagePanel.getMessageList().getSelectedValue();
-		System.out.println(messagePanel.getMessageList().getSelectedValue());
 		new EditImage(controller, message.getImagePath());
 	}
 
