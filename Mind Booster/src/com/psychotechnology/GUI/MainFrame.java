@@ -31,6 +31,7 @@ import com.psychotechnology.GUI.Message.MessagePanel;
 import com.psychotechnology.GUI.Settings.SettingsEvent;
 import com.psychotechnology.GUI.Settings.SettingsListener;
 import com.psychotechnology.GUI.Settings.SettingsPanel;
+import com.psychotechnology.MenuBar.CreateMenuBar;
 import com.psychotechnology.Model.Message;
 import com.psychotechnology.util.IconFetch;
 
@@ -67,10 +68,12 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public MainFrame() {
 		initComponents();
 		setupUI();
+		
+		// Listeners for the 4 panels
 		categoryPanel.setCategorySelectionListener(this);
-		controlPanel.setMessageStartListener(this);
 		messagePanel.setMessageStartListener(this);
 		settingsPanel.setSettingsListener(this);
+		controlPanel.setMessageStartListener(this);
 
 		// Window settings
 		setPreferredSize(new Dimension(1600, 900));
@@ -86,12 +89,12 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	 */
 	private void initComponents() {
 		controller = new Controller();
-		menuBar = createMenuBar();
-		setJMenuBar(menuBar);
+		//menuBar = createMenuBar();
 		categoryPanel = new CategoryPanel(controller);
 		messagePanel = new MessagePanel(controller);
 		settingsPanel = new SettingsPanel(controller.getSpeed(), controller.getInterval());
 		controlPanel = new ControlPanel();
+		setJMenuBar(new CreateMenuBar(controller, messagePanel));
 	}
 
 	/**
@@ -103,7 +106,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		// Add Category Panel to Window
+		// Category Panel on Left
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -114,7 +117,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(categoryPanel, gbc);
 
-		// Add Message Panel to Window
+		// Message Panel in Middle
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -124,7 +127,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(messagePanel, gbc);
 
-		// Add Settings Panel to Window
+		// Settings Panel on Right
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -134,7 +137,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(settingsPanel, gbc);
 
-		// Add Controls Panel to Window
+		// Controls Panel on Bottom
 		gbc.anchor = GridBagConstraints.SOUTH;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -144,118 +147,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weighty = 0.2;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(controlPanel, gbc);
-	}
-
-	private JMenuBar createMenuBar() {
-		JMenuBar menuBar = new JMenuBar();
-
-		JMenu fileMenu = new JMenu("File");
-		fileMenu.setBorder(BorderFactory.createRaisedBevelBorder());
-		JMenu settingsMenu = new JMenu("Settings");
-
-		// Exit
-		fileMenu.add(exitItem());
-
-		// Factory Reset
-		settingsMenu.add(factoryResetItem());
-		
-		settingsMenu.addSeparator();
-		
-		// Message Size
-		ButtonGroup bg = new ButtonGroup();
-		JRadioButtonMenuItem small = new JRadioButtonMenuItem("    Small");
-		JRadioButtonMenuItem medium = new JRadioButtonMenuItem("    Medium");
-		JRadioButtonMenuItem large = new JRadioButtonMenuItem("    Large");
-		small.setSelected(true);
-		
-		bg.add(small);
-		bg.add(medium);
-		bg.add(large);
-		
-		small.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Subliminal.width = 200;
-				Subliminal.height = 200;
-			}
-		});
-		
-		medium.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Subliminal.width = 300;
-				Subliminal.height = 300;
-				//Subliminal.setSize(900, 750);
-			}
-		});
-		
-		large.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Subliminal.width = 500;
-				Subliminal.height = 500;
-			}
-		});
-		
-		settingsMenu.add(small);
-		settingsMenu.add(medium);
-		settingsMenu.add(large);
-
-		// Add items to menu bar
-		menuBar.add(fileMenu);
-		menuBar.add(settingsMenu);
-
-		return menuBar;
-	}
-
-	private JMenuItem exitItem() {
-		JMenuItem fileMenu = new JMenuItem(new AbstractAction("Exit") {
-
-			private static final long serialVersionUID = -6305470444317273153L;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		fileMenu.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/exit.png"));
-
-		return fileMenu;
-	}
-
-	private JMenuItem factoryResetItem() {
-		JMenuItem messageResetItem = new JMenuItem(new AbstractAction("    Restore Messages") {
-			private static final long serialVersionUID = -6305470444317273153L;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controller.loadInBuiltCategories();
-				controller.save();
-				messagePanel.getModel().clear();
-				messagePanel.setMessageList(controller.getActiveMessages());
-			}
-		});
-
-		messageResetItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/reset.png"));
-
-		return messageResetItem;
-	}
-	
-	private JMenuItem messageSizeItem() {
-		
-		JMenuItem messageSizeItem = new JMenuItem(new AbstractAction("    Message Size") {
-			
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		return messageSizeItem;
 	}
 	
 	@Override
@@ -315,7 +206,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
+	
 	@Override
 	public void deleteMessageEventOccurred(MessageEvent e) {
 		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
