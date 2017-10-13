@@ -92,23 +92,49 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 
 		if ((e.getSource() == firstPersonBtn || e.getSource() == firstPersonLabel)
 				&& controller.getMessageTense() != MessageTense.FIRST_PERSON) {
-			int[] selectedIndices = messageListSelectionModel.getSelectedMsgIndices();
+			
+			
+			//int[] selectedIndices = messageListSelectionModel.getSelectedMsgIndices();
+			int[] selectedIndices = messageList.getSelectedIndices();
+			
+			
+			for (int i = 0; i < selectedIndices.length; i++) {
+				System.out.println(selectedIndices[i]);
+			}
+			
 			model.clear();
 			controller.setMessageTense(MessageTense.FIRST_PERSON);
+			
 			firstPersonBtn.setIcon(activeIcon);
 			secondPersonBtn.setIcon(inactiveIcon);
+			
 			setMessageList(controller.getMessagesFromTenseCategory(MessageTense.FIRST_PERSON));
 			messageListSelectionModel.setMgsSelected(selectedIndices);
+		
+		
+		
 		} else if ((e.getSource() == secondPersonBtn || e.getSource() == secondPersonLabel)
 				&& controller.getMessageTense() != MessageTense.SECOND_PERSON) {
-			int[] selectedIndices = messageListSelectionModel.getSelectedMsgIndices();
+			
+			//int[] selectedIndices = messageListSelectionModel.getSelectedMsgIndices();
+			int[] selectedIndices = messageList.getSelectedIndices();
+			
+			for (int i = 0; i < selectedIndices.length; i++) {
+				System.out.println(selectedIndices[i]);
+			}
+			
 			model.clear();
 			controller.setMessageTense(MessageTense.SECOND_PERSON);
 			firstPersonBtn.setIcon(inactiveIcon);
 			secondPersonBtn.setIcon(activeIcon);
 			setMessageList(controller.getMessagesFromTenseCategory(MessageTense.SECOND_PERSON));
 			messageListSelectionModel.setMgsSelected(selectedIndices);
+		
 		}
+	}
+
+	public void setMessageList(JList<Message> messageList) {
+		this.messageList = messageList;
 	}
 
 	@Override
@@ -146,13 +172,13 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 
 		activeIcon = IconFetch.getInstance().getIcon("/com/psychotechnology/images/man-active.jpg");
 		inactiveIcon = IconFetch.getInstance().getIcon("/com/psychotechnology/images/man-inactive.jpg");
-
+		
 		firstPersonBtn = new RoundButton(activeIcon);
 		secondPersonBtn = new RoundButton(inactiveIcon);
 		
 		firstPersonBtn.setToolTipText("Message list in first person");
 		secondPersonBtn.setToolTipText("Message list in second person");
-
+		
 		scroller = new JScrollPane(messageList);
 	}
 

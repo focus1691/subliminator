@@ -33,10 +33,9 @@ public class Controller {
 	//private Subliminal topLeft, topRight, center, botLeft, botRight;
 	private List<Message> activeMessages;
 	private Network network;
-	
 	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
 	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
-
+	
 	public Controller() {
 		network = new Network();
 		// network.checkIfRunning();
@@ -53,7 +52,7 @@ public class Controller {
 		
 		load();
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	private void load() {
 		try {

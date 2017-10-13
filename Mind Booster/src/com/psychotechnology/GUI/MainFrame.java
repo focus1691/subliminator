@@ -318,7 +318,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void deleteMessageEventOccurred(MessageEvent e) {
-		int[] selectedMsgs = messagePanel.getMessageListSelectionModel().getSelectedMsgIndices();
+		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
 		
 		if (selectedMsgs == null) {
 			JOptionPane.showMessageDialog(this, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
