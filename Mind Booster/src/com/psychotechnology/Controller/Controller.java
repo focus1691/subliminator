@@ -190,7 +190,6 @@ public class Controller {
 		}
 		return messages;
 	}
-	
 	/**
 	 * 
 	 * @param catIndex 	category index

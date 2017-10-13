@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.psychotechnology.util.CustomColors;
+import com.psychotechnology.util.CustomColor;
 import com.psychotechnology.util.CustomFont;
 import com.psychotechnology.util.IconFetch;
 
@@ -28,12 +28,12 @@ public class MessageButton extends JLabel {
 
 	public void setActive() {
 		this.active = true;
-		setForeground(CustomColors.green);
+		setForeground(CustomColor.green);
 	}
 
 	public void setInactive() {
 		this.active = false;
-		setForeground(CustomColors.lightGrey);
+		setForeground(CustomColor.lightGrey);
 		setBackground(Color.WHITE);
 	}
 
@@ -53,7 +53,7 @@ public class MessageButton extends JLabel {
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setBounds(x, y, w, h);
 		setFont(font);
-		setForeground(CustomColors.green);
+		setForeground(CustomColor.green);
 		setBackground(Color.WHITE);
 		setOpaque(true);
 		if (isActive()) setActive();

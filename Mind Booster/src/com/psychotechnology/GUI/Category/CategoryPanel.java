@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -17,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 
 import com.psychotechnology.Controller.Controller;
 import com.psychotechnology.GUI.BlueCurvedScrollBar;
+import com.psychotechnology.Model.Category;
 import com.psychotechnology.util.CustomFont;
 
 public class CategoryPanel extends JPanel {
@@ -25,7 +28,8 @@ public class CategoryPanel extends JPanel {
 	private Controller controller;
 	private JScrollPane scroller;
 	private JLabel header;
-	private JList<Object> categoryList;
+	private DefaultListModel<Category> model = new DefaultListModel<>();
+	private JList<Category> categoryList;
 	private CategoryListener categorySelectionListener;
 
 	public CategoryPanel(Controller controller) {
@@ -54,7 +58,8 @@ public class CategoryPanel extends JPanel {
 	 * This method initializes all Category Panel components
 	 */
 	private void initComponents() {
-		categoryList = new JList<Object>(controller.getCategoryNames());
+		setCategoryList(controller.getCategories());
+		categoryList = new JList<Category>(model);
 		header = new JLabel("Select Categories");
 		scroller = new JScrollPane();
 		scroller.setViewportView(categoryList);
@@ -114,6 +119,19 @@ public class CategoryPanel extends JPanel {
 		add(scroller, gc);
 
 		setBackground(Color.decode("#efeff0"));
+	}
+	
+	/**
+	 * Set list with all messages from chosen category
+	 * 
+	 * @param categoryIndex
+	 *            category to retrieve messages from
+	 */
+	public void setCategoryList(List<Category> categories) {
+		int i;
+		for (i = 0; i < categories.size(); i++) {
+			model.addElement(categories.get(i));
+		}
 	}
 
 	/**
