@@ -43,7 +43,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private MessagePanel messagePanel;
 	private SettingsPanel settingsPanel;
 	private ControlPanel controlPanel;
-	private JMenuBar menuBar;
 
 	public static void main(String[] args) {
 		try {
@@ -89,7 +88,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	 */
 	private void initComponents() {
 		controller = new Controller();
-		//menuBar = createMenuBar();
 		categoryPanel = new CategoryPanel(controller);
 		messagePanel = new MessagePanel(controller);
 		settingsPanel = new SettingsPanel(controller.getSpeed(), controller.getInterval());

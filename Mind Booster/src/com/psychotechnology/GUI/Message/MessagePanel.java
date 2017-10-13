@@ -50,7 +50,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private JButton firstPersonBtn, secondPersonBtn;
 	private ImageIcon activeIcon, inactiveIcon;
 	private JPopupMenu messageMenu;
-	private JMenuItem add, edit, delete, change;
+	private JMenuItem addItem, editItem, deleteItem, changeItem;
 	private Controller controller;
 	private MessageListener messageListener;
 
@@ -92,45 +92,25 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 
 		if ((e.getSource() == firstPersonBtn || e.getSource() == firstPersonLabel)
 				&& controller.getMessageTense() != MessageTense.FIRST_PERSON) {
-			
-			
-			//int[] selectedIndices = messageListSelectionModel.getSelectedMsgIndices();
-			int[] selectedIndices = messageList.getSelectedIndices();
-			
-			
-			for (int i = 0; i < selectedIndices.length; i++) {
-				System.out.println(selectedIndices[i]);
-			}
-			
-			model.clear();
-			controller.setMessageTense(MessageTense.FIRST_PERSON);
-			
+			switchPersonMode(MessageTense.FIRST_PERSON);
 			firstPersonBtn.setIcon(activeIcon);
 			secondPersonBtn.setIcon(inactiveIcon);
-			
-			setMessageList(controller.getMessagesFromTenseCategory(MessageTense.FIRST_PERSON));
-			messageListSelectionModel.setMgsSelected(selectedIndices);
-		
-		
-		
 		} else if ((e.getSource() == secondPersonBtn || e.getSource() == secondPersonLabel)
 				&& controller.getMessageTense() != MessageTense.SECOND_PERSON) {
-			
-			//int[] selectedIndices = messageListSelectionModel.getSelectedMsgIndices();
-			int[] selectedIndices = messageList.getSelectedIndices();
-			
-			for (int i = 0; i < selectedIndices.length; i++) {
-				System.out.println(selectedIndices[i]);
-			}
-			
-			model.clear();
-			controller.setMessageTense(MessageTense.SECOND_PERSON);
+			switchPersonMode(MessageTense.SECOND_PERSON);
 			firstPersonBtn.setIcon(inactiveIcon);
 			secondPersonBtn.setIcon(activeIcon);
-			setMessageList(controller.getMessagesFromTenseCategory(MessageTense.SECOND_PERSON));
-			messageListSelectionModel.setMgsSelected(selectedIndices);
-		
 		}
+	}
+	
+	private void switchPersonMode(MessageTense messageTense) {
+		int[] selectedIndices = messageList.getSelectedIndices();
+		model.clear();
+		controller.setMessageTense(messageTense);
+		firstPersonBtn.setIcon(inactiveIcon);
+		secondPersonBtn.setIcon(activeIcon);
+		setMessageList(controller.getMessagesFromTenseCategory(messageTense));
+		messageListSelectionModel.setMgsSelected(selectedIndices);
 	}
 
 	public void setMessageList(JList<Message> messageList) {
@@ -267,7 +247,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(secondPersonLabel, gc);
 
-		// Message list: full width, 90% of heights
+		// Message list: full width, 90% of height
 		gc.gridx = 0;
 		gc.gridy = 2;
 		gc.gridheight = 1;
@@ -287,31 +267,31 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		JPopupMenu messageMenu = new JPopupMenu();
 		messageMenu.setBorder(BorderFactory.createRaisedBevelBorder());
 
-		add = new JMenuItem("Add");
-		add.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/addItem.png"));
-		add.setMargin(new Insets(5, 0, 0, 0));
+		addItem = new JMenuItem("Add");
+		addItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/addItem.png"));
+		addItem.setMargin(new Insets(5, 0, 0, 0));
 
-		edit = new JMenuItem("Edit");
-		edit.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/editItem.png"));
-		edit.setMargin(new Insets(10, 0, 2, 0));
+		editItem = new JMenuItem("Edit");
+		editItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/editItem.png"));
+		editItem.setMargin(new Insets(10, 0, 2, 0));
 
-		delete = new JMenuItem("Delete");
-		delete.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/deleteItem.png"));
-		delete.setMargin(new Insets(10, 2, 0, 0));
+		deleteItem = new JMenuItem("Delete");
+		deleteItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/deleteItem.png"));
+		deleteItem.setMargin(new Insets(10, 2, 0, 0));
 
-		change = new JMenuItem("Change Image");
-		change.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/changeItem.png"));
-		change.setMargin(new Insets(10, 0, 2, 0));
+		changeItem = new JMenuItem("Change Image");
+		changeItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/changeItem.png"));
+		changeItem.setMargin(new Insets(10, 0, 2, 0));
 
-		add.addActionListener(this);
-		edit.addActionListener(this);
-		delete.addActionListener(this);
-		change.addActionListener(this);
+		addItem.addActionListener(this);
+		editItem.addActionListener(this);
+		deleteItem.addActionListener(this);
+		changeItem.addActionListener(this);
 
-		messageMenu.add(add);
-		messageMenu.add(edit);
-		messageMenu.add(delete);
-		messageMenu.add(change);
+		messageMenu.add(addItem);
+		messageMenu.add(editItem);
+		messageMenu.add(deleteItem);
+		messageMenu.add(changeItem);
 
 		return messageMenu;
 	}
@@ -319,22 +299,22 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == add) {
+		if (e.getSource() == addItem) {
 			MessageEvent messageEvent = new MessageEvent(this);
 			if (messageListener != null) {
 				messageListener.addMessageEventOccurred(messageEvent);
 			}
-		} else if (e.getSource() == edit) {
+		} else if (e.getSource() == editItem) {
 			MessageEvent messageEvent = new MessageEvent(this);
 			if (messageListener != null) {
 				messageListener.editMessageEventOccurred(messageEvent);
 			}
-		} else if (e.getSource() == delete) {
+		} else if (e.getSource() == deleteItem) {
 			MessageEvent messageEvent = new MessageEvent(this);
 			if (messageListener != null) {
 				messageListener.deleteMessageEventOccurred(messageEvent);
 			}
-		} else if (e.getSource() == change) {
+		} else if (e.getSource() == changeItem) {
 			MessageEvent messageEvent = new MessageEvent(this);
 			if (messageListener != null) {
 				messageListener.editImageEventOccurred(messageEvent);
