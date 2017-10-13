@@ -4,19 +4,20 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
-import javax.swing.JDialog;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
 
 import com.psychotechnology.Controller.Controller;
@@ -33,10 +34,10 @@ import com.psychotechnology.GUI.Settings.SettingsPanel;
 import com.psychotechnology.Model.Message;
 import com.psychotechnology.util.IconFetch;
 
-public class MainFrame implements CategoryListener, MessageListener, SettingsListener {
-
+public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
+	
+	private static final long serialVersionUID = -4312454251947395385L;
 	private Controller controller;
-	private static JFrame frame;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
 	private SettingsPanel settingsPanel;
@@ -72,12 +73,12 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		settingsPanel.setSettingsListener(this);
 
 		// Window settings
-		frame.setPreferredSize(new Dimension(1600, 900));
-		frame.setMinimumSize(new Dimension(1200, 750));
-		frame.pack();
-		centerFrame(frame);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setPreferredSize(new Dimension(1600, 900));
+		setMinimumSize(new Dimension(1200, 750));
+		pack();
+		SetScreenLocation.centerFrame(this);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	/**
@@ -85,9 +86,8 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 	 */
 	private void initComponents() {
 		controller = new Controller();
-		frame = new JFrame();
 		menuBar = createMenuBar();
-		frame.setJMenuBar(menuBar);
+		setJMenuBar(menuBar);
 		categoryPanel = new CategoryPanel(controller);
 		messagePanel = new MessagePanel(controller);
 		settingsPanel = new SettingsPanel(controller.getSpeed(), controller.getInterval());
@@ -99,8 +99,8 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 	 * (right), and controls (bottom full-width) containers onto the window.
 	 */
 	private void setupUI() {
-		frame.setTitle("Mind Booster");
-		frame.setLayout(new GridBagLayout());
+		setTitle("Mind Booster");
+		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		// Add Category Panel to Window
@@ -112,7 +112,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		gbc.weighty = 0.8;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		frame.add(categoryPanel, gbc);
+		add(categoryPanel, gbc);
 
 		// Add Message Panel to Window
 		gbc.gridx = 1;
@@ -122,7 +122,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		gbc.weightx = 0.4;
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		frame.add(messagePanel, gbc);
+		add(messagePanel, gbc);
 
 		// Add Settings Panel to Window
 		gbc.gridx = 2;
@@ -132,7 +132,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		gbc.weightx = 0.8;
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		frame.add(settingsPanel, gbc);
+		add(settingsPanel, gbc);
 
 		// Add Controls Panel to Window
 		gbc.anchor = GridBagConstraints.SOUTH;
@@ -143,7 +143,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		gbc.weightx = 1;
 		gbc.weighty = 0.2;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		frame.add(controlPanel, gbc);
+		add(controlPanel, gbc);
 	}
 
 	private JMenuBar createMenuBar() {
@@ -151,19 +151,67 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setBorder(BorderFactory.createRaisedBevelBorder());
-		JMenu messageMenu = new JMenu("Messages");
+		JMenu settingsMenu = new JMenu("Settings");
 
-		fileMenu.add(createExitItem());
+		// Exit
+		fileMenu.add(exitItem());
 
-		messageMenu.add(createFactoryResetItem());
+		// Factory Reset
+		settingsMenu.add(factoryResetItem());
+		
+		settingsMenu.addSeparator();
+		
+		// Message Size
+		ButtonGroup bg = new ButtonGroup();
+		JRadioButtonMenuItem small = new JRadioButtonMenuItem("    Small");
+		JRadioButtonMenuItem medium = new JRadioButtonMenuItem("    Medium");
+		JRadioButtonMenuItem large = new JRadioButtonMenuItem("    Large");
+		small.setSelected(true);
+		
+		bg.add(small);
+		bg.add(medium);
+		bg.add(large);
+		
+		small.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Subliminal.width = 200;
+				Subliminal.height = 200;
+			}
+		});
+		
+		medium.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Subliminal.width = 300;
+				Subliminal.height = 300;
+				//Subliminal.setSize(900, 750);
+			}
+		});
+		
+		large.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Subliminal.width = 500;
+				Subliminal.height = 500;
+			}
+		});
+		
+		settingsMenu.add(small);
+		settingsMenu.add(medium);
+		settingsMenu.add(large);
+
+		// Add items to menu bar
 		menuBar.add(fileMenu);
-		menuBar.add(messageMenu);
+		menuBar.add(settingsMenu);
 
 		return menuBar;
 	}
 
-	private JMenuItem createExitItem() {
+	private JMenuItem exitItem() {
 		JMenuItem fileMenu = new JMenuItem(new AbstractAction("Exit") {
 
 			private static final long serialVersionUID = -6305470444317273153L;
@@ -178,7 +226,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		return fileMenu;
 	}
 
-	private JMenuItem createFactoryResetItem() {
+	private JMenuItem factoryResetItem() {
 		JMenuItem messageResetItem = new JMenuItem(new AbstractAction("    Restore Messages") {
 			private static final long serialVersionUID = -6305470444317273153L;
 
@@ -195,27 +243,19 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 
 		return messageResetItem;
 	}
+	
+	private JMenuItem messageSizeItem() {
+		
+		JMenuItem messageSizeItem = new JMenuItem(new AbstractAction("    Message Size") {
+			
+			private static final long serialVersionUID = 1L;
 
-	/**
-	 * A general-purpose method to vertically and horizontally center a window.
-	 * http://stackoverflow.com/questions/144892/how-to-center-a-window-in-java
-	 */
-	public static void centerFrame(JFrame frame) {
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
-		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
-		frame.setLocation(x, y);
-	}
-
-	/**
-	 * A general-purpose method to vertically and horizontally center a window.
-	 * http://stackoverflow.com/questions/144892/how-to-center-a-window-in-java
-	 */
-	public static void centerFrame(JDialog dialog) {
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (int) ((dimension.getWidth() - dialog.getWidth()) / 2);
-		int y = (int) ((dimension.getHeight() - dialog.getHeight()) / 2);
-		dialog.setLocation(x, y);
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		return messageSizeItem;
 	}
 	
 	@Override
@@ -271,7 +311,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 					messagePanel.getMessageListSelectionModel().getLastSelection());
 			controller.save();
 		} else {
-			JOptionPane.showMessageDialog(frame, "You must selected a message to edit.", "Warning",
+			JOptionPane.showMessageDialog(this, "You must selected a message to edit.", "Warning",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -281,7 +321,7 @@ public class MainFrame implements CategoryListener, MessageListener, SettingsLis
 		int[] selectedMsgs = messagePanel.getMessageListSelectionModel().getSelectedMsgIndices();
 		
 		if (selectedMsgs == null) {
-			JOptionPane.showMessageDialog(frame, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
 		} else {
 			controller.doInsertionSort(selectedMsgs);
 			new DeleteMessage(controller, messagePanel, selectedMsgs);

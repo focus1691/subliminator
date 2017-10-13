@@ -17,7 +17,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-import com.psychotechnology.Controller.Controller;
 import com.psychotechnology.util.IconFetch;
 
 public class ControlPanel extends JPanel implements ActionListener {

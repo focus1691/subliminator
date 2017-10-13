@@ -9,7 +9,7 @@ public class SubliminalTask implements Runnable {
 	private Controller controller;
 	private Subliminal subliminal;
 	private int messageIndex;
-
+	
 	public SubliminalTask(Controller controller, Subliminal subliminal) {
 		this.controller = controller;
 		this.subliminal = subliminal;
@@ -27,7 +27,7 @@ public class SubliminalTask implements Runnable {
 		}
 		subliminal.setVisible(false);
 	}
-
+	
 	public void setMessageIndex(int messageIndex) {
 		this.messageIndex = messageIndex;
 	}

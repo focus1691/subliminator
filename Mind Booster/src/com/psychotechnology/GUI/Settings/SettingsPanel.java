@@ -41,8 +41,8 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 	private Rectangle screenRect;
 	private Rectangle containerRect;
 	private double screenToPanelWRatio, screenToPanelHRatio;
-	private JSlider speedSlider, durationSlider;
-	private JLabel speedLabel, durationLabel;
+	private JSlider speedSlider, intervalSlider;
+	private JLabel speedLbl, intervalLbl;
 	private SettingsListener settingsListener;
 	private MultiMessageListener multiMessageListener;
 
@@ -52,7 +52,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		styleUI();
 
 		speedSlider.addChangeListener((ChangeListener) this);
-		durationSlider.addChangeListener((ChangeListener) this);
+		intervalSlider.addChangeListener((ChangeListener) this);
 
 		msgOne.addMouseListener(this);
 		msgTwo.addMouseListener(this);
@@ -112,17 +112,17 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 			JSlider source = (JSlider) ce.getSource();
 			if (!source.getValueIsAdjusting()) {
 				int speed = speedSlider.getValue();
-				int duration = durationSlider.getValue();
+				int duration = intervalSlider.getValue();
 				SettingsEvent settingsEvent = new SettingsEvent(this, speed, duration);
 				if (settingsListener != null) {
 					settingsListener.settingsEventOccurred(settingsEvent);
 				}
 			}
-		} else if (ce.getSource() == durationSlider) {
+		} else if (ce.getSource() == intervalSlider) {
 			JSlider source = (JSlider) ce.getSource();
 			if (!source.getValueIsAdjusting()) {
 				int speed = speedSlider.getValue();
-				int duration = durationSlider.getValue();
+				int duration = intervalSlider.getValue();
 				SettingsEvent settingsEvent = new SettingsEvent(this, speed, duration);
 				if (settingsListener != null) {
 					settingsListener.settingsEventOccurred(settingsEvent);
@@ -226,21 +226,21 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		picturePanel.add(pictureLabel, BorderLayout.CENTER);
 
 		speedSlider = new JSlider(0, 1000);
-		speedSlider.setToolTipText("Time for message to disappear");
+		speedSlider.setToolTipText("Message speed");
 		speedSlider.setValue(speed);
-		speedLabel = new JLabel("Display Every (ms):");
+		speedLbl = new JLabel("Display Every (ms):");
 		
-		durationSlider = new JSlider(0, 20);
-		durationSlider.setToolTipText("Time between messages in seconds");
-		durationSlider.setValue(interval);
-		durationLabel = new JLabel("Duration (s):");
+		intervalSlider = new JSlider(0, 20);
+		intervalSlider.setToolTipText("Delay between each message in seconds");
+		intervalSlider.setValue(interval);
+		intervalLbl = new JLabel("Interval (s):");
 
 		speedSlider.setUI(new CustomSliderUI(speedSlider));
-		durationSlider.setUI(new CustomSliderUI(durationSlider));
+		intervalSlider.setUI(new CustomSliderUI(intervalSlider));
 	}
 
 	public void styleUI() {
-		speedLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		speedLbl.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		speedSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
 		speedSlider.setMinorTickSpacing(50);
 		speedSlider.setMajorTickSpacing(1000);
@@ -248,13 +248,13 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		speedSlider.setPaintLabels(true);
 		speedSlider.setPreferredSize(new Dimension(300, 75));
 
-		durationLabel.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
-		durationSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
-		durationSlider.setMinorTickSpacing(20);
-		durationSlider.setMajorTickSpacing(2);
-		durationSlider.setPaintTicks(true);
-		durationSlider.setPaintLabels(true);
-		durationSlider.setPreferredSize(new Dimension(300, 75));
+		intervalLbl.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		intervalSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		intervalSlider.setMinorTickSpacing(20);
+		intervalSlider.setMajorTickSpacing(2);
+		intervalSlider.setPaintTicks(true);
+		intervalSlider.setPaintLabels(true);
+		intervalSlider.setPreferredSize(new Dimension(300, 75));
 	}
 
 	public void setupUI() {
@@ -283,7 +283,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
-		add(speedLabel, gc); // add component to the ContentPane
+		add(speedLbl, gc); // add component to the ContentPane
 
 		gc.gridx = 0;
 		gc.gridy = 1;
@@ -305,7 +305,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.insets = new Insets(100, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
-		add(durationLabel, gc); // add component to the ContentPane
+		add(intervalLbl, gc); // add component to the ContentPane
 
 		gc.gridx = 0;
 		gc.gridy = 1;
@@ -316,7 +316,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		gc.insets = new Insets(130, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
-		add(durationSlider, gc); // add component to the ContentPane
+		add(intervalSlider, gc); // add component to the ContentPane
 
 		gc.gridx = 0;
 		gc.gridy = 1;

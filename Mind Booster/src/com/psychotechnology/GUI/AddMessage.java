@@ -1,6 +1,5 @@
 package com.psychotechnology.GUI;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -62,7 +61,7 @@ public class AddMessage extends JDialog {
 			}
 		});
 		
-		MainFrame.centerFrame(this);
+		SetScreenLocation.centerFrame(this);
 		setSize(400, 150);
 		setModal(true);
 		setResizable(false);

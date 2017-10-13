@@ -30,8 +30,4 @@ public class PictureLabel extends JLabel {
 	public void setImageIcon(ImageIcon imageIcon) {
 		this.imageIcon = imageIcon;
 	}
-	
-	public void changeText() {
-		this.setText("aaaaa");
-	}
 }

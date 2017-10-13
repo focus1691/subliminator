@@ -16,16 +16,16 @@ import javax.swing.JPanel;
  * @author Joshua
  */
 public class SubliminalMessage extends JPanel {
-
+	
 	private static final long serialVersionUID = -7806435918984466627L;
 	private String message;
 	private Image img;
-
+	
 	public SubliminalMessage() {
 		setOpaque(false);
-		setPreferredSize(new Dimension(600, 300));
+		setPreferredSize(new Dimension(900, 450));
 	}
-
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -56,9 +56,11 @@ public class SubliminalMessage extends JPanel {
 	
 	public void setMessage(String message) {
 		this.message = message;
+		repaint();
 	}
 	
 	public void setImage(Image image) {
 		this.img = image;
+		repaint();
 	}
 }

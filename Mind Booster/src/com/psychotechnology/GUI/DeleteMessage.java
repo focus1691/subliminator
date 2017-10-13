@@ -48,7 +48,7 @@ public class DeleteMessage extends JDialog {
 			}
 		});
 
-		MainFrame.centerFrame(this);
+		SetScreenLocation.centerFrame(this);
 		setSize(1000, 350);
 		setModal(true);
 		setVisible(true);
