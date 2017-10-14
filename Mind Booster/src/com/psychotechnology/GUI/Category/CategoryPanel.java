@@ -133,7 +133,7 @@ public class CategoryPanel extends JPanel {
 			model.addElement(categories.get(i));
 		}
 	}
-
+	
 	/**
 	 * Used by anonymous class in MainFrame to listen for Category Selection
 	 * Event

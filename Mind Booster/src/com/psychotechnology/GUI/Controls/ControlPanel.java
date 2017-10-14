@@ -23,15 +23,10 @@ public class ControlPanel extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 1990836352559802232L;
 	private boolean active = false;
-	private JButton startBtn;
-	private JButton addBtn;
-	private JButton editBtn;
-	private JButton deleteBtn;
-	private JButton changeBtn;
+	private JButton startBtn, addBtn, editBtn, deleteBtn, changeBtn;
 	private JSeparator separator, separator2, separator3;
 	private ButtonGroup messageSelectorGroup;
-	private JRadioButton selectAllMsgBtn;
-	private JRadioButton deselectAllMsgBtn;
+	private JRadioButton selectBtn, deselectBtn;
 	private MessageListener messageListener;
 
 	public ControlPanel() {
@@ -45,8 +40,8 @@ public class ControlPanel extends JPanel implements ActionListener {
 		editBtn.addActionListener(this);
 		deleteBtn.addActionListener(this);
 		changeBtn.addActionListener(this);
-		selectAllMsgBtn.addActionListener(this);
-		deselectAllMsgBtn.addActionListener(this);
+		selectBtn.addActionListener(this);
+		deselectBtn.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -83,12 +78,12 @@ public class ControlPanel extends JPanel implements ActionListener {
 			if (messageListener != null) {
 				messageListener.editImageEventOccurred(messageEvent);
 			}
-		} else if (e.getSource() == selectAllMsgBtn) {
+		} else if (e.getSource() == selectBtn) {
 			MessageEvent messageEvent = new MessageEvent(this, true);
 			if (messageListener != null) {
 				messageListener.messageSelectionEventOccurred(messageEvent);
 			}
-		} else if (e.getSource() == deselectAllMsgBtn) {
+		} else if (e.getSource() == deselectBtn) {
 			MessageEvent messageEvent = new MessageEvent(this, false);
 			if (messageListener != null) {
 				messageListener.messageSelectionEventOccurred(messageEvent);
@@ -114,10 +109,10 @@ public class ControlPanel extends JPanel implements ActionListener {
 		separator2 = new JSeparator(SwingConstants.VERTICAL);
 		separator3 = new JSeparator(SwingConstants.VERTICAL);
 		messageSelectorGroup = new ButtonGroup();
-		deselectAllMsgBtn = new JRadioButton("Deselect All");
-		selectAllMsgBtn = new JRadioButton("Select All");
-		messageSelectorGroup.add(deselectAllMsgBtn);
-		messageSelectorGroup.add(selectAllMsgBtn);
+		deselectBtn = new JRadioButton("Deselect All");
+		selectBtn = new JRadioButton("Select All");
+		messageSelectorGroup.add(deselectBtn);
+		messageSelectorGroup.add(selectBtn);
 	}
 
 	/**
@@ -177,10 +172,10 @@ public class ControlPanel extends JPanel implements ActionListener {
 		separator3.setOpaque(true);
 		separator3.setBackground(Color.decode("#1060a1"));
 
-		deselectAllMsgBtn.setForeground(Color.WHITE);
-		deselectAllMsgBtn.setPreferredSize(new Dimension(100, 30));
-		selectAllMsgBtn.setForeground(Color.WHITE);
-		selectAllMsgBtn.setPreferredSize(new Dimension(100, 30));
+		deselectBtn.setForeground(Color.WHITE);
+		deselectBtn.setPreferredSize(new Dimension(100, 30));
+		selectBtn.setForeground(Color.WHITE);
+		selectBtn.setPreferredSize(new Dimension(100, 30));
 	}
 
 	/**
@@ -190,8 +185,8 @@ public class ControlPanel extends JPanel implements ActionListener {
 	private void setupUI() {
 		
 		JPanel container = new JPanel(new FlowLayout());
-		container.add(selectAllMsgBtn);
-		container.add(deselectAllMsgBtn);
+		container.add(selectBtn);
+		container.add(deselectBtn);
 		
 		JPanel container2 = new JPanel(new FlowLayout());
 		container2.add(addBtn);
