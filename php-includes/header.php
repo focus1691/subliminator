@@ -54,7 +54,9 @@ ini_set('session.cookie_secure', 1);
         <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		
         <!--Main CSS-->
-        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="preCSS/style.css" rel="stylesheet" type="text/css"/>
+
+        <link href="preCSS/contact.css" rel="stylesheet" type="text/css"/>
 
         <!--Media Queries CSS-->
         <link href="css/media.css" rel="stylesheet" type="text/css"/>

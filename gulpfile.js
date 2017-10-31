@@ -11,7 +11,11 @@ gulp.task('browserSync', function() {
 			baseDir: './'
 		},
 	})
-})
+});
+
+gulp.task('hello', function() {
+  console.log('Hello Zell');
+});
 
 gulp.task('minify-css', function() {
 	return gulp.src('preCSS/*.css')
