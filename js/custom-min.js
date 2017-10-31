@@ -1,1 +1,0 @@
-function bodyBottom(){var o=$(".footer").height();$("body").css("margin-bottom",o+30+"px")}window.onresize=function(){bodyBottom()},window.onload=function(){bodyBottom()};
