@@ -211,8 +211,15 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void editImageEventOccurred(MessageEvent e) {
 		//int index = messagePanel.getMessageListSelectionModel().getLeadSelectionIndex();
+		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
+		//JOptionPane.showMessageDialog(null, messagePanel.getMessageListSelectionModel().getLastSelection());
+		if (messagePanel.getMessageListSelectionModel().getLastSelection() <0) {
+			JOptionPane.showMessageDialog(this, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);	
+			return;
+		}			
 		Message message = (Message) messagePanel.getMessageList().getSelectedValue();
-		new EditImage(controller, message.getImagePath());
+		new EditImage(controller, message, messagePanel, messagePanel.getMessageListSelectionModel().getLastSelection());
+		controller.save();
 	}
 
 	@Override

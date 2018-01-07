@@ -44,7 +44,10 @@ public class MessageListCellRenderer extends DefaultListCellRenderer {
 		
 		if (isSelected) {
 			ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
-			
+			System.out.println("Message Image: "+message.getImagePath()+"=> is null: "+(icon==null));
+			if(icon ==null)
+				 icon = new ImageIcon(message.getImagePath());
+			System.out.println("Message Image: "+message.getImagePath()+"=> is null After: "+(icon==null));
 			SettingsPanel.pictureLabel.setImageIcon(icon);
 			SettingsPanel.pictureLabel.repaint();
 			

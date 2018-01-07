@@ -222,9 +222,10 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		picturePanel = new JPanel();
 		picture = new ImageIcon();
 		pictureLabel = new PictureLabel(picture);
+		
 		picturePanel.setLayout(new BorderLayout());
 		picturePanel.add(pictureLabel, BorderLayout.CENTER);
-
+		//pictureLabel.setText("Demo");
 		speedSlider = new JSlider(0, 1000);
 		speedSlider.setToolTipText("Message speed");
 		speedSlider.setValue(speed);

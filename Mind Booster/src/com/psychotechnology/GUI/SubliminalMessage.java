@@ -20,6 +20,9 @@ public class SubliminalMessage extends JPanel {
 	private static final long serialVersionUID = -7806435918984466627L;
 	private String message;
 	private Image img;
+	private Font message_font;
+	private Color message_color;
+	private boolean isTextOnly;
 	
 	public SubliminalMessage() {
 		setOpaque(false);
@@ -38,16 +41,16 @@ public class SubliminalMessage extends JPanel {
 		
 		g2d.clearRect(0, 0, getWidth(), getHeight());
 		
-		g2d.setFont(new Font("Courier New", Font.BOLD, 24));
+		g2d.setFont(message_font/*new Font("Courier New", Font.BOLD, 24)*/);
 		g2d.setColor(Color.WHITE);
         g2d.fillRect(x,
                 40 - metrics.getAscent(),
                 (int) rect.getWidth(),
                 (int) rect.getHeight());
-        g2d.setColor(Color.BLACK);
+        g2d.setColor(message_color/*Color.RED*/);
 		g2d.drawString(message, x, 40);
 		
-		if (img != null) {
+		if (img != null && !isTextOnly) {
 			x = (this.getWidth() - img.getWidth(null)) / 2;
 			y = (this.getHeight() - img.getHeight(null)) / 2;
 			g2d.drawImage(img, x, y, this);
@@ -63,4 +66,18 @@ public class SubliminalMessage extends JPanel {
 		this.img = image;
 		repaint();
 	}
+	public void setFont(Font msgFont) {
+		this.message_font = msgFont;
+		repaint();
+	}	
+	public void setColor(Color msgColor) {
+		this.message_color = msgColor;
+		//System.out.println("Color: "+this.message_color);
+		repaint();
+	}	
+	public void setIsTextOnly(boolean isTextOnly) {
+		this.isTextOnly = isTextOnly;
+		//System.out.println("Color: "+this.message_color);
+		repaint();
+	}		
 }

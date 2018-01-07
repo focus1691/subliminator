@@ -29,7 +29,7 @@ public class DeleteMessage extends JDialog {
 	private JLabel deleteMsg;
 	private JButton deleteBtn;
 
-	public DeleteMessage(Controller controller, MessagePanel messagePanel, int[] selectedMsgs) {
+	public DeleteMessage(final Controller controller,final MessagePanel messagePanel, final int[] selectedMsgs) {
 
 		this.controller = controller;
 		initComponents();
