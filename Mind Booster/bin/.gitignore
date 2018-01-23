@@ -1,1 +1,12 @@
-/com
+/com/
+/controller/
+/gui/
+/controls/
+/font/
+/category/
+/message/
+/utility/
+/images/
+/model/
+/settings/
+/menu/
