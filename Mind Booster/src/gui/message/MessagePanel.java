@@ -28,8 +28,8 @@ import javax.swing.border.EmptyBorder;
 
 import constants.MessageTense;
 import controller.MessageController;
-import controls.MessageEvent;
-import controls.MessageListener;
+import gui.controls.MessageEvent;
+import gui.controls.MessageListener;
 import gui.custom.BlueCurvedScrollBar;
 import gui.custom.RoundButton;
 import gui.util.IconFetch;

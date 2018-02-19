@@ -13,12 +13,12 @@ import javax.swing.UIManager;
 
 import controller.MessageController;
 import controller.NetworkController;
-import controls.ControlPanel;
-import controls.MessageEvent;
-import controls.MessageListener;
 import gui.category.CategoryEvent;
 import gui.category.CategoryListener;
 import gui.category.CategoryPanel;
+import gui.controls.ControlPanel;
+import gui.controls.MessageEvent;
+import gui.controls.MessageListener;
 import gui.message.MessagePanel;
 import gui.message.dialogs.AddMessage;
 import gui.message.dialogs.DeleteMessage;

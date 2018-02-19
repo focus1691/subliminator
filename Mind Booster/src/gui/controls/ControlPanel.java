@@ -1,4 +1,4 @@
-package controls;
+package gui.controls;
 
 import java.awt.Color;
 import java.awt.Dimension;

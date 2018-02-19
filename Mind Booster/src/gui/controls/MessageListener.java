@@ -1,4 +1,4 @@
-package controls;
+package gui.controls;
 
 import java.util.EventListener;
 
