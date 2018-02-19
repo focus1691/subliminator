@@ -6,11 +6,11 @@ import gui.Subliminal;
 
 public class SubliminalTask implements Runnable {
 
-	private Controller controller;
+	private MessageController controller;
 	private Subliminal subliminal;
 	private int messageIndex;
 	
-	public SubliminalTask(Controller controller, Subliminal subliminal) {
+	public SubliminalTask(MessageController controller, Subliminal subliminal) {
 		this.controller = controller;
 		this.subliminal = subliminal;
 	}

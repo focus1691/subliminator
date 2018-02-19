@@ -1,4 +1,4 @@
-package gui;
+package gui.message.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics2D;
@@ -23,7 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import constants.MessageTense;
-import controller.Controller;
+import controller.MessageController;
+import gui.SetScreenLocation;
 import gui.message.MessagePanel;
 import model.Message;
 import utility.IconFetch;
@@ -31,7 +32,7 @@ import utility.IconFetch;
 public class EditImage extends JDialog {
 
 	private static final long serialVersionUID = 8614724076980880135L;
-	private Controller controller;
+	private MessageController controller;
 	private JLabel deleteMsg;
 	private JButton deleteBtn;
 	private JLabel oldImg, newImg;
@@ -45,7 +46,7 @@ public class EditImage extends JDialog {
 	private Message message;
 	private int selected_message;
 	private MessagePanel messagePanel;
-	public EditImage(Controller controller, Message message, MessagePanel messagePanel, int index) {
+	public EditImage(MessageController controller, Message message, MessagePanel messagePanel, int index) {
 		this.controller = controller;
 		this.message=message;
 		this.messagePanel=messagePanel;

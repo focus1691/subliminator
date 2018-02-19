@@ -19,7 +19,7 @@ import gui.Subliminal;
 import model.Category;
 import model.Message;
 
-public class Controller {
+public class MessageController {
 	public static boolean messagesOn = false;
 	private boolean userPremium = false;
 	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -32,13 +32,10 @@ public class Controller {
 	private SubliminalTask topLeft, topRight, center, botLeft, botRight;
 	//private Subliminal topLeft, topRight, center, botLeft, botRight;
 	private List<Message> activeMessages;
-	private Network network;
 	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
 	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
 	
-	public Controller() {
-		network = new Network();
-		// network.checkIfRunning();
+	public MessageController() {
 		
 		topLeft = new SubliminalTask(this, new Subliminal(ScreenPosition.TOPLEFT));
 		topRight = new SubliminalTask(this, new Subliminal(ScreenPosition.TOPRIGHT));
@@ -135,7 +132,7 @@ public class Controller {
 	}
 
 	public static void setMessagesOn(boolean messagesOn) {
-		Controller.messagesOn = messagesOn;
+		MessageController.messagesOn = messagesOn;
 	}
 
 	/**
@@ -283,13 +280,5 @@ public class Controller {
 	 */
 	public void setActiveMessages(List<Message> activeMessages) {
 		this.activeMessages = activeMessages;
-	}
-
-	public Network getNetwork() {
-		return network;
-	}
-
-	public void setNetwork(Network network) {
-		this.network = network;
 	}
 }

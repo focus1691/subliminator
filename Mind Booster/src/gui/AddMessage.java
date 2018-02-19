@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import constants.MessageTense;
-import controller.Controller;
+import controller.MessageController;
 import controller.Validation;
 import gui.message.MessagePanel;
 import model.Message;
@@ -24,7 +24,7 @@ import model.Message;
 public class AddMessage extends JDialog {
 	
 	private static final long serialVersionUID = 1447537632437945694L;
-	private Controller controller;
+	private MessageController controller;
 	private JLabel firstPersonLabel;
 	private JLabel secondPersonLabel;
 	private JTextField firstPersonMsg;
@@ -36,7 +36,7 @@ public class AddMessage extends JDialog {
 	private JCheckBox text_only_1;
 	private JCheckBox text_only_2;
 
-	public AddMessage(final Controller controller, final MessagePanel messagePanel) {
+	public AddMessage(final MessageController controller, final MessagePanel messagePanel) {
 		this.controller = controller;
 		initComponents();
 		setupUI();

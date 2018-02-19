@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import constants.MessageTense;
-import controller.Controller;
+import controller.MessageController;
 import controls.MessageEvent;
 import controls.MessageListener;
 import gui.BlueCurvedScrollBar;
@@ -50,10 +50,10 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private ImageIcon activeIcon, inactiveIcon;
 	private JPopupMenu popupMenu;
 	private JMenuItem addItem, editItem, deleteItem, changeItem;
-	private Controller controller;
+	private MessageController controller;
 	private MessageListener messageListener;
 
-	public MessagePanel(Controller controller) {
+	public MessagePanel(MessageController controller) {
 		this.controller = controller;
 		initComponents();
 		styleUI();

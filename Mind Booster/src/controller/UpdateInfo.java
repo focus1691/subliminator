@@ -67,7 +67,7 @@ public class UpdateInfo extends JFrame{
         pan1.add(scp, BorderLayout.CENTER);
         this.add(pan1);
         pack();
-        show();
+        setVisible(true);
         this.setSize(300, 200);
     }
     private void update()

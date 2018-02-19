@@ -1,4 +1,4 @@
-package gui;
+package gui.message.dialogs;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,14 +14,16 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import constants.MessageTense;
-import controller.Controller;
+import controller.MessageController;
 import controller.Validation;
+import gui.JFontChooser;
+import gui.SetScreenLocation;
 import gui.message.MessagePanel;
 
 public class EditMessage extends JDialog {
 
 	private static final long serialVersionUID = 5470112838506529493L;
-	private Controller controller;
+	private MessageController controller;
 	private JLabel firstPersonLbl, secondPersonLbl;
 	private JTextField firstPersonMsg, secondPersonMsg;
 	private JButton submitBtn;
@@ -31,7 +33,7 @@ public class EditMessage extends JDialog {
 	private JCheckBox text_only_1;
 	private JCheckBox text_only_2;
 	
-	public EditMessage(final Controller controller,final MessagePanel messagePanel, final int index) {
+	public EditMessage(final MessageController controller,final MessagePanel messagePanel, final int index) {
 		this.controller = controller;
 		initComponents(index);
 		setupUI();

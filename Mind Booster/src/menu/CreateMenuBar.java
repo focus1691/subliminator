@@ -11,7 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
-import controller.Controller;
+import controller.MessageController;
 import gui.Subliminal;
 import gui.message.MessagePanel;
 import utility.IconFetch;
@@ -19,10 +19,10 @@ import utility.IconFetch;
 public class CreateMenuBar extends JMenuBar {
 	
 	private static final long serialVersionUID = 2825424567069068134L;
-	private Controller controller;
+	private MessageController controller;
 	private MessagePanel messagePanel;
 
-	public CreateMenuBar(Controller controller, MessagePanel messagePanel) {
+	public CreateMenuBar(MessageController controller, MessagePanel messagePanel) {
 		
 	this.controller = controller;
 	this.messagePanel = messagePanel;

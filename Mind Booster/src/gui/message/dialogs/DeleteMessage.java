@@ -1,4 +1,4 @@
-package gui;
+package gui.message.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,20 +16,22 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import constants.MessageTense;
-import controller.Controller;
+import controller.MessageController;
+import gui.BlueCurvedScrollBar;
+import gui.SetScreenLocation;
 import gui.message.MessagePanel;
 
 public class DeleteMessage extends JDialog {
 	
 	private static final long serialVersionUID = 5549429493881002578L;
-	private Controller controller;
+	private MessageController controller;
 	private JScrollPane scroller;
 	private JTextArea selectedMessagesTxt;
 	private JPanel panel;
 	private JLabel deleteMsg;
 	private JButton deleteBtn;
 
-	public DeleteMessage(final Controller controller,final MessagePanel messagePanel, final int[] selectedMsgs) {
+	public DeleteMessage(final MessageController controller,final MessagePanel messagePanel, final int[] selectedMsgs) {
 
 		this.controller = controller;
 		initComponents();

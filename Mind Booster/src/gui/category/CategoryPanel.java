@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import controller.Controller;
+import controller.MessageController;
 import gui.BlueCurvedScrollBar;
 import model.Category;
 import utility.FontPicker;
@@ -25,14 +25,14 @@ import utility.FontPicker;
 public class CategoryPanel extends JPanel {
 
 	private static final long serialVersionUID = 4919411682587534256L;
-	private Controller controller;
+	private MessageController controller;
 	private JScrollPane scroller;
 	private JLabel header;
 	private DefaultListModel<Category> model = new DefaultListModel<>();
 	private JList<Category> categoryList;
 	private CategoryListener categorySelectionListener;
 
-	public CategoryPanel(Controller controller) {
+	public CategoryPanel(MessageController controller) {
 		this.controller = controller;
 		initComponents();
 		styleUI();
