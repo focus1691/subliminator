@@ -24,10 +24,10 @@ import javax.swing.JTextArea;
 
 import constants.MessageTense;
 import controller.MessageController;
-import gui.SetScreenLocation;
 import gui.message.MessagePanel;
+import gui.util.IconFetch;
+import gui.util.SetScreenLocation;
 import model.Message;
-import utility.IconFetch;
 
 public class EditImage extends JDialog {
 

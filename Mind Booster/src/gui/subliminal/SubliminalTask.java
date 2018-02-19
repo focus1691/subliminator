@@ -1,8 +1,8 @@
-package controller;
+package gui.subliminal;
 
 import java.util.concurrent.TimeUnit;
 
-import gui.Subliminal;
+import controller.MessageController;
 
 public class SubliminalTask implements Runnable {
 

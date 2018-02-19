@@ -15,43 +15,40 @@ import java.util.concurrent.TimeUnit;
 import constants.MessageTense;
 import constants.ScreenPosition;
 import data.InBuiltCategory;
-import gui.Subliminal;
+import gui.subliminal.Subliminal;
+import gui.subliminal.SubliminalTask;
 import model.Category;
 import model.Message;
 
 public class MessageController {
 	public static boolean messagesOn = false;
-	private boolean userPremium = false;
 	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-	private int startDelay = 0; // Milliseconds
-	private int speed = 700; // Milliseconds
-	private int interval = 4; // Seconds
+	private int startDelay = 0; // ms
+	private int speed = 700; // ms
+	private int interval = 4; // s
 	private int categoryIndex;
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
-	private SubliminalTask topLeft, topRight, center, botLeft, botRight;
-	//private Subliminal topLeft, topRight, center, botLeft, botRight;
+	private SubliminalTask topLeftTask, topRightTask, centerTask, botLeftTask, botRightTask;
 	private List<Message> activeMessages;
-	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
-	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
-	
+
 	public MessageController() {
-		
-		topLeft = new SubliminalTask(this, new Subliminal(ScreenPosition.TOPLEFT));
-		topRight = new SubliminalTask(this, new Subliminal(ScreenPosition.TOPRIGHT));
-		center = new SubliminalTask(this, new Subliminal(ScreenPosition.CENTER));
-		botLeft = new SubliminalTask(this, new Subliminal(ScreenPosition.BOTLEFT));
-		botRight = new SubliminalTask(this, new Subliminal(ScreenPosition.BOTRIGHT));
+
+		topLeftTask = new SubliminalTask(this, new Subliminal(ScreenPosition.TOPLEFT));
+		topRightTask = new SubliminalTask(this, new Subliminal(ScreenPosition.TOPRIGHT));
+		centerTask = new SubliminalTask(this, new Subliminal(ScreenPosition.CENTER));
+		botLeftTask = new SubliminalTask(this, new Subliminal(ScreenPosition.BOTLEFT));
+		botRightTask = new SubliminalTask(this, new Subliminal(ScreenPosition.BOTRIGHT));
 		
 		messageTense = MessageTense.FIRST_PERSON;
 		categoryIndex = 0;
 		activeMessages = new ArrayList<Message>();
 		
-		load();
+		loadStoredLists();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private void load() {
+	private void loadStoredLists() {
 		try {
 			FileInputStream fileIn = new FileInputStream("data.cats");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -60,7 +57,6 @@ public class MessageController {
 			fileIn.close();
 		} catch (IOException i) {
 			loadInBuiltCategories();
-			save();
 		} catch (ClassNotFoundException c) {
 			c.printStackTrace();
 			return;
@@ -88,7 +84,8 @@ public class MessageController {
 	/**
 	 * Start/Stop the messages
 	 * 
-	 * @throws InterruptedException check for multithreading exceptions
+	 * @throws InterruptedException
+	 *             check for multithreading exceptions
 	 */
 	public synchronized void changeMessageActivity(boolean msgLocationsSelected[]) throws InterruptedException {
 		messagesOn = (messagesOn == true) ? false : true;
@@ -97,36 +94,36 @@ public class MessageController {
 				scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 			}
 			if (msgLocationsSelected[0] == true) {
-				scheduledExecutorService.scheduleWithFixedDelay(topLeft, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(topLeftTask, startDelay, interval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[1] == true) {
-				scheduledExecutorService.scheduleWithFixedDelay(topRight, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(topRightTask, startDelay, interval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[2] == true) {
-				scheduledExecutorService.scheduleWithFixedDelay(botLeft, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(botLeftTask, startDelay, interval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[3] == true) {
-				scheduledExecutorService.scheduleWithFixedDelay(botRight, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(botRightTask, startDelay, interval, TimeUnit.SECONDS);
 			}
 			if (msgLocationsSelected[4] == true) {
-				scheduledExecutorService.scheduleWithFixedDelay(center, startDelay, interval, TimeUnit.SECONDS);
-				scheduledExecutorService.scheduleWithFixedDelay(topRight, startDelay, interval, TimeUnit.SECONDS);
-				scheduledExecutorService.scheduleWithFixedDelay(topLeft, startDelay, interval, TimeUnit.SECONDS);
-				scheduledExecutorService.scheduleWithFixedDelay(botRight, startDelay, interval, TimeUnit.SECONDS);
-				scheduledExecutorService.scheduleWithFixedDelay(botLeft, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(centerTask, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(topRightTask, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(topLeftTask, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(botRightTask, startDelay, interval, TimeUnit.SECONDS);
+				scheduledExecutorService.scheduleWithFixedDelay(botLeftTask, startDelay, interval, TimeUnit.SECONDS);
 			}
 		} else {
-			 scheduledExecutorService.shutdown();
-			 System.gc();
+			scheduledExecutorService.shutdown();
+			System.gc();
 		}
 	}
-	
+
 	public synchronized int randInt(int min, int max) {
 		Random rand = new Random();
 		int randomNum = rand.nextInt((max - min) + 1) + min;
 		return randomNum;
 	}
-	
+
 	public static boolean isMessagesOn() {
 		return messagesOn;
 	}
@@ -159,7 +156,6 @@ public class MessageController {
 	}
 
 	public String getActiveCategoryName() {
-
 		return categories.get(categoryIndex).getCategoryName();
 	}
 
@@ -174,7 +170,8 @@ public class MessageController {
 
 	/**
 	 * 
-	 * @param catIndex 	category index
+	 * @param catIndex
+	 *            category index
 	 * @return List of all messages in a selected category
 	 */
 	public List<Message> getMessagesFromActiveTenseCategory() {
@@ -187,9 +184,11 @@ public class MessageController {
 		}
 		return messages;
 	}
+
 	/**
 	 * 
-	 * @param catIndex 	category index
+	 * @param catIndex
+	 *            category index
 	 * @return List of all messages in a selected category
 	 */
 	public List<Message> getMessagesFromTenseCategory(MessageTense messageTense) {
@@ -209,21 +208,6 @@ public class MessageController {
 
 	public Message getMessageFromCategory(int categoryIdx, int msgIdx, MessageTense tense) {
 		return categories.get(categoryIdx).getMessages().get(tense.getTenseVal()).get(msgIdx);
-	}
-
-	public int[] doInsertionSort(int[] input) {
-
-		int temp;
-		for (int i = 1; i < input.length; i++) {
-			for (int j = i; j > 0; j--) {
-				if (input[j] < input[j - 1]) {
-					temp = input[j];
-					input[j] = input[j - 1];
-					input[j - 1] = temp;
-				}
-			}
-		}
-		return input;
 	}
 
 	public int getStartDelay() {
@@ -265,19 +249,11 @@ public class MessageController {
 	public void setMessageTense(MessageTense messageTense) {
 		this.messageTense = messageTense;
 	}
-	
-	/**
-	 * 
-	 * @return all selected messages
-	 */
+
 	public List<Message> getActiveMessages() {
 		return activeMessages;
 	}
 
-	/**
-	 * 
-	 * @param activeMessages list of selected messages
-	 */
 	public void setActiveMessages(List<Message> activeMessages) {
 		this.activeMessages = activeMessages;
 	}

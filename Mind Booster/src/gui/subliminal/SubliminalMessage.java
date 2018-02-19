@@ -1,4 +1,4 @@
-package gui;
+package gui.subliminal;
 
 import java.awt.Color;
 import java.awt.Dimension;

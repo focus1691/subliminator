@@ -23,10 +23,11 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import gui.MessageButton;
+import gui.CustomSliderUI;
 import gui.PictureLabel;
+import gui.custom.MessageButton;
+import gui.util.IconFetch;
 import utility.FontPicker;
-import utility.IconFetch;
 
 public class SettingsPanel extends JPanel implements ChangeListener, MouseListener {
 

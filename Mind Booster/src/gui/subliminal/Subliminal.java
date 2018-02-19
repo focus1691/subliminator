@@ -1,4 +1,4 @@
-package gui;
+package gui.subliminal;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -6,9 +6,10 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import model.Message;
 import constants.ScreenPosition;
-import utility.IconFetch;
+import gui.util.IconFetch;
+import gui.util.SetScreenLocation;
+import model.Message;
 
 public class Subliminal extends JFrame {
 

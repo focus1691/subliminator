@@ -17,10 +17,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-import utility.IconFetch;
+import gui.util.IconFetch;
 
 public class ControlPanel extends JPanel implements ActionListener {
-	
+
 	private static final long serialVersionUID = 1990836352559802232L;
 	private boolean active = false;
 	private JButton startBtn, addBtn, editBtn, deleteBtn, changeBtn;
@@ -90,7 +90,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method initializes Control Panel components
 	 */
@@ -158,16 +158,15 @@ public class ControlPanel extends JPanel implements ActionListener {
 		changeBtn.setForeground(Color.WHITE);
 		changeBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/change.jpg")));
 		changeBtn.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		
+
 		separator.setPreferredSize(new Dimension(1, 30));
 		separator.setOpaque(true);
 		separator.setBackground(Color.decode("#1060a1"));
-		
+
 		separator2.setPreferredSize(new Dimension(1, 30));
 		separator2.setOpaque(true);
 		separator2.setBackground(Color.decode("#1060a1"));
-		
+
 		separator3.setPreferredSize(new Dimension(1, 30));
 		separator3.setOpaque(true);
 		separator3.setBackground(Color.decode("#1060a1"));
@@ -183,11 +182,11 @@ public class ControlPanel extends JPanel implements ActionListener {
 	 * Panel
 	 */
 	private void setupUI() {
-		
+
 		JPanel container = new JPanel(new FlowLayout());
 		container.add(selectBtn);
 		container.add(deselectBtn);
-		
+
 		JPanel container2 = new JPanel(new FlowLayout());
 		container2.add(addBtn);
 		container2.add(separator);
@@ -196,15 +195,15 @@ public class ControlPanel extends JPanel implements ActionListener {
 		container2.add(deleteBtn);
 		container2.add(separator3);
 		container2.add(changeBtn);
-		
+
 		container.setBackground(Color.decode("#1975bf"));
 		container2.setBackground(Color.decode("#1975bf"));
 		setBackground(Color.decode("#1975bf"));
-		
+
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
-		
+
 		// Start Button
 		gc.gridx = 0;
 		gc.gridy = 0;
@@ -216,7 +215,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		gc.anchor = GridBagConstraints.LINE_START;
 		gc.fill = GridBagConstraints.VERTICAL;
 		add(startBtn, gc);
-		
+
 		gc.gridx = 1;
 		gc.gridy = 0;
 		gc.gridheight = 1;
@@ -227,7 +226,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		gc.anchor = GridBagConstraints.LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(container, gc);
-		
+
 		gc.gridx = 1;
 		gc.gridy = 1;
 		gc.gridheight = 1;

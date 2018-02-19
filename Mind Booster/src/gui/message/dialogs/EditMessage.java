@@ -15,10 +15,10 @@ import javax.swing.JTextField;
 
 import constants.MessageTense;
 import controller.MessageController;
-import controller.Validation;
 import gui.JFontChooser;
-import gui.SetScreenLocation;
 import gui.message.MessagePanel;
+import gui.util.SetScreenLocation;
+import utility.Validator;
 
 public class EditMessage extends JDialog {
 
@@ -47,7 +47,7 @@ public class EditMessage extends JDialog {
 				boolean is_text_only1=text_only_1.isSelected();
 				boolean is_text_only2=text_only_2.isSelected();
 
-				if (Validation.isMoreThanThreeChars(msg1) && Validation.isMoreThanThreeChars(msg2)) {
+				if (Validator.isMoreThanThreeChars(msg1) && Validator.isMoreThanThreeChars(msg2)) {
 					
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).get(index).setMessage(msg1);
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).get(index).setMessage(msg2);

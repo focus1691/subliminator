@@ -13,8 +13,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import gui.settings.SettingsPanel;
+import gui.util.IconFetch;
 import model.Message;
-import utility.IconFetch;
 
 public class MessageListCellRenderer extends DefaultListCellRenderer {
 

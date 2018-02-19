@@ -1,4 +1,4 @@
-package gui;
+package gui.custom;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,9 +7,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import utility.CustomColor;
+import constants.CustomColor;
+import gui.util.IconFetch;
 import utility.FontPicker;
-import utility.IconFetch;
 
 public class MessageButton extends JLabel {
 

@@ -10,8 +10,8 @@ import javax.swing.JList;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
+import constants.CustomColor;
 import model.Category;
-import utility.CustomColor;
 
 public class CategoryListCellRenderer extends DefaultListCellRenderer {
 	

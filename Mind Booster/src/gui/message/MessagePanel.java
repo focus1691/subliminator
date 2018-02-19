@@ -30,11 +30,11 @@ import constants.MessageTense;
 import controller.MessageController;
 import controls.MessageEvent;
 import controls.MessageListener;
-import gui.BlueCurvedScrollBar;
+import gui.custom.BlueCurvedScrollBar;
+import gui.custom.RoundButton;
+import gui.util.IconFetch;
 import model.Message;
 import utility.FontPicker;
-import utility.IconFetch;
-import utility.RoundButton;
 
 public class MessagePanel extends JPanel implements ActionListener, MouseListener {
 

@@ -1,4 +1,4 @@
-package gui;
+package gui.message.dialogs;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,9 +17,11 @@ import javax.swing.JTextField;
 
 import constants.MessageTense;
 import controller.MessageController;
-import controller.Validation;
+import gui.JFontChooser;
 import gui.message.MessagePanel;
+import gui.util.SetScreenLocation;
 import model.Message;
+import utility.Validator;
 
 public class AddMessage extends JDialog {
 	
@@ -50,7 +52,7 @@ public class AddMessage extends JDialog {
 				boolean is_text_only1=text_only_1.isSelected();
 				boolean is_text_only2=text_only_2.isSelected();
 				
-				if (Validation.isMoreThanThreeChars(msg1) && Validation.isMoreThanThreeChars(msg2)) {
+				if (Validator.isMoreThanThreeChars(msg1) && Validator.isMoreThanThreeChars(msg2)) {
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).add(new Message(msg1, "/Images/7.jpg", message_font, message_color, is_text_only1));
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).add(new Message(msg2, "/Images/7.jpg", message_font, message_color, is_text_only2));
 					

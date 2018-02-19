@@ -18,7 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import controller.MessageController;
-import gui.BlueCurvedScrollBar;
+import gui.custom.BlueCurvedScrollBar;
 import model.Category;
 import utility.FontPicker;
 

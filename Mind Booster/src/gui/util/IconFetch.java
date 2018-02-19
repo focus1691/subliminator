@@ -1,4 +1,4 @@
-package utility;
+package gui.util;
 
 import java.awt.Graphics2D;
 import java.awt.Image;

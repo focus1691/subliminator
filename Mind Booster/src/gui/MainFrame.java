@@ -20,14 +20,17 @@ import gui.category.CategoryEvent;
 import gui.category.CategoryListener;
 import gui.category.CategoryPanel;
 import gui.message.MessagePanel;
+import gui.message.dialogs.AddMessage;
 import gui.message.dialogs.DeleteMessage;
 import gui.message.dialogs.EditImage;
 import gui.message.dialogs.EditMessage;
 import gui.settings.SettingsEvent;
 import gui.settings.SettingsListener;
 import gui.settings.SettingsPanel;
+import gui.util.SetScreenLocation;
 import menu.CreateMenuBar;
 import model.Message;
+import utility.Sorter;
 
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 
@@ -210,7 +213,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		if (selectedMsgs == null) {
 			JOptionPane.showMessageDialog(this, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
 		} else {
-			controller.doInsertionSort(selectedMsgs);
+			Sorter.getInstance().doInsertionSort(selectedMsgs);
 			new DeleteMessage(controller, messagePanel, selectedMsgs);
 			controller.save();
 		}

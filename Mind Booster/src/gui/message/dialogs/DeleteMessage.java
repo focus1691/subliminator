@@ -17,9 +17,9 @@ import javax.swing.JTextArea;
 
 import constants.MessageTense;
 import controller.MessageController;
-import gui.BlueCurvedScrollBar;
-import gui.SetScreenLocation;
+import gui.custom.BlueCurvedScrollBar;
 import gui.message.MessagePanel;
+import gui.util.SetScreenLocation;
 
 public class DeleteMessage extends JDialog {
 	
