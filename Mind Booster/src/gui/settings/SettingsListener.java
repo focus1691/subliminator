@@ -1,4 +1,4 @@
-package settings;
+package gui.settings;
 
 import java.util.EventListener;
 

@@ -1,4 +1,4 @@
-package settings;
+package gui.settings;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package message;
+package gui.message;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
@@ -141,8 +141,8 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		firstPersonLabel = new JLabel("1st Person");
 		secondPersonLabel = new JLabel("2nd Person");
 
-		activeIcon = IconFetch.getInstance().getIcon("/com/psychotechnology/images/man-active.jpg");
-		inactiveIcon = IconFetch.getInstance().getIcon("/com/psychotechnology/images/man-inactive.jpg");
+		activeIcon = IconFetch.getInstance().getIcon("/images/man-active.jpg");
+		inactiveIcon = IconFetch.getInstance().getIcon("/images/man-inactive.jpg");
 		
 		firstPersonBtn = new RoundButton(activeIcon);
 		secondPersonBtn = new RoundButton(inactiveIcon);
@@ -259,19 +259,19 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		messageMenu.setBorder(BorderFactory.createRaisedBevelBorder());
 
 		addItem = new JMenuItem("Add");
-		addItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/addItem.png"));
+		addItem.setIcon(IconFetch.getInstance().getIcon("/images/addItem.png"));
 		addItem.setMargin(new Insets(5, 0, 0, 0));
 
 		editItem = new JMenuItem("Edit");
-		editItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/editItem.png"));
+		editItem.setIcon(IconFetch.getInstance().getIcon("/images/editItem.png"));
 		editItem.setMargin(new Insets(10, 0, 2, 0));
 
 		deleteItem = new JMenuItem("Delete");
-		deleteItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/deleteItem.png"));
+		deleteItem.setIcon(IconFetch.getInstance().getIcon("/images/deleteItem.png"));
 		deleteItem.setMargin(new Insets(10, 2, 0, 0));
 
 		changeItem = new JMenuItem("Change Image");
-		changeItem.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/changeItem.png"));
+		changeItem.setIcon(IconFetch.getInstance().getIcon("/images/changeItem.png"));
 		changeItem.setMargin(new Insets(10, 0, 2, 0));
 
 		addItem.addActionListener(this);

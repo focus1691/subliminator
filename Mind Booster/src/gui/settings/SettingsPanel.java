@@ -1,6 +1,4 @@
-package settings;
-
-import java.util.Arrays;
+package gui.settings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,6 +12,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -183,7 +182,7 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new BorderLayout());
 		screenPanel.setBounds(screenRect);
-		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/com/psychotechnology/images/screen.png")),
+		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")),
 				BorderLayout.CENTER);
 
 		// Message on the top left of the screen

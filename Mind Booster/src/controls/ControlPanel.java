@@ -51,10 +51,10 @@ public class ControlPanel extends JPanel implements ActionListener {
 			if (messageListener != null) {
 				if (active == false) {
 					active = true;
-					startBtn.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/stop.jpg"));
+					startBtn.setIcon(IconFetch.getInstance().getIcon("/images/stop.jpg"));
 				} else {
 					active = false;
-					startBtn.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/start.jpg"));
+					startBtn.setIcon(IconFetch.getInstance().getIcon("/images/start.jpg"));
 				}
 				messageListener.messageEventOccurred(messageEvent);
 			}
@@ -95,7 +95,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 	 * This method initializes Control Panel components
 	 */
 	private void initComponents() {
-		startBtn = new JButton(IconFetch.getInstance().getIcon("/com/psychotechnology/images/start.jpg"));
+		startBtn = new JButton(IconFetch.getInstance().getIcon("/images/start.jpg"));
 		startBtn.setToolTipText("Play subliminal messages");
 		addBtn = new JButton("Add");
 		addBtn.setToolTipText("Add a new message");
@@ -131,7 +131,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
 		addBtn.setForeground(Color.WHITE);
-		addBtn.setIcon(new ImageIcon(this.getClass().getResource("/com/psychotechnology/images/plus.jpg")));
+		addBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/plus.jpg")));
 		addBtn.setHorizontalAlignment(SwingConstants.LEFT);
 
 		// Edit Button
@@ -140,7 +140,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		editBtn.setContentAreaFilled(false);
 		editBtn.setBorderPainted(false);
 		editBtn.setForeground(Color.WHITE);
-		editBtn.setIcon(new ImageIcon(this.getClass().getResource("/com/psychotechnology/images/edit.jpg")));
+		editBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/edit.jpg")));
 		editBtn.setHorizontalAlignment(SwingConstants.LEFT);
 
 		// Delete Button
@@ -148,7 +148,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		deleteBtn.setContentAreaFilled(false);
 		deleteBtn.setBorderPainted(false);
 		deleteBtn.setForeground(Color.WHITE);
-		deleteBtn.setIcon(new ImageIcon(this.getClass().getResource("/com/psychotechnology/images/delete.jpg")));
+		deleteBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/delete.jpg")));
 		deleteBtn.setHorizontalAlignment(SwingConstants.LEFT);
 
 		// Change Button
@@ -156,7 +156,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		changeBtn.setContentAreaFilled(false);
 		changeBtn.setBorderPainted(false);
 		changeBtn.setForeground(Color.WHITE);
-		changeBtn.setIcon(new ImageIcon(this.getClass().getResource("/com/psychotechnology/images/change.jpg")));
+		changeBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/change.jpg")));
 		changeBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		

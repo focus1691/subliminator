@@ -6,13 +6,13 @@ import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.InputStream;
 
-import category.CategoryPanel;
+import gui.category.CategoryPanel;
 
 public class CustomFont {
 
-	public final static String latoBlack = "/com/psychotechnology/font/Lato-Black_0.ttf";
-	public final static String latoBold = "/com/psychotechnology/font/Lato-Bold_0.ttf";
-	public final static String latoRegular = "/com/psychotechnology/font/Lato-Regular_0.ttf";
+	public final static String latoBlack = "/font/Lato-Black_0.ttf";
+	public final static String latoBold = "/font/Lato-Bold_0.ttf";
+	public final static String latoRegular = "/font/Lato-Regular_0.ttf";
 
 	public static Font getFont(String dir, int fontSize) {
 		Font font = null;

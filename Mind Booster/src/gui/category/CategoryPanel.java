@@ -1,4 +1,4 @@
-package category;
+package gui.category;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;

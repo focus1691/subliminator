@@ -13,7 +13,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import controller.Controller;
 import gui.Subliminal;
-import message.MessagePanel;
+import gui.message.MessagePanel;
 import utility.IconFetch;
 
 public class CreateMenuBar extends JMenuBar {

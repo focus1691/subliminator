@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 
 import controller.Controller;
 import controller.Validation;
-import message.MessagePanel;
+import gui.message.MessagePanel;
 import model.Message;
 import model.MessageTense;
 

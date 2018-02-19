@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controller.Controller;
-import message.MessagePanel;
+import gui.message.MessagePanel;
 import model.Message;
 import model.MessageTense;
 import utility.IconFetch;

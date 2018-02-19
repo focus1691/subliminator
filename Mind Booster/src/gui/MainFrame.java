@@ -11,19 +11,19 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import category.CategoryEvent;
-import category.CategoryListener;
-import category.CategoryPanel;
 import controller.Controller;
 import controls.ControlPanel;
 import controls.MessageEvent;
 import controls.MessageListener;
+import gui.category.CategoryEvent;
+import gui.category.CategoryListener;
+import gui.category.CategoryPanel;
+import gui.message.MessagePanel;
+import gui.settings.SettingsEvent;
+import gui.settings.SettingsListener;
+import gui.settings.SettingsPanel;
 import menu.CreateMenuBar;
-import message.MessagePanel;
 import model.Message;
-import settings.SettingsEvent;
-import settings.SettingsListener;
-import settings.SettingsPanel;
 
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 	
@@ -34,7 +34,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private SettingsPanel settingsPanel;
 	private ControlPanel controlPanel;
 
-	public static void main(String[] args) {
+	public MainFrame() {
 		try {
 			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -51,10 +51,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
 			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		new MainFrame();
-	}
-
-	public MainFrame() {
+		
 		initComponents();
 		setupUI();
 		

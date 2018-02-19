@@ -1,4 +1,4 @@
-package message;
+package gui.message;
 
 import java.util.EventObject;
 import java.util.List;

@@ -1,4 +1,4 @@
-package message;
+package gui.message;
 
 import javax.swing.DefaultListSelectionModel;
 

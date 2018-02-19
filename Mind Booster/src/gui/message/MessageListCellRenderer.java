@@ -1,4 +1,4 @@
-package message;
+package gui.message;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -12,8 +12,8 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import gui.settings.SettingsPanel;
 import model.Message;
-import settings.SettingsPanel;
 import utility.IconFetch;
 
 public class MessageListCellRenderer extends DefaultListCellRenderer {
