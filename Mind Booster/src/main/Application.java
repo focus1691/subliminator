@@ -1,3 +1,4 @@
+package main;
 import javax.swing.SwingUtilities;
 
 import gui.MainFrame;
@@ -12,5 +13,4 @@ public class Application {
 			}
 		});
 	}
-
 }
