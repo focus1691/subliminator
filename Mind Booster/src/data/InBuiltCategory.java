@@ -1,9 +1,12 @@
-package model;
+package data;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import model.Category;
+import model.Message;
 
 public class InBuiltCategory {
 

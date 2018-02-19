@@ -12,12 +12,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import constants.MessageTense;
+import constants.ScreenPosition;
+import data.InBuiltCategory;
 import gui.Subliminal;
 import model.Category;
-import model.InBuiltCategory;
 import model.Message;
-import model.MessageTense;
-import model.ScreenPosition;
 
 public class Controller {
 	public static boolean messagesOn = false;

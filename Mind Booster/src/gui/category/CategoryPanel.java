@@ -20,7 +20,7 @@ import javax.swing.event.ListSelectionListener;
 import controller.Controller;
 import gui.BlueCurvedScrollBar;
 import model.Category;
-import utility.CustomFont;
+import utility.FontPicker;
 
 public class CategoryPanel extends JPanel {
 
@@ -67,10 +67,10 @@ public class CategoryPanel extends JPanel {
 	
 	private void styleUI() {
 		// UI for the header
-		header.setFont(CustomFont.getFont(CustomFont.latoBlack, 20));
+		header.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
 		
 		// Category List
-		categoryList.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		categoryList.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
 		categoryList.setFixedCellHeight(55);
 		categoryList.setFixedCellWidth(350);
 		categoryList.setCellRenderer(new CategoryListCellRenderer());

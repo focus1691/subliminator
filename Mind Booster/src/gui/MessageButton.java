@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import utility.CustomColor;
-import utility.CustomFont;
+import utility.FontPicker;
 import utility.IconFetch;
 
 public class MessageButton extends JLabel {
@@ -20,7 +20,7 @@ public class MessageButton extends JLabel {
 	private double btnToScreenWRatio, btnToScreenHRatio;
 	private boolean active = false;
 	private boolean locked = true;
-	private Font font = CustomFont.getFont(CustomFont.latoBlack, 20);
+	private Font font = FontPicker.getFont(FontPicker.latoBlack, 20);
 
 	public boolean isActive() {
 		return active;

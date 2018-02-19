@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 import gui.category.CategoryPanel;
 
-public class CustomFont {
+public class FontPicker {
 
 	public final static String latoBlack = "/font/Lato-Black_0.ttf";
 	public final static String latoBold = "/font/Lato-Bold_0.ttf";

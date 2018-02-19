@@ -22,10 +22,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import constants.MessageTense;
 import controller.Controller;
 import gui.message.MessagePanel;
 import model.Message;
-import model.MessageTense;
 import utility.IconFetch;
 
 public class EditImage extends JDialog {

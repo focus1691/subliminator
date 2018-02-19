@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import model.Message;
-import model.ScreenPosition;
+import constants.ScreenPosition;
 import utility.IconFetch;
 
 public class Subliminal extends JFrame {

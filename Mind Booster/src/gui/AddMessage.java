@@ -15,11 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import constants.MessageTense;
 import controller.Controller;
 import controller.Validation;
 import gui.message.MessagePanel;
 import model.Message;
-import model.MessageTense;
 
 public class AddMessage extends JDialog {
 	

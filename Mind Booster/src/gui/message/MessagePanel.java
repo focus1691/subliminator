@@ -26,13 +26,13 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import constants.MessageTense;
 import controller.Controller;
 import controls.MessageEvent;
 import controls.MessageListener;
 import gui.BlueCurvedScrollBar;
 import model.Message;
-import model.MessageTense;
-import utility.CustomFont;
+import utility.FontPicker;
 import utility.IconFetch;
 import utility.RoundButton;
 
@@ -122,10 +122,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		setMessageList(controller.getMessagesFromTenseCategory(messageTense));
 		messageListSelectionModel.setMgsSelected(selectedIndices);
 	}
-
-	/**
-	 * This method initializes all Message Panel components
-	 */
+	
 	private void initComponents() {
 		popupMenu = createMessageMenu();
 		
@@ -156,11 +153,11 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private void styleUI() {
 
 		// UI for the header
-		header.setFont(CustomFont.getFont(CustomFont.latoBlack, 20));
+		header.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
 		header.setLayout(new GridLayout());
 
 		// Message List
-		messageList.setFont(CustomFont.getFont(CustomFont.latoRegular, 16));
+		messageList.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
 		messageList.setFixedCellHeight(55);
 		messageList.setFixedCellWidth(350);
 		messageList.setSelectionModel(messageListSelectionModel);

@@ -3,8 +3,8 @@ package gui.message;
 import java.util.EventObject;
 import java.util.List;
 
+import constants.MessageTense;
 import model.Message;
-import model.MessageTense;
 
 public class MessageSelectionEvent extends EventObject {
 

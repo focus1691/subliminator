@@ -1,4 +1,4 @@
-package model;
+package constants;
 
 public enum ScreenPosition {
 	TOPLEFT,

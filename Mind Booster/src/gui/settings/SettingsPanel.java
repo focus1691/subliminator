@@ -25,7 +25,7 @@ import javax.swing.event.ChangeListener;
 
 import gui.MessageButton;
 import gui.PictureLabel;
-import utility.CustomFont;
+import utility.FontPicker;
 import utility.IconFetch;
 
 public class SettingsPanel extends JPanel implements ChangeListener, MouseListener {
@@ -240,16 +240,16 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 	}
 
 	public void styleUI() {
-		speedLbl.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
-		speedSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		speedLbl.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
+		speedSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
 		speedSlider.setMinorTickSpacing(50);
 		speedSlider.setMajorTickSpacing(1000);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
 		speedSlider.setPreferredSize(new Dimension(300, 75));
 
-		intervalLbl.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
-		intervalSlider.setFont(CustomFont.getFont(CustomFont.latoBold, 16));
+		intervalLbl.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
+		intervalSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
 		intervalSlider.setMinorTickSpacing(20);
 		intervalSlider.setMajorTickSpacing(2);
 		intervalSlider.setPaintTicks(true);

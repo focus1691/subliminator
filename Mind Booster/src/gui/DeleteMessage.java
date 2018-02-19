@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import constants.MessageTense;
 import controller.Controller;
 import gui.message.MessagePanel;
-import model.MessageTense;
 
 public class DeleteMessage extends JDialog {
 	

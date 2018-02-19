@@ -13,10 +13,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import constants.MessageTense;
 import controller.Controller;
 import controller.Validation;
 import gui.message.MessagePanel;
-import model.MessageTense;
 
 public class EditMessage extends JDialog {
 
