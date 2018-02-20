@@ -5,17 +5,17 @@ import java.util.concurrent.TimeUnit;
 import controller.MessageController;
 import utility.RandomNumberGenerator;
 
-public class SubliminalTask implements Runnable {
+public class PlayMessageTask implements Runnable {
 
 	private MessageController controller;
-	private Subliminal subliminal;
+	private SubliminalFrame subliminal;
 	private int messageIndex;
-
-	public SubliminalTask(MessageController controller, Subliminal subliminal) {
+	
+	public PlayMessageTask(MessageController controller, SubliminalFrame subliminal) {
 		this.controller = controller;
 		this.subliminal = subliminal;
 	}
-
+	
 	@Override
 	public void run() {
 		setMessageIndex(RandomNumberGenerator.randInt(0, controller.getActiveMessages().size() - 1));

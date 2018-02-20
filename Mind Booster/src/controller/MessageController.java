@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 import constants.MessageTense;
 import constants.ScreenPosition;
 import data.InBuiltCategory;
-import gui.subliminal.Subliminal;
-import gui.subliminal.SubliminalTask;
+import gui.subliminal.SubliminalFrame;
+import gui.subliminal.PlayMessageTask;
 import model.Category;
 import model.Message;
 
@@ -29,16 +29,16 @@ public class MessageController {
 	private int categoryIndex;
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
-	private SubliminalTask topLeftTask, topRightTask, centerTask, botLeftTask, botRightTask;
+	private PlayMessageTask topLeftTask, topRightTask, centerTask, botLeftTask, botRightTask;
 	private List<Message> activeMessages;
 
 	public MessageController() {
 
-		topLeftTask = new SubliminalTask(this, new Subliminal(ScreenPosition.TOPLEFT));
-		topRightTask = new SubliminalTask(this, new Subliminal(ScreenPosition.TOPRIGHT));
-		centerTask = new SubliminalTask(this, new Subliminal(ScreenPosition.CENTER));
-		botLeftTask = new SubliminalTask(this, new Subliminal(ScreenPosition.BOTLEFT));
-		botRightTask = new SubliminalTask(this, new Subliminal(ScreenPosition.BOTRIGHT));
+		topLeftTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.TOPLEFT));
+		topRightTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.TOPRIGHT));
+		centerTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.CENTER));
+		botLeftTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.BOTLEFT));
+		botRightTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.BOTRIGHT));
 		
 		messageTense = MessageTense.FIRST_PERSON;
 		categoryIndex = 0;

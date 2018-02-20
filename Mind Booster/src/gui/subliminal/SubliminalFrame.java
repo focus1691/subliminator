@@ -11,16 +11,16 @@ import gui.util.IconFetch;
 import gui.util.SetScreenLocation;
 import model.Message;
 
-public class Subliminal extends JFrame {
+public class SubliminalFrame extends JFrame {
 
 	private static final long serialVersionUID = 2931841309711143361L;
 	private SubliminalMessage subliminalMessage;
 	public static int height = 200;
 	public static int width = 200;
-	
-	public Subliminal(ScreenPosition screenPosition) {
+
+	public SubliminalFrame(ScreenPosition screenPosition) {
 		initComponents();
-		
+
 		setFocusable(false);
 		setUndecorated(true);
 		setBackground(new Color(0, 0, 0, 0));
@@ -29,7 +29,7 @@ public class Subliminal extends JFrame {
 		setFocusableWindowState(false);
 		setEnabled(false);
 		pack();
-		
+
 		setMessageLocation(screenPosition);
 	}
 
@@ -60,22 +60,21 @@ public class Subliminal extends JFrame {
 			break;
 		}
 	}
-	
+
 	public void setMessage(Message message) {
 		subliminalMessage.setMessage(message.getMessage());
 		subliminalMessage.setFont(message.getFont());
-		subliminalMessage.setColor((message.getColor()==null?new Color(0,0,0):message.getColor()));
+		subliminalMessage.setColor((message.getColor() == null ? new Color(0, 0, 0) : message.getColor()));
 		ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
 		if (icon != null) {
 			System.out.println("Icon Set!");
 			Image img = IconFetch.getInstance().getScaledImage(icon.getImage(), width, height);
 			subliminalMessage.setImage(img);
-		}else
-		{
+		} else {
 			System.out.println("Icon not set!");
 		}
 		subliminalMessage.setIsTextOnly(message.getIsTextOnly());
-		
+
 	}
 
 }

@@ -13,7 +13,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import controller.MessageController;
 import gui.message.MessagePanel;
-import gui.subliminal.Subliminal;
+import gui.subliminal.SubliminalFrame;
 import gui.util.IconFetch;
 
 public class CreateMenuBar extends JMenuBar {
@@ -54,8 +54,8 @@ public class CreateMenuBar extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Subliminal.width = 200;
-				Subliminal.height = 200;
+				SubliminalFrame.width = 200;
+				SubliminalFrame.height = 200;
 			}
 		});
 
@@ -63,8 +63,8 @@ public class CreateMenuBar extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Subliminal.width = 300;
-				Subliminal.height = 300;
+				SubliminalFrame.width = 300;
+				SubliminalFrame.height = 300;
 				// Subliminal.setSize(900, 750);
 			}
 		});
@@ -73,8 +73,8 @@ public class CreateMenuBar extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Subliminal.width = 500;
-				Subliminal.height = 500;
+				SubliminalFrame.width = 500;
+				SubliminalFrame.height = 500;
 			}
 		});
 
