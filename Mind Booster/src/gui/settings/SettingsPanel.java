@@ -225,7 +225,6 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		
 		picturePanel.setLayout(new BorderLayout());
 		picturePanel.add(pictureLabel, BorderLayout.CENTER);
-		//pictureLabel.setText("Demo");
 		speedSlider = new JSlider(0, 1000);
 		speedSlider.setToolTipText("Message speed");
 		speedSlider.setValue(speed);
@@ -235,9 +234,6 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		intervalSlider.setToolTipText("Delay between each message in seconds");
 		intervalSlider.setValue(interval);
 		intervalLbl = new JLabel("Interval (s):");
-
-		speedSlider.setUI(new CustomSliderUI(speedSlider));
-		intervalSlider.setUI(new CustomSliderUI(intervalSlider));
 	}
 
 	public void styleUI() {
