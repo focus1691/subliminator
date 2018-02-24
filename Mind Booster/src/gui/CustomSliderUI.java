@@ -31,7 +31,6 @@ public class CustomSliderUI extends BasicSliderUI {
 
 	@Override
 	public void paint(Graphics g, JComponent c) {
-		System.out.println("Slider paint");
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -65,7 +64,6 @@ public class CustomSliderUI extends BasicSliderUI {
 
 	@Override
 	public void paintTrack(Graphics g) {
-		System.out.println("Slider paint track");
 		Graphics2D g2d = (Graphics2D) g;
 		Stroke old = g2d.getStroke();
 		g2d.setStroke(stroke);
@@ -82,7 +80,6 @@ public class CustomSliderUI extends BasicSliderUI {
 
 	@Override
 	public void paintThumb(Graphics g) {
-		System.out.println("Slider paint thumb");
 		Graphics2D g2d = (Graphics2D) g;
 		int x1 = thumbRect.x + 2;
 		int x2 = thumbRect.x + thumbRect.width - 2;
@@ -98,11 +95,11 @@ public class CustomSliderUI extends BasicSliderUI {
 		drawCenteredCircle(g2d, x1, topY + 3, 30);
 		Stroke old = g2d.getStroke();
 		g2d.setStroke(new BasicStroke(15f));
+		// g2d.draw(shape);
 		g2d.setStroke(old);
 	}
 
 	public void drawCenteredCircle(Graphics2D g, int x, int y, int r) {
-		System.out.println("Slider centered circle");
 		x = x - (r / 2);
 		y = y - (r / 2);
 		g.fillOval(x, y, r, r);
