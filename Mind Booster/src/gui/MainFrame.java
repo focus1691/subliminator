@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.MessageController;
 import controller.NetworkController;
@@ -35,25 +36,21 @@ import utility.Sorter;
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 
 	private static final long serialVersionUID = -4312454251947395385L;
-	private MessageController controller;
-	private NetworkController networkController;
+	private MessageController messageController;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
 	private SettingsPanel settingsPanel;
 	private ControlPanel controlPanel;
 
 	public MainFrame() {
-
-		controller = new MessageController();
-		networkController = new NetworkController();
-
-		if (networkController.isApplicationRunning() == true) {
+		
+		if (NetworkController.isApplicationRunning() == true) {
 			System.exit(1);
 		} else {
 			try {
 				for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 					if ("Nimbus".equals(info.getName())) {
-						javax.swing.UIManager.setLookAndFeel(info.getClassName());
+						UIManager.setLookAndFeel(info.getClassName());
 						break;
 					}
 				}
@@ -63,19 +60,26 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 			} catch (IllegalAccessException ex) {
 				Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-			} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+			} catch (UnsupportedLookAndFeelException ex) {
 				Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 			}
+			
+			messageController = new MessageController();
 
-			initComponents();
-			setJMenuBar(new CreateMenuBar(controller, messagePanel));
-			setupUI();
-
-			// Listeners for the 4 panels
+			categoryPanel = new CategoryPanel(messageController);
 			categoryPanel.setCategorySelectionListener(this);
+			
+			messagePanel = new MessagePanel(messageController);
 			messagePanel.setMessageStartListener(this);
+			
+			settingsPanel = new SettingsPanel(messageController.getSpeed(), messageController.getInterval());
 			settingsPanel.setSettingsListener(this);
+			
+			controlPanel = new ControlPanel();
 			controlPanel.setMessageStartListener(this);
+
+			setJMenuBar(new CreateMenuBar(messageController, messagePanel));
+			setupUI();
 
 			// Window settings
 			setPreferredSize(new Dimension(1600, 900));
@@ -86,21 +90,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 	}
-
-	/**
-	 * This method initializes the three main containers, and the controller.
-	 */
-	private void initComponents() {
-		categoryPanel = new CategoryPanel(controller);
-		messagePanel = new MessagePanel(controller);
-		settingsPanel = new SettingsPanel(controller.getSpeed(), controller.getInterval());
-		controlPanel = new ControlPanel();
-	}
-
-	/**
-	 * This method positions the category (left), message (middle), settings
-	 * (right), and controls (bottom full-width) containers onto the window.
-	 */
+	
 	private void setupUI() {
 		setTitle("Mind Booster");
 		setLayout(new GridBagLayout());
@@ -152,13 +142,13 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void categorySelectionEventOccurred(CategoryEvent e) {
 		messagePanel.getModel().clear();
-		controller.setCategoryIndex(e.getCategoryIndex());
-		messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
+		messageController.setCategoryIndex(e.getCategoryIndex());
+		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
 		if (MessageController.messagesOn == false) {
 			try {
-				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
-				controller.setCategoryIndex(e.getCategoryIndex());
-				controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+				messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+				messageController.setCategoryIndex(e.getCategoryIndex());
+				messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
@@ -171,8 +161,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			if (event.isAllMessagesSelected() == false) {
 
 			}
-			controller.setActiveMessages(messagePanel.getSelectedMessages());
-			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+			messageController.setActiveMessages(messagePanel.getSelectedMessages());
+			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -189,8 +179,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void addMessageEventOccurred(MessageEvent e) {
-		new AddMessage(controller, messagePanel);
-		controller.save();
+		new AddMessage(messageController, messagePanel);
+		messageController.save();
 	}
 
 	@Override
@@ -198,8 +188,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 		if (messagePanel.getMessageListSelectionModel()
 				.isSelectedIndex(messagePanel.getMessageListSelectionModel().getLastSelection())) {
-			new EditMessage(controller, messagePanel, messagePanel.getMessageListSelectionModel().getLastSelection());
-			controller.save();
+			new EditMessage(messageController, messagePanel,
+					messagePanel.getMessageListSelectionModel().getLastSelection());
+			messageController.save();
 		} else {
 			JOptionPane.showMessageDialog(this, "You must selected a message to edit.", "Warning",
 					JOptionPane.ERROR_MESSAGE);
@@ -214,8 +205,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			JOptionPane.showMessageDialog(this, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
 		} else {
 			Sorter.getInstance().doInsertionSort(selectedMsgs);
-			new DeleteMessage(controller, messagePanel, selectedMsgs);
-			controller.save();
+			new DeleteMessage(messageController, messagePanel, selectedMsgs);
+			messageController.save();
 		}
 	}
 
@@ -231,18 +222,18 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			return;
 		}
 		Message message = (Message) messagePanel.getMessageList().getSelectedValue();
-		new EditImage(controller, message, messagePanel,
+		new EditImage(messageController, message, messagePanel,
 				messagePanel.getMessageListSelectionModel().getLastSelection());
-		controller.save();
+		messageController.save();
 	}
 
 	@Override
 	public void settingsEventOccurred(SettingsEvent e) {
 		try {
-			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
-			controller.setSpeed(e.getMessageSpeed());
-			controller.setInterval(e.getMessageInterval());
-			controller.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+			messageController.setSpeed(e.getMessageSpeed());
+			messageController.setInterval(e.getMessageInterval());
+			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}

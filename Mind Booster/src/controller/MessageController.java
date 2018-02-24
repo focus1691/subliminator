@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -15,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 import constants.MessageTense;
 import constants.ScreenPosition;
 import data.InBuiltCategory;
-import gui.subliminal.SubliminalFrame;
 import gui.subliminal.PlayMessageTask;
+import gui.subliminal.SubliminalFrame;
 import model.Category;
 import model.Message;
 

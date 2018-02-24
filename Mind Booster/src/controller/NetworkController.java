@@ -10,7 +10,7 @@ public class NetworkController {
 	private static final int PORT = 9999;
 	private static ServerSocket socket;
 
-	public boolean isApplicationRunning() {
+	public static boolean isApplicationRunning() {
 		try {
 			// Bind to localhost adapter with a zero connection queue
 			socket = new ServerSocket(PORT, 0, InetAddress.getByAddress(new byte[] { 127, 0, 0, 1 }));
