@@ -56,63 +56,9 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	public MessagePanel(MessageController controller) {
 		this.controller = controller;
 		initComponents();
-		styleUI();
 		setupUI();
-
-		firstPersonLabel.addMouseListener(this);
-		secondPersonLabel.addMouseListener(this);
-		firstPersonBtn.addMouseListener(this);
-		secondPersonBtn.addMouseListener(this);
-		messageList.addMouseListener(this);
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-		if ((e.getSource() == firstPersonBtn || e.getSource() == firstPersonLabel)
-				&& controller.getMessageTense() != MessageTense.FIRST_PERSON) {
-			switchPersonMode(MessageTense.FIRST_PERSON);
-			firstPersonBtn.setIcon(activeIcon);
-			secondPersonBtn.setIcon(inactiveIcon);
-		} else if ((e.getSource() == secondPersonBtn || e.getSource() == secondPersonLabel)
-				&& controller.getMessageTense() != MessageTense.SECOND_PERSON) {
-			switchPersonMode(MessageTense.SECOND_PERSON);
-			firstPersonBtn.setIcon(inactiveIcon);
-			secondPersonBtn.setIcon(activeIcon);
-		}
-	}
-	
-	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON3) {
-
-			@SuppressWarnings("unchecked")
-			JList<Message> list = (JList<Message>) e.getSource();
-			int row = list.locationToIndex(e.getPoint());
-			if (!messageListSelectionModel.isSelectedIndex(row)) {
-				list.setSelectedIndex(row);
-			} else {
-				list.removeSelectionInterval(row, row);
-				list.setSelectedIndex(row);
-			}
-			popupMenu.show(e.getComponent(), e.getX(), e.getY());
-		}
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
-	
 	private void switchPersonMode(MessageTense messageTense) {
 		int[] selectedIndices = messageList.getSelectedIndices();
 		model.clear();
@@ -122,61 +68,65 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		setMessageList(controller.getMessagesFromTenseCategory(messageTense));
 		messageListSelectionModel.setMgsSelected(selectedIndices);
 	}
-	
+
 	private void initComponents() {
 		popupMenu = createMessageMenu();
-		
-		
+
 		setMessageList(controller.getMessagesFromActiveTenseCategory());
 		messageListSelectionModel = new MessageListSelectionModel(
 				controller.getMessagesFromActiveTenseCategory().size());
+
 		messageList = new JList<Message>(model);
-		
-		
-		header = new JLabel("Select Messages");
-
-		firstPersonLabel = new JLabel("1st Person");
-		secondPersonLabel = new JLabel("2nd Person");
-
-		activeIcon = IconFetch.getInstance().getIcon("/images/man-active.jpg");
-		inactiveIcon = IconFetch.getInstance().getIcon("/images/man-inactive.jpg");
-		
-		firstPersonBtn = new RoundButton(activeIcon);
-		secondPersonBtn = new RoundButton(inactiveIcon);
-
-		firstPersonBtn.setToolTipText("Message list in first person");
-		secondPersonBtn.setToolTipText("Message list in second person");
-
-		scroller = new JScrollPane(messageList);
-	}
-
-	private void styleUI() {
-
-		// UI for the header
-		header.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
-		header.setLayout(new GridLayout());
-
-		// Message List
 		messageList.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
 		messageList.setFixedCellHeight(55);
 		messageList.setFixedCellWidth(350);
 		messageList.setSelectionModel(messageListSelectionModel);
+		messageList.addMouseListener(this);
+
 		messageListCellRenderer = new MessageListCellRenderer();
 		messageList.setCellRenderer(messageListCellRenderer);
 
-		// Vertical ScrollBar
+		header = new JLabel("Select Messages");
+		header.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		header.setLayout(new GridLayout());
+
+		firstPersonLabel = new JLabel("1st Person");
+		firstPersonLabel.addMouseListener(this);
+		secondPersonLabel = new JLabel("2nd Person");
+		secondPersonLabel.addMouseListener(this);
+
+		activeIcon = IconFetch.getInstance().getIcon("/images/man-active.jpg");
+		inactiveIcon = IconFetch.getInstance().getIcon("/images/man-inactive.jpg");
+
+		firstPersonBtn = new RoundButton(activeIcon);
+		firstPersonBtn.setToolTipText("Message list in first person");
+		firstPersonBtn.addMouseListener(this);
+
+		secondPersonBtn = new RoundButton(inactiveIcon);
+		secondPersonBtn.setToolTipText("Message list in second person");
+		secondPersonBtn.addMouseListener(this);
+
+		if (controller.getMessageTense() == MessageTense.FIRST_PERSON) {
+			firstPersonBtn.setIcon(activeIcon);
+			secondPersonBtn.setIcon(inactiveIcon);
+		} else if (controller.getMessageTense() == MessageTense.SECOND_PERSON) {
+			firstPersonBtn.setIcon(inactiveIcon);
+			secondPersonBtn.setIcon(activeIcon);
+		}
+
+		scroller = new JScrollPane(messageList);
 		scroller.getVerticalScrollBar().setUI(new BlueCurvedScrollBar());
 		scroller.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
 		scroller.getVerticalScrollBar().setBackground(Color.decode("#efeff0"));
 		scroller.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		scroller.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}
-	
+
 	private void setupUI() {
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
-		
+
 		gc.gridx = 0;
 		gc.gridy = 0;
 		gc.gridheight = 1;
@@ -186,7 +136,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.insets = new Insets(30, 40, 0, 0);
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(header, gc);
-		
+
 		gc.gridx = 0;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -196,7 +146,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 40, 0, 0);
 		add(firstPersonBtn, gc);
-		
+
 		gc.gridx = 1;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -206,7 +156,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(firstPersonLabel, gc);
-		
+
 		gc.gridx = 2;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -216,7 +166,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(secondPersonBtn, gc);
-		
+
 		gc.gridx = 3;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -226,7 +176,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(secondPersonLabel, gc);
-		
+
 		gc.gridx = 0;
 		gc.gridy = 2;
 		gc.gridheight = 1;
@@ -274,46 +224,81 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 
 		return messageMenu;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		MessageEvent messageEvent = new MessageEvent(this);
-		
+
 		if (messageListener != null) {
 			if (e.getSource() == addItem) {
 				messageListener.addMessageEventOccurred(messageEvent);
-				
+
 			} else if (e.getSource() == editItem) {
 				messageListener.editMessageEventOccurred(messageEvent);
-				
+
 			} else if (e.getSource() == deleteItem) {
-				
+
 				messageListener.deleteMessageEventOccurred(messageEvent);
 			} else if (e.getSource() == changeItem) {
 				messageListener.editImageEventOccurred(messageEvent);
 			}
 		}
 	}
-	
-	/**
-	 *
-	 * @return All Message objects inside the JList
-	 */
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+		if ((e.getSource() == firstPersonBtn || e.getSource() == firstPersonLabel)
+				&& controller.getMessageTense() != MessageTense.FIRST_PERSON) {
+			switchPersonMode(MessageTense.FIRST_PERSON);
+			firstPersonBtn.setIcon(activeIcon);
+			secondPersonBtn.setIcon(inactiveIcon);
+		} else if ((e.getSource() == secondPersonBtn || e.getSource() == secondPersonLabel)
+				&& controller.getMessageTense() != MessageTense.SECOND_PERSON) {
+			switchPersonMode(MessageTense.SECOND_PERSON);
+			firstPersonBtn.setIcon(inactiveIcon);
+			secondPersonBtn.setIcon(activeIcon);
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if (e.getButton() == MouseEvent.BUTTON3) {
+
+			@SuppressWarnings("unchecked")
+			JList<Message> list = (JList<Message>) e.getSource();
+			int row = list.locationToIndex(e.getPoint());
+			if (!messageListSelectionModel.isSelectedIndex(row)) {
+				list.setSelectedIndex(row);
+			} else {
+				list.removeSelectionInterval(row, row);
+				list.setSelectedIndex(row);
+			}
+			popupMenu.show(e.getComponent(), e.getX(), e.getY());
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
 	public JList<Message> getMessageList() {
 		return messageList;
 	}
-	
+
 	public void setMessageList(JList<Message> messageList) {
 		this.messageList = messageList;
 	}
 
-	/**
-	 * Set list with all messages from chosen category
-	 * 
-	 * @param categoryIndex
-	 *            category to retrieve messages from
-	 */
 	public void setMessageList(List<Message> messages) {
 		int i;
 		for (i = 0; i < messages.size(); i++) {
@@ -329,18 +314,10 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		this.model = model;
 	}
 
-	/**
-	 * 
-	 * @return list model
-	 */
 	public MessageListSelectionModel getMessageListSelectionModel() {
 		return messageListSelectionModel;
 	}
 
-	/**
-	 * 
-	 * @return Selected messages
-	 */
 	public List<Message> getSelectedMessages() {
 		int i;
 
@@ -355,12 +332,6 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		return selectedMessages;
 	}
 
-	/**
-	 * Used by anonymous class in MainFrame to listen for a message start event
-	 * 
-	 * @param messageListener
-	 *            interface object used to alert anonymous class in MainFrame
-	 */
 	public void setMessageStartListener(MessageListener messageListener) {
 		this.messageListener = messageListener;
 	}

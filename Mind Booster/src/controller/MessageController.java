@@ -203,6 +203,7 @@ public class MessageController {
 	public List<Message> getMessagesFromActiveTenseCategory() {
 		int i;
 		List<Message> messages = new ArrayList<Message>();
+		System.out.println(messageTense + " inside getMessagesFromActiveTenseCategory");
 		int numMessagesInCategory = categories.get(categoryIndex).getMessages().get(messageTense.getTenseVal()).size();
 
 		for (i = 0; i < numMessagesInCategory; i++) {

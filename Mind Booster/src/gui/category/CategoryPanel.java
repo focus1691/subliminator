@@ -34,8 +34,8 @@ public class CategoryPanel extends JPanel {
 
 	public CategoryPanel(MessageController controller) {
 		this.controller = controller;
+
 		initComponents();
-		styleUI();
 		setupUI();
 
 		categoryList.addListSelectionListener(new ListSelectionListener() {
@@ -43,8 +43,7 @@ public class CategoryPanel extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (e.getValueIsAdjusting()) {
-					CategoryEvent catgorySelectionEvent = new CategoryEvent(this,
-							categoryList.getSelectedIndex());
+					CategoryEvent catgorySelectionEvent = new CategoryEvent(this, categoryList.getSelectedIndex());
 
 					if (categorySelectionListener != null) {
 						categorySelectionListener.categorySelectionEventOccurred(catgorySelectionEvent);
@@ -53,41 +52,34 @@ public class CategoryPanel extends JPanel {
 			}
 		});
 	}
-	
+
 	private void initComponents() {
 		setCategoryList(controller.getCategories());
 		categoryList = new JList<Category>(model);
-		header = new JLabel("Select Categories");
-		scroller = new JScrollPane();
-		scroller.setViewportView(categoryList);
-	}
-	
-	private void styleUI() {
-		// UI for the header
-		header.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
-		
-		// Category List
 		categoryList.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
 		categoryList.setFixedCellHeight(55);
 		categoryList.setFixedCellWidth(350);
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
-		categoryList.setSelectedIndex(0);
-		
-		// ScrollBar
+		categoryList.setSelectedIndex(controller.getCategoryIndex());
+
+		header = new JLabel("Select Categories");
+		header.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+
+		scroller = new JScrollPane();
+		scroller.setViewportView(categoryList);
 		scroller.getVerticalScrollBar().setUI(new BlueCurvedScrollBar());
 		scroller.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
 		scroller.getVerticalScrollBar().setBackground(Color.decode("#efeff0"));
 		scroller.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		scroller.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}
-	
+
 	private void setupUI() {
 
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
 
-		// Add the header to the very top, full-width, with a short height
 		gc.gridx = 0;
 		gc.gridy = 0;
 		gc.gridheight = 1;
@@ -99,7 +91,6 @@ public class CategoryPanel extends JPanel {
 		gc.fill = GridBagConstraints.BOTH;
 		add(header, gc);
 
-		// Add the Category list, with full width, and 90% of height
 		gc.gridx = 0;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -113,27 +104,14 @@ public class CategoryPanel extends JPanel {
 
 		setBackground(Color.decode("#efeff0"));
 	}
-	
-	/**
-	 * Set list with all messages from chosen category
-	 * 
-	 * @param categoryIndex
-	 *            category to retrieve messages from
-	 */
+
 	public void setCategoryList(List<Category> categories) {
 		int i;
 		for (i = 0; i < categories.size(); i++) {
 			model.addElement(categories.get(i));
 		}
 	}
-	
-	/**
-	 * Used by anonymous class in MainFrame to listen for Category Selection
-	 * Event
-	 * 
-	 * @param CategoryListener
-	 *            interface object used to alert anonymous class in MainFrame
-	 */
+
 	public void setCategorySelectionListener(CategoryListener categorySelectionListener) {
 		this.categorySelectionListener = categorySelectionListener;
 	}
