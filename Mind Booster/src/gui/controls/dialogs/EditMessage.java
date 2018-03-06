@@ -1,4 +1,4 @@
-package gui.message.dialogs;
+package gui.controls.dialogs;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 
 import constants.MessageTense;
 import controller.MessageController;
-import gui.JFontChooser;
 import gui.message.MessagePanel;
 import gui.util.SetScreenLocation;
 import utility.Validator;
@@ -27,9 +26,6 @@ public class EditMessage extends JDialog {
 	private JLabel firstPersonLbl, secondPersonLbl;
 	private JTextField firstPersonMsg, secondPersonMsg;
 	private JButton submitBtn;
-	private JButton fontBtn;
-	private Font message_font;
-	private Color message_color = new Color(0, 0, 0);
 	private JCheckBox text_only_1;
 	private JCheckBox text_only_2;
 
@@ -66,28 +62,8 @@ public class EditMessage extends JDialog {
 				}
 			}
 		});
-		fontBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				JFontChooser fontChooser = new JFontChooser();
-				int result = fontChooser.showDialog(EditMessage.this);
-				if (result == JFontChooser.OK_OPTION) {
-					Font font = fontChooser.getSelectedFont();
-					Color color = fontChooser.getColor();
-					message_color = color;
-					System.out.println("Selected Font : " + font + " Selected Color: " + color);
-					message_font = font;
-					firstPersonMsg.setFont(font);
-					secondPersonMsg.setFont(font);
-					firstPersonMsg.setForeground(color);
-					secondPersonMsg.setForeground(color);
-				}
-			}
-
-		});
 		SetScreenLocation.centerFrame(this);
+		this.getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(400, 225);
 		setModal(true);
 		setResizable(false);
@@ -99,10 +75,14 @@ public class EditMessage extends JDialog {
 		setTitle("Edit Message");
 
 		firstPersonLbl = new JLabel("1st Person");
+		firstPersonLbl.setForeground(Color.WHITE);
+
 		secondPersonLbl = new JLabel("2nd Person");
+		secondPersonLbl.setForeground(Color.WHITE);
 
 		firstPersonMsg = new JTextField(30);
 		firstPersonMsg.setToolTipText("First Person Message");
+
 		secondPersonMsg = new JTextField(30);
 		secondPersonMsg.setToolTipText("Second Person Message");
 
@@ -116,13 +96,14 @@ public class EditMessage extends JDialog {
 		submitBtn = new JButton("Change");
 		submitBtn.setToolTipText("Edit this message");
 
-		fontBtn = new JButton("Font");
-
 		text_only_1 = new JCheckBox("Text Ony?");
+		text_only_1.setForeground(Color.WHITE);
 		text_only_1.setSelected(
 				controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).get(index)
 						.getIsTextOnly());
+
 		text_only_2 = new JCheckBox("Text Ony?");
+		text_only_2.setForeground(Color.WHITE);
 		text_only_2.setSelected(
 				controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).get(index)
 						.getIsTextOnly());
@@ -165,28 +146,5 @@ public class EditMessage extends JDialog {
 		gc.gridx = 0;
 		gc.anchor = GridBagConstraints.EAST;
 		add(submitBtn, gc);
-
-		gc.gridx++;
-		add(fontBtn, gc);
-		/*
-		 * gc.gridx = 0; gc.gridy = 0; //gc.insets = new Insets(10, 0, 10, 0);
-		 * add(firstPersonLbl, gc);
-		 * 
-		 * gc.fill=GridBagConstraints.HORIZONTAL; gc.gridy++; //gc.insets = new
-		 * Insets(0, 0, 10, 0); add(firstPersonMsg, gc);
-		 * 
-		 * gc.gridx++; add(text_only_1, gc);
-		 * 
-		 * gc.gridy++; add(secondPersonLbl, gc);
-		 * 
-		 * gc.fill=GridBagConstraints.HORIZONTAL; gc.gridy++;
-		 * add(secondPersonMsg, gc);
-		 * 
-		 * gc.gridx++; add(text_only_2, gc);
-		 * 
-		 * gc.gridy++; add(submitBtn, gc);
-		 * 
-		 * gc.gridx++; add(fontBtn, gc);
-		 */
 	}
 }

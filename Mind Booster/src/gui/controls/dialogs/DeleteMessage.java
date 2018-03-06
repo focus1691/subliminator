@@ -1,4 +1,4 @@
-package gui.message.dialogs;
+package gui.controls.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -51,6 +51,7 @@ public class DeleteMessage extends JDialog {
 		});
 
 		SetScreenLocation.centerFrame(this);
+		this.getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(1000, 350);
 		setModal(true);
 		setVisible(true);
