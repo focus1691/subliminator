@@ -65,7 +65,6 @@ public class CreateMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				SubliminalFrame.width = 300;
 				SubliminalFrame.height = 300;
-				// Subliminal.setSize(900, 750);
 			}
 		});
 
