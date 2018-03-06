@@ -1,6 +1,7 @@
 package gui.subliminal;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -17,6 +18,8 @@ public class SubliminalFrame extends JFrame {
 	private SubliminalMessage subliminalMessage;
 	public static int height = 200;
 	public static int width = 200;
+	private Font font;
+	private Color color;
 
 	public SubliminalFrame(ScreenPosition screenPosition) {
 		initComponents();
@@ -63,18 +66,30 @@ public class SubliminalFrame extends JFrame {
 
 	public void setMessage(Message message) {
 		subliminalMessage.setMessage(message.getMessage());
-		subliminalMessage.setFont(message.getFont());
-		subliminalMessage.setColor((message.getColor() == null ? new Color(0, 0, 0) : message.getColor()));
+		subliminalMessage.setFont(font);
+		subliminalMessage.setColor(color == null ? new Color(0, 0, 0) : color);
 		ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
 		if (icon != null) {
-			System.out.println("Icon Set!");
 			Image img = IconFetch.getInstance().getScaledImage(icon.getImage(), width, height);
 			subliminalMessage.setImage(img);
-		} else {
-			System.out.println("Icon not set!");
 		}
 		subliminalMessage.setIsTextOnly(message.getIsTextOnly());
 
 	}
+	
+	public Font getFont() {
+		return font;
+	}
 
+	public void setFont(Font font) {
+		this.font = font;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 }

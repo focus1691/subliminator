@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import constants.MessageTense;
 import constants.ScreenPosition;
 import data.InBuiltCategory;
+import gui.custom.MessageButton;
 import gui.subliminal.PlayMessageTask;
 import gui.subliminal.SubliminalFrame;
 import model.Category;
@@ -28,16 +29,40 @@ public class MessageController {
 	private int categoryIndex;
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
+	private SubliminalFrame frame1, frame2, frame3, frame4, frame5;
 	private PlayMessageTask topLeftTask, topRightTask, centerTask, botLeftTask, botRightTask;
 	private List<Message> activeMessages;
+	
+	public void setFonts(MessageButton[] messageButtons) {
+		frame1.setFont(messageButtons[0].getFont());
+		frame1.setColor(messageButtons[0].getActiveColour());
+		
+		frame2.setFont(messageButtons[1].getFont());
+		frame2.setColor(messageButtons[1].getActiveColour());
+		
+		frame3.setFont(messageButtons[2].getFont());
+		frame3.setColor(messageButtons[2].getActiveColour());
+		
+		frame4.setFont(messageButtons[3].getFont());
+		frame4.setColor(messageButtons[3].getActiveColour());
+		
+		frame5.setFont(messageButtons[4].getFont());
+		frame5.setColor(messageButtons[4].getActiveColour());
+	}
 
 	public MessageController() {
+		
+		frame1 = new SubliminalFrame(ScreenPosition.TOPLEFT);
+		frame2 = new SubliminalFrame(ScreenPosition.TOPRIGHT);
+		frame3 = new SubliminalFrame(ScreenPosition.CENTER);
+		frame4 = new SubliminalFrame(ScreenPosition.BOTLEFT);
+		frame5 = new SubliminalFrame(ScreenPosition.BOTRIGHT);
 
-		topLeftTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.TOPLEFT));
-		topRightTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.TOPRIGHT));
-		centerTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.CENTER));
-		botLeftTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.BOTLEFT));
-		botRightTask = new PlayMessageTask(this, new SubliminalFrame(ScreenPosition.BOTRIGHT));
+		topLeftTask = new PlayMessageTask(this, frame1);
+		topRightTask = new PlayMessageTask(this, frame2);
+		centerTask = new PlayMessageTask(this, frame3);
+		botLeftTask = new PlayMessageTask(this, frame4);
+		botRightTask = new PlayMessageTask(this, frame5);
 		
 		messageTense = MessageTense.FIRST_PERSON;
 		categoryIndex = 0;
@@ -45,6 +70,8 @@ public class MessageController {
 		
 		loadStoredLists();
 	}
+	
+	
 
 	@SuppressWarnings("unchecked")
 	private void loadStoredLists() {

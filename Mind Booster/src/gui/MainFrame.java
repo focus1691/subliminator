@@ -158,9 +158,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void messageEventOccurred(MessageEvent event) {
 		try {
-			if (event.isAllMessagesSelected() == false) {
-
-			}
+			messageController.setFonts(settingsPanel.getMessageButtons());
 			messageController.setActiveMessages(messagePanel.getSelectedMessages());
 			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
 		} catch (InterruptedException e) {

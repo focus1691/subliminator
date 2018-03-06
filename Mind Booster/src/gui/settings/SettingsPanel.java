@@ -23,18 +23,20 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import constants.CustomColor;
 import gui.PictureLabel;
 import gui.custom.MessageButton;
 import gui.util.IconFetch;
 import utility.FontPicker;
 
-public class SettingsPanel extends JPanel implements ChangeListener, MouseListener {
+public class SettingsPanel extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = -798661649041437371L;
 	private JLayeredPane screenContainer;
 	private JPanel screenPanel;
 	public static ImageIcon screen, picture;
 	public static JPanel picturePanel;
+	private MessageButton[] messageButtons;
 	private MessageButton msgOne, msgTwo, msgThree, msgFour, msgFive;
 	public static PictureLabel pictureLabel;
 	private Rectangle screenRect;
@@ -52,12 +54,6 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 
 		speedSlider.addChangeListener((ChangeListener) this);
 		intervalSlider.addChangeListener((ChangeListener) this);
-
-		msgOne.addMouseListener(this);
-		msgTwo.addMouseListener(this);
-		msgThree.addMouseListener(this);
-		msgFour.addMouseListener(this);
-		msgFive.addMouseListener(this);
 
 		this.addComponentListener(new ComponentListener() {
 
@@ -127,42 +123,6 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		}
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		MessageButton msg = (MessageButton) e.getSource();
-
-		if (e.getClickCount() == 1) {
-			if (msg.isLocked()) {
-				JOptionPane.showMessageDialog(this, "Error", "Warning", JOptionPane.INFORMATION_MESSAGE);
-			} else if (msg.isActive()) {
-				msg.setInactive();
-			} else {
-				msg.setActive();
-			}
-		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
 	public void initComponents(int speed, int interval) {
 
 		screenRect = new Rectangle(0, 0, 650, 410);
@@ -175,25 +135,32 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
 		// Message on the top left of the screen
-		msgOne = new MessageButton("Message 1", false, true, screenPanel.getWidth() / 8, screenPanel.getHeight() / 8,
+		msgOne = new MessageButton("Top Left", false, CustomColor.green, true, screenPanel.getWidth() / 8, screenPanel.getHeight() / 8,
 				185, 60);
 
 		// Message on the top right of the screen
-		msgTwo = new MessageButton("Message 2", false, true,
+		msgTwo = new MessageButton("Top Right", false, Color.RED, true,
 				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, screenPanel.getHeight() / 8, 185, 60);
 
 		// Message on the bottom left of the screen
-		msgThree = new MessageButton("Message 4", false, true, screenPanel.getWidth() / 8,
+		msgThree = new MessageButton("Bottom Left", false, Color.ORANGE, true, screenPanel.getWidth() / 8,
 				(screenPanel.getHeight() / 2) - 20, 185, 60);
 
 		// Message on the bottom right of the screen
-		msgFour = new MessageButton("Message 5", false, true,
+		msgFour = new MessageButton("Bottom Right", false, Color.BLUE, true,
 				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, (screenPanel.getHeight() / 2) - 20, 185,
 				60);
 
 		// Message in the middle of the screen
-		msgFive = new MessageButton("Message 3", true, false, (screenPanel.getWidth() / 2) - 100,
+		msgFive = new MessageButton("Center", true, Color.MAGENTA, false, (screenPanel.getWidth() / 2) - 100,
 				(screenPanel.getHeight() / 2) - 85, 185, 60);
+		
+		messageButtons = new MessageButton[5];
+		messageButtons[0] = msgOne;
+		messageButtons[1] = msgTwo;
+		messageButtons[2] = msgThree;
+		messageButtons[3] = msgFour;
+		messageButtons[4] = msgFive;
 
 		msgOne.setToolTipText("Message top left of screen");
 		msgTwo.setToolTipText("Message top right of screen");
@@ -337,6 +304,14 @@ public class SettingsPanel extends JPanel implements ChangeListener, MouseListen
 
 	public void setmultiMessageListener(MultiMessageListener multiMessageListener) {
 		this.multiMessageListener = multiMessageListener;
+	}
+	
+	public MessageButton[] getMessageButtons() {
+		return messageButtons;
+	}
+
+	public void setMessageButtons(MessageButton[] messageButtons) {
+		this.messageButtons = messageButtons;
 	}
 
 	public boolean[] getMsgLocationsSelected() {

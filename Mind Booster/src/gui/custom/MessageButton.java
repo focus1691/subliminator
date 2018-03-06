@@ -2,64 +2,155 @@ package gui.custom;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JColorChooser;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import constants.CustomColor;
+import gui.JFontChooser;
+import gui.message.dialogs.EditMessage;
 import gui.util.IconFetch;
 import utility.FontPicker;
 
-public class MessageButton extends JLabel {
+public class MessageButton extends JPanel {
 
 	private static final long serialVersionUID = -890456094498670386L;
+	private JPopupMenu menu;
+	private JLabel label;
+	private Color activeColour;
+	private CirclePanel circlePanel;
 	private String categoryName;
 	private ImageIcon image;
-	private int x, y, w, h;
 	private double btnToScreenWRatio, btnToScreenHRatio;
 	private boolean active = false;
 	private boolean locked = true;
-	private Font font = FontPicker.getFont(FontPicker.latoBlack, 20);
+	private Font font;
 
 	public boolean isActive() {
 		return active;
 	}
 
-	public void setActive() {
-		this.active = true;
-		setForeground(CustomColor.green);
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
-	public void setInactive() {
-		this.active = false;
-		setForeground(CustomColor.lightGrey);
-		setBackground(Color.WHITE);
-	}
-
-	public MessageButton(String categoryName, boolean active, boolean locked, int x, int y, int w, int h) {
-		super(categoryName, SwingConstants.CENTER);
+	public MessageButton(String categoryName, boolean active, Color activeColour, boolean locked, int x, int y, int w,
+			int h) {
 		this.categoryName = categoryName;
 		this.active = active;
+		this.activeColour = activeColour;
 		this.locked = locked;
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-		setupUI();
+		
+		createMenu();
+		
+		font = FontPicker.getFont(FontPicker.latoBlack, 20);
+
+		label = new JLabel(categoryName, JLabel.CENTER);
+		label.setForeground(activeColour);
+		label.setBackground(Color.WHITE);
+		label.setFont(font);
+		label.setOpaque(true);
+		label.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menu.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+
+		circlePanel = new CirclePanel(CustomColor.green);
+		circlePanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (isActive()) {
+					circlePanel.setActiveColour(CustomColor.lightGrey);
+					circlePanel.repaint();
+					setActive(false);
+				} else {
+					circlePanel.setActiveColour(CustomColor.green);
+					circlePanel.repaint();
+					setActive(true);
+				}
+			}
+		});
+
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(label);
+		add(circlePanel);
+
+		setBounds(x, y, w, h);
+		setOpaque(true);
+		setBackground(Color.WHITE);
+
+		if (isActive()) {
+			circlePanel.setActiveColour(CustomColor.green);
+			setActive(true);
+		} else {
+			circlePanel.setActiveColour(CustomColor.lightGrey);
+			setActive(false);
+		}
+		if (isLocked()) {
+			lock();
+		} else {
+			unlock();
+		}
 	}
 
-	private void setupUI() {
-		setHorizontalTextPosition(SwingConstants.CENTER);
-		setBounds(x, y, w, h);
-		setFont(font);
-		setForeground(CustomColor.green);
-		setBackground(Color.WHITE);
-		setOpaque(true);
-		if (isActive()) setActive();
-		else setInactive();
-		if (isLocked()) lock();
-		else unlock();
+	private void createMenu() {
+		this.menu = new JPopupMenu();
+
+		JMenuItem colourPickerItem = new JMenuItem("Choose Colour");
+		colourPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		colourPickerItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
+				label.setForeground(newColor);
+				label.repaint();
+			}
+		});
+
+		JMenuItem fontPickerItem = new JMenuItem("Choose Font");
+		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		fontPickerItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFontChooser fontChooser = new JFontChooser();
+				int result = fontChooser.showDialog(null);
+				if (result == JFontChooser.OK_OPTION) {
+					setFont(fontChooser.getSelectedFont());
+					label.setFont(font);
+				}
+			}
+		});
+
+		this.menu.add(colourPickerItem);
+		this.menu.add(fontPickerItem);
+	}
+
+	@Override
+	public Font getFont() {
+		return font;
+	}
+
+	public void setFont(Font font) {
+		this.font = font;
+	}
+
+	public Color getActiveColour() {
+		return activeColour;
+	}
+
+	public void setActiveColour(Color activeColour) {
+		this.activeColour = activeColour;
 	}
 
 	public double getBtnToScreenWRatio() {
@@ -100,9 +191,9 @@ public class MessageButton extends JLabel {
 
 	public void lock() {
 		this.locked = true;
-		this.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/lock2.png"));
+		label.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/lock2.png"));
 	}
-	
+
 	public void unlock() {
 		this.locked = false;
 	}

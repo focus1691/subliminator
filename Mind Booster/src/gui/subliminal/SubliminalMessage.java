@@ -71,13 +71,11 @@ public class SubliminalMessage extends JPanel {
 
 	public void setColor(Color msgColor) {
 		this.message_color = msgColor;
-		// System.out.println("Color: "+this.message_color);
 		repaint();
 	}
 
 	public void setIsTextOnly(boolean isTextOnly) {
 		this.isTextOnly = isTextOnly;
-		// System.out.println("Color: "+this.message_color);
 		repaint();
 	}
 }

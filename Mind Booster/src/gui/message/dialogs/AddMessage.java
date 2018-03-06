@@ -53,8 +53,8 @@ public class AddMessage extends JDialog {
 				boolean is_text_only2=text_only_2.isSelected();
 				
 				if (Validator.isMoreThanThreeChars(msg1) && Validator.isMoreThanThreeChars(msg2)) {
-					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).add(new Message(msg1, "/Images/7.jpg", message_font, message_color, is_text_only1));
-					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).add(new Message(msg2, "/Images/7.jpg", message_font, message_color, is_text_only2));
+					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).add(new Message(msg1, "/Images/7.jpg", is_text_only1));
+					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).add(new Message(msg2, "/Images/7.jpg", is_text_only2));
 					
 					messagePanel.getModel().clear();
 					messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
