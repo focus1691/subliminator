@@ -97,8 +97,6 @@ public class CreateMenuBar extends JMenuBar {
 				System.exit(0);
 			}
 		});
-		fileMenu.setIcon(IconFetch.getInstance().getIcon("/images/exit.png"));
-
 		return fileMenu;
 	}
 
@@ -114,9 +112,6 @@ public class CreateMenuBar extends JMenuBar {
 				messagePanel.setMessageList(controller.getActiveMessages());
 			}
 		});
-
-		messageResetItem.setIcon(IconFetch.getInstance().getIcon("/images/reset.png"));
-
 		return messageResetItem;
 	}
 
