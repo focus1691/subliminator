@@ -127,7 +127,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 
 		// Add Button
 		addBtn.setOpaque(false);
-		addBtn.setPreferredSize(new Dimension(100, 40));
+		addBtn.setPreferredSize(new Dimension(120, 40));
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
 		addBtn.setForeground(Color.WHITE);
@@ -136,7 +136,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 
 		// Edit Button
 		editBtn.setOpaque(false);
-		editBtn.setPreferredSize(new Dimension(100, 40));
+		editBtn.setPreferredSize(new Dimension(120, 40));
 		editBtn.setContentAreaFilled(false);
 		editBtn.setBorderPainted(false);
 		editBtn.setForeground(Color.WHITE);
@@ -145,6 +145,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 
 		// Delete Button
 		deleteBtn.setOpaque(false);
+		deleteBtn.setPreferredSize(new Dimension(150, 40));
 		deleteBtn.setContentAreaFilled(false);
 		deleteBtn.setBorderPainted(false);
 		deleteBtn.setForeground(Color.WHITE);
@@ -153,6 +154,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 
 		// Change Button
 		changeBtn.setOpaque(false);
+		changeBtn.setPreferredSize(new Dimension(220, 40));
 		changeBtn.setContentAreaFilled(false);
 		changeBtn.setBorderPainted(false);
 		changeBtn.setForeground(Color.WHITE);
@@ -172,9 +174,10 @@ public class ControlPanel extends JPanel implements ActionListener {
 		separator3.setBackground(Color.decode("#1060a1"));
 
 		deselectBtn.setForeground(Color.WHITE);
-		deselectBtn.setPreferredSize(new Dimension(100, 30));
+		deselectBtn.setPreferredSize(new Dimension(160, 30));
+		
 		selectBtn.setForeground(Color.WHITE);
-		selectBtn.setPreferredSize(new Dimension(100, 30));
+		selectBtn.setPreferredSize(new Dimension(160, 30));
 	}
 
 	/**

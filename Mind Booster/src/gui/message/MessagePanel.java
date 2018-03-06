@@ -207,7 +207,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.gridy = 1;
 		gc.gridheight = 1;
 		gc.gridwidth = 1;
-		gc.weightx = 1;
+		gc.weightx = 0.1;
 		gc.weighty = 0.1;
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 0, 0, 0);
@@ -229,7 +229,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.gridy = 1;
 		gc.gridheight = 1;
 		gc.gridwidth = 1;
-		gc.weightx = 1;
+		gc.weightx = 0.1;
 		gc.weighty = 0.1;
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 0, 0, 0);
