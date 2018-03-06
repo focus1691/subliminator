@@ -119,17 +119,14 @@ public class EditMessage extends JDialog {
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
+		
 		gc.gridx = 0;
 		gc.gridy = 0;
 		add(firstPersonLbl, gc);
 
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridx++;
-		// gc.gridwidth=25;
 		add(firstPersonMsg, gc);
-
-		gc.gridx++;
-		add(text_only_1, gc);
 
 		gc.gridy++;
 		gc.gridx = 0;
@@ -139,12 +136,12 @@ public class EditMessage extends JDialog {
 		gc.gridx++;
 		add(secondPersonMsg, gc);
 
-		gc.gridx++;
+		gc.gridy++;
 		add(text_only_2, gc);
 
 		gc.gridy++;
 		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.EAST;
+		gc.anchor = GridBagConstraints.CENTER;
 		add(submitBtn, gc);
 	}
 }

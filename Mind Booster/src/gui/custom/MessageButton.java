@@ -1,6 +1,7 @@
 package gui.custom;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,9 +49,9 @@ public class MessageButton extends JPanel {
 		this.active = active;
 		this.activeColour = activeColour;
 		this.locked = locked;
-		
+
 		createMenu();
-		
+
 		font = FontPicker.getFont(FontPicker.latoBlack, 20);
 
 		label = new JLabel(categoryName, JLabel.CENTER);
@@ -118,11 +119,14 @@ public class MessageButton extends JPanel {
 		});
 
 		JMenuItem fontPickerItem = new JMenuItem("Choose Font");
-		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
 		fontPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFontChooser fontChooser = new JFontChooser();
+				fontChooser.setSelectedFontFamily(font.getFamily());
+				fontChooser.setSelectedFontSize(font.getSize());
+				fontChooser.setSelectedFontStyle(font.getStyle());
 				int result = fontChooser.showDialog(null);
 				if (result == JFontChooser.OK_OPTION) {
 					setFont(fontChooser.getSelectedFont());

@@ -7,8 +7,10 @@ import java.awt.Insets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -35,6 +37,7 @@ import utility.Sorter;
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 
 	private static final long serialVersionUID = -4312454251947395385L;
+	private JDesktopPane desktopPane;
 	private MessageController messageController;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
@@ -42,33 +45,21 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private ControlPanel controlPanel;
 
 	public MainFrame() {
-		
+
 		if (NetworkController.isApplicationRunning() == true) {
 			System.exit(1);
 		} else {
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (ClassNotFoundException ex) {
-				Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-			} catch (InstantiationException ex) {
-				Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-			} catch (IllegalAccessException ex) {
-				Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-			} catch (UnsupportedLookAndFeelException ex) {
-				Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-			}
-			
 			messageController = new MessageController();
 
 			categoryPanel = new CategoryPanel(messageController);
 			categoryPanel.setCategorySelectionListener(this);
-			
+
 			messagePanel = new MessagePanel(messageController);
 			messagePanel.setMessageStartListener(this);
-			
+
 			settingsPanel = new SettingsPanel(messageController.getSpeed(), messageController.getInterval());
 			settingsPanel.setSettingsListener(this);
-			
+
 			controlPanel = new ControlPanel();
 			controlPanel.setMessageStartListener(this);
 
@@ -76,6 +67,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setupUI();
 
 			// Window settings
+			setTitle("Mind Booster");
 			setPreferredSize(new Dimension(1600, 900));
 			setMinimumSize(new Dimension(1200, 750));
 			pack();
@@ -84,13 +76,12 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 	}
-	
-	private void setupUI() {
-		setTitle("Mind Booster");
-		setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
 
-		// Category Panel on Left
+	private void setupUI() {
+		setLayout(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -100,8 +91,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(categoryPanel, gbc);
-
-		// Message Panel in Middle
+		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -110,8 +100,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(messagePanel, gbc);
-
-		// Settings Panel on Right
+		
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -120,8 +109,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(settingsPanel, gbc);
-
-		// Controls Panel on Bottom
+		
 		gbc.anchor = GridBagConstraints.SOUTH;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -171,7 +159,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void addMessageEventOccurred(MessageEvent e) {
-		new AddMessage(messageController, messagePanel);
+		AddMessage addMessage = new AddMessage(messageController, messagePanel);
 		messageController.save();
 	}
 

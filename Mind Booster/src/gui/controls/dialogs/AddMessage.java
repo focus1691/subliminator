@@ -108,30 +108,25 @@ public class AddMessage extends JDialog {
 
 		gc.gridx = 0;
 		gc.gridy = 0;
+		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(firstPersonLabel, gc);
 
-		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridx++;
-		// gc.gridwidth=25;
 		add(firstPersonMsg, gc);
-
-		gc.gridx++;
-		add(text_only_1, gc);
 
 		gc.gridy++;
 		gc.gridx = 0;
 		add(secondPersonLabel, gc);
 
-		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridx++;
 		add(secondPersonMsg, gc);
 
-		gc.gridx++;
+		gc.gridy++;
 		add(text_only_2, gc);
 
 		gc.gridy++;
 		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.EAST;
+		gc.anchor = GridBagConstraints.CENTER;
 		add(submitBtn, gc);
 	}
 }
