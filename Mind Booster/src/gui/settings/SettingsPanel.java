@@ -47,9 +47,85 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public SettingsPanel(int speed, int interval) {
 		initComponents(speed, interval);
 		setupUI();
-		styleUI();
+	}
 
+	public void initComponents(int speed, int interval) {
+		screenRect = new Rectangle(0, 0, 650, 410);
+		screenContainer = new JLayeredPane();
+		
+		screenPanel = new JPanel();
+		screenPanel.setLayout(new BorderLayout());
+		screenPanel.setBounds(screenRect);
+		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
+		
+		msgOne = new MessageButton("Top Left", false, CustomColor.green, true, screenPanel.getWidth() / 8,
+				screenPanel.getHeight() / 8, 185, 60);
+		
+		msgTwo = new MessageButton("Top Right", false, Color.RED, true,
+				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, screenPanel.getHeight() / 8, 185, 60);
+		
+		msgThree = new MessageButton("Bottom Left", false, Color.ORANGE, true, screenPanel.getWidth() / 8,
+				(screenPanel.getHeight() / 2) - 20, 185, 60);
+		
+		msgFour = new MessageButton("Bottom Right", false, Color.BLUE, true,
+				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, (screenPanel.getHeight() / 2) - 20, 185,
+				60);
+		
+		msgFive = new MessageButton("Center", true, Color.MAGENTA, false, (screenPanel.getWidth() / 2) - 100,
+				(screenPanel.getHeight() / 2) - 85, 185, 60);
+
+		messageButtons = new MessageButton[5];
+		messageButtons[0] = msgOne;
+		messageButtons[1] = msgTwo;
+		messageButtons[2] = msgThree;
+		messageButtons[3] = msgFour;
+		messageButtons[4] = msgFive;
+
+		msgOne.setToolTipText("Message top left of screen");
+		msgTwo.setToolTipText("Message top right of screen");
+		msgThree.setToolTipText("Message bottom left of screen");
+		msgFour.setToolTipText("Message bottom right of screen");
+		msgFive.setToolTipText("Message center of screen");
+
+		screenContainer.add(screenPanel, new Integer(0), 0);
+		screenContainer.add(msgOne, new Integer(1), 0);
+		screenContainer.add(msgTwo, new Integer(1), 0);
+		screenContainer.add(msgThree, new Integer(1), 0);
+		screenContainer.add(msgFour, new Integer(1), 0);
+		screenContainer.add(msgFive, new Integer(1), 0);
+
+		picturePanel = new JPanel();
+		picture = new ImageIcon();
+		pictureLabel = new PictureLabel(picture);
+
+		picturePanel.setLayout(new BorderLayout());
+		picturePanel.add(pictureLabel, BorderLayout.CENTER);
+
+		speedLbl = new JLabel("Display Every (ms):");
+		speedLbl.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
+		intervalLbl = new JLabel("Interval (s):");
+		intervalLbl.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
+
+		speedSlider = new JSlider(0, 1000);
+		speedSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
+		speedSlider.setToolTipText("Message speed");
+		speedSlider.setMinorTickSpacing(50);
+		speedSlider.setMajorTickSpacing(1000);
+		speedSlider.setPaintTicks(true);
+		speedSlider.setPaintLabels(true);
+		speedSlider.setPreferredSize(new Dimension(300, 75));
+		speedSlider.setValue(speed);
 		speedSlider.addChangeListener((ChangeListener) this);
+
+		intervalSlider = new JSlider(0, 20);
+		intervalSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
+		intervalSlider.setToolTipText("Delay between each message in seconds");
+		intervalSlider.setMinorTickSpacing(20);
+		intervalSlider.setMajorTickSpacing(2);
+		intervalSlider.setPaintTicks(true);
+		intervalSlider.setPaintLabels(true);
+		intervalSlider.setPreferredSize(new Dimension(300, 75));
+		intervalSlider.setValue(interval);
 		intervalSlider.addChangeListener((ChangeListener) this);
 
 		this.addComponentListener(new ComponentListener() {
@@ -94,7 +170,6 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 			}
 		});
 	}
-
 	@Override
 	public void stateChanged(ChangeEvent ce) {
 		if (ce.getSource() == speedSlider) {
@@ -119,94 +194,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 			}
 		}
 	}
-
-	public void initComponents(int speed, int interval) {
-
-		screenRect = new Rectangle(0, 0, 650, 410);
-		screenContainer = new JLayeredPane();
-
-		// The screen
-		screenPanel = new JPanel();
-		screenPanel.setLayout(new BorderLayout());
-		screenPanel.setBounds(screenRect);
-		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
-
-		// Message on the top left of the screen
-		msgOne = new MessageButton("Top Left", false, CustomColor.green, true, screenPanel.getWidth() / 8, screenPanel.getHeight() / 8,
-				185, 60);
-
-		// Message on the top right of the screen
-		msgTwo = new MessageButton("Top Right", false, Color.RED, true,
-				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, screenPanel.getHeight() / 8, 185, 60);
-
-		// Message on the bottom left of the screen
-		msgThree = new MessageButton("Bottom Left", false, Color.ORANGE, true, screenPanel.getWidth() / 8,
-				(screenPanel.getHeight() / 2) - 20, 185, 60);
-
-		// Message on the bottom right of the screen
-		msgFour = new MessageButton("Bottom Right", false, Color.BLUE, true,
-				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, (screenPanel.getHeight() / 2) - 20, 185,
-				60);
-
-		// Message in the middle of the screen
-		msgFive = new MessageButton("Center", true, Color.MAGENTA, false, (screenPanel.getWidth() / 2) - 100,
-				(screenPanel.getHeight() / 2) - 85, 185, 60);
-		
-		messageButtons = new MessageButton[5];
-		messageButtons[0] = msgOne;
-		messageButtons[1] = msgTwo;
-		messageButtons[2] = msgThree;
-		messageButtons[3] = msgFour;
-		messageButtons[4] = msgFive;
-
-		msgOne.setToolTipText("Message top left of screen");
-		msgTwo.setToolTipText("Message top right of screen");
-		msgThree.setToolTipText("Message bottom left of screen");
-		msgFour.setToolTipText("Message bottom right of screen");
-		msgFive.setToolTipText("Message center of screen");
-
-		screenContainer.add(screenPanel, new Integer(0), 0);
-		screenContainer.add(msgOne, new Integer(1), 0);
-		screenContainer.add(msgTwo, new Integer(1), 0);
-		screenContainer.add(msgThree, new Integer(1), 0);
-		screenContainer.add(msgFour, new Integer(1), 0);
-		screenContainer.add(msgFive, new Integer(1), 0);
-
-		picturePanel = new JPanel();
-		picture = new ImageIcon();
-		pictureLabel = new PictureLabel(picture);
-
-		picturePanel.setLayout(new BorderLayout());
-		picturePanel.add(pictureLabel, BorderLayout.CENTER);
-		speedSlider = new JSlider(0, 1000);
-		speedSlider.setToolTipText("Message speed");
-		speedSlider.setValue(speed);
-		speedLbl = new JLabel("Display Every (ms):");
-
-		intervalSlider = new JSlider(0, 20);
-		intervalSlider.setToolTipText("Delay between each message in seconds");
-		intervalSlider.setValue(interval);
-		intervalLbl = new JLabel("Interval (s):");
-	}
-
-	public void styleUI() {
-		speedLbl.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
-		speedSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
-		speedSlider.setMinorTickSpacing(50);
-		speedSlider.setMajorTickSpacing(1000);
-		speedSlider.setPaintTicks(true);
-		speedSlider.setPaintLabels(true);
-		speedSlider.setPreferredSize(new Dimension(300, 75));
-
-		intervalLbl.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
-		intervalSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
-		intervalSlider.setMinorTickSpacing(20);
-		intervalSlider.setMajorTickSpacing(2);
-		intervalSlider.setPaintTicks(true);
-		intervalSlider.setPaintLabels(true);
-		intervalSlider.setPreferredSize(new Dimension(300, 75));
-	}
-
+	
 	public void setupUI() {
 
 		setLayout(new GridBagLayout());
@@ -302,7 +290,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public void setmultiMessageListener(MultiMessageListener multiMessageListener) {
 		this.multiMessageListener = multiMessageListener;
 	}
-	
+
 	public MessageButton[] getMessageButtons() {
 		return messageButtons;
 	}

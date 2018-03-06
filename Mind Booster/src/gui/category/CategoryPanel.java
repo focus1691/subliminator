@@ -53,10 +53,7 @@ public class CategoryPanel extends JPanel {
 			}
 		});
 	}
-
-	/**
-	 * This method initializes all Category Panel components
-	 */
+	
 	private void initComponents() {
 		setCategoryList(controller.getCategories());
 		categoryList = new JList<Category>(model);
@@ -84,10 +81,6 @@ public class CategoryPanel extends JPanel {
 		scroller.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}
 	
-	/**
-	 * This method uses GridBagLayout to position components onto the Category
-	 * Panel
-	 */
 	private void setupUI() {
 
 		GridBagLayout gbl = new GridBagLayout();

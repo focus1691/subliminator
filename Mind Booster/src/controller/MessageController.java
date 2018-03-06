@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.prefs.Preferences;
 
 import constants.MessageTense;
 import constants.ScreenPosition;
@@ -23,34 +24,43 @@ import model.Message;
 public class MessageController {
 	public static boolean messagesOn = false;
 	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-	private int startDelay = 0; // ms
-	private int speed = 700; // ms
-	private int interval = 4; // s
+	private Preferences prefs;
+	private final int startDelay = 0;
+	private int speed;
+	private int interval;
 	private int categoryIndex;
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
 	private SubliminalFrame frame1, frame2, frame3, frame4, frame5;
 	private PlayMessageTask topLeftTask, topRightTask, centerTask, botLeftTask, botRightTask;
 	private List<Message> activeMessages;
-	
+
 	public void setFonts(MessageButton[] messageButtons) {
 		frame1.setFont(messageButtons[0].getFont());
 		frame1.setColor(messageButtons[0].getActiveColour());
-		
+
 		frame2.setFont(messageButtons[1].getFont());
 		frame2.setColor(messageButtons[1].getActiveColour());
-		
+
 		frame3.setFont(messageButtons[2].getFont());
 		frame3.setColor(messageButtons[2].getActiveColour());
-		
+
 		frame4.setFont(messageButtons[3].getFont());
 		frame4.setColor(messageButtons[3].getActiveColour());
-		
+
 		frame5.setFont(messageButtons[4].getFont());
 		frame5.setColor(messageButtons[4].getActiveColour());
 	}
 
 	public MessageController() {
+		prefs = Preferences.userRoot().node(this.getClass().getName());
+
+		speed = prefs.getInt("speed", 50);
+		interval = prefs.getInt("interval", 1);
+		categoryIndex = prefs.getInt("categoryIndex", 0);
+		messageTense = (prefs.getInt("tense", 0)) == 0 ? MessageTense.FIRST_PERSON : MessageTense.SECOND_PERSON;
+
+		System.out.println(messageTense);
 		
 		frame1 = new SubliminalFrame(ScreenPosition.TOPLEFT);
 		frame2 = new SubliminalFrame(ScreenPosition.TOPRIGHT);
@@ -64,14 +74,10 @@ public class MessageController {
 		botLeftTask = new PlayMessageTask(this, frame4);
 		botRightTask = new PlayMessageTask(this, frame5);
 		
-		messageTense = MessageTense.FIRST_PERSON;
-		categoryIndex = 0;
 		activeMessages = new ArrayList<Message>();
-		
+
 		loadStoredLists();
 	}
-	
-	
 
 	@SuppressWarnings("unchecked")
 	private void loadStoredLists() {
@@ -230,20 +236,13 @@ public class MessageController {
 		return categories.get(categoryIdx).getMessages().get(tense.getTenseVal()).get(msgIdx);
 	}
 
-	public int getStartDelay() {
-		return startDelay;
-	}
-
-	public void setStartDelay(int startDelay) {
-		this.startDelay = startDelay;
-	}
-
 	public int getSpeed() {
 		return speed;
 	}
 
 	public void setSpeed(int speed) {
 		this.speed = speed;
+		prefs.putInt("speed", speed);
 	}
 
 	public int getInterval() {
@@ -252,6 +251,7 @@ public class MessageController {
 
 	public void setInterval(int interval) {
 		this.interval = interval;
+		prefs.putInt("interval", interval);
 	}
 
 	public int getCategoryIndex() {
@@ -260,6 +260,7 @@ public class MessageController {
 
 	public void setCategoryIndex(int categoryIndex) {
 		this.categoryIndex = categoryIndex;
+		prefs.putInt("categoryIndex", categoryIndex);
 	}
 
 	public MessageTense getMessageTense() {
@@ -268,6 +269,7 @@ public class MessageController {
 
 	public void setMessageTense(MessageTense messageTense) {
 		this.messageTense = messageTense;
+		prefs.putInt("tense", messageTense == MessageTense.FIRST_PERSON ? 0 : 1);
 	}
 
 	public List<Message> getActiveMessages() {

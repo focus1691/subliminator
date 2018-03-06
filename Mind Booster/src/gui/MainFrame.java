@@ -79,9 +79,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	private void setupUI() {
 		setLayout(new GridBagLayout());
-		
+
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -91,7 +91,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(categoryPanel, gbc);
-		
+
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -100,7 +100,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(messagePanel, gbc);
-		
+
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -109,7 +109,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(settingsPanel, gbc);
-		
+
 		gbc.anchor = GridBagConstraints.SOUTH;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -192,11 +192,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void editImageEventOccurred(MessageEvent e) {
-		// int index =
-		// messagePanel.getMessageListSelectionModel().getLeadSelectionIndex();
 		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
-		// JOptionPane.showMessageDialog(null,
-		// messagePanel.getMessageListSelectionModel().getLastSelection());
 		if (messagePanel.getMessageListSelectionModel().getLastSelection() < 0) {
 			JOptionPane.showMessageDialog(this, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
 			return;

@@ -171,16 +171,12 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		scroller.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		scroller.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}
-
-	/**
-	 * Setup Layout Manager
-	 */
+	
 	private void setupUI() {
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
-
-		// Header, top, full-width, short height
+		
 		gc.gridx = 0;
 		gc.gridy = 0;
 		gc.gridheight = 1;
@@ -190,8 +186,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.insets = new Insets(30, 40, 0, 0);
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(header, gc);
-
-		// 1st person button
+		
 		gc.gridx = 0;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -201,8 +196,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 40, 0, 0);
 		add(firstPersonBtn, gc);
-
-		/// 1st person label
+		
 		gc.gridx = 1;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -212,8 +206,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(firstPersonLabel, gc);
-
-		// 2nd person button
+		
 		gc.gridx = 2;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -223,8 +216,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(secondPersonBtn, gc);
-
-		// 2nd person label
+		
 		gc.gridx = 3;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -234,8 +226,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.anchor = GridBagConstraints.WEST;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(secondPersonLabel, gc);
-
-		// Message list: full width, 90% of height
+		
 		gc.gridx = 0;
 		gc.gridy = 2;
 		gc.gridheight = 1;
