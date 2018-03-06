@@ -17,7 +17,6 @@ import javax.swing.JPopupMenu;
 
 import constants.CustomColor;
 import gui.JFontChooser;
-import gui.message.dialogs.EditMessage;
 import gui.util.IconFetch;
 import utility.FontPicker;
 

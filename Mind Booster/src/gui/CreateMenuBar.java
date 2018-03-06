@@ -14,7 +14,6 @@ import javax.swing.JRadioButtonMenuItem;
 import controller.MessageController;
 import gui.message.MessagePanel;
 import gui.subliminal.SubliminalFrame;
-import gui.util.IconFetch;
 
 public class CreateMenuBar extends JMenuBar {
 
