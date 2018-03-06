@@ -5,13 +5,13 @@ import java.util.concurrent.TimeUnit;
 import controller.MessageController;
 import utility.RandomNumberGenerator;
 
-public class PlayMessageTask implements Runnable {
+public class SubliminalTask implements Runnable {
 
 	private MessageController controller;
 	private SubliminalFrame subliminal;
 	private int messageIndex;
 	
-	public PlayMessageTask(MessageController controller, SubliminalFrame subliminal) {
+	public SubliminalTask(MessageController controller, SubliminalFrame subliminal) {
 		this.controller = controller;
 		this.subliminal = subliminal;
 	}

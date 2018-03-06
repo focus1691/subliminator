@@ -52,7 +52,7 @@ public class MessageButton extends JPanel {
 
 		prefs = Preferences.userRoot().node(this.getClass().getName());
 		setActive(prefs.getBoolean(categoryName, false));
-
+		
 		createMenu();
 
 		font = FontPicker.getFont(FontPicker.latoBlack, 20);

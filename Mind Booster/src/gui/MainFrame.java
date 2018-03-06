@@ -5,7 +5,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -121,9 +120,10 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
 		if (messageController.isMessagesOn() == false) {
 			try {
-				messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
+				messageController.startMessageActivity(settingsPanel.getMsgLocationsSelected(),
+						settingsPanel.getMessageButtons());
 				messageController.setCategoryIndex(e.getCategoryIndex());
-				messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
+				messageController.stopMessageActivity();
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
@@ -133,8 +133,16 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void messageEventOccurred(MessageEvent event) {
 		try {
-			messageController.setActiveMessages(messagePanel.getSelectedMessages());
-			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
+			if (messageController.isMessagesOn() == false) {
+				messageController.setActiveMessages(messagePanel.getSelectedMessages());
+				messageController.startMessageActivity(settingsPanel.getMsgLocationsSelected(),
+						settingsPanel.getMessageButtons());
+				messageController.setMessagesOn(true);
+			} else if (messageController.isMessagesOn() == true) {
+				messageController.stopMessageActivity();
+				messageController.setMessagesOn(false);
+			}
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -198,10 +206,11 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void settingsEventOccurred(SettingsEvent e) {
 		try {
-			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
+			messageController.startMessageActivity(settingsPanel.getMsgLocationsSelected(),
+					settingsPanel.getMessageButtons());
 			messageController.setSpeed(e.getMessageSpeed());
 			messageController.setInterval(e.getMessageInterval());
-			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
+			messageController.stopMessageActivity();
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}

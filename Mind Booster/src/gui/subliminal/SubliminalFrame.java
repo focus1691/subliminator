@@ -7,7 +7,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import constants.ScreenPosition;
 import gui.util.IconFetch;
 import gui.util.SetScreenLocation;
 import model.Message;
@@ -22,8 +21,9 @@ public class SubliminalFrame extends JFrame {
 	private Font font;
 	private Color color;
 
-	public SubliminalFrame(ScreenPosition screenPosition) {
-		initComponents();
+	public SubliminalFrame() {
+		subliminalMessage = new SubliminalMessage();
+		add(subliminalMessage);
 		
 		setFocusable(false);
 		setUndecorated(true);
@@ -33,38 +33,8 @@ public class SubliminalFrame extends JFrame {
 		setFocusableWindowState(false);
 		setEnabled(false);
 		pack();
-
-		setMessageLocation(screenPosition);
 	}
-
-	private void initComponents() {
-		subliminalMessage = new SubliminalMessage();
-		add(subliminalMessage);
-	}
-
-	private void setMessageLocation(ScreenPosition messageLocation) {
-
-		switch (messageLocation) {
-		case CENTER:
-			SetScreenLocation.center(this);
-			break;
-		case TOPLEFT:
-			SetScreenLocation.topLeft(this);
-			break;
-		case TOPRIGHT:
-			SetScreenLocation.topRight(this);
-			break;
-		case BOTLEFT:
-			SetScreenLocation.botLeft(this);
-			break;
-		case BOTRIGHT:
-			SetScreenLocation.botRight(this);
-			break;
-		default:
-			break;
-		}
-	}
-
+	
 	public void setMessage(Message message) {
 		subliminalMessage.setMessage(message.getMessage());
 		subliminalMessage.setFont(font);

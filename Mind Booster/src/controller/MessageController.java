@@ -13,11 +13,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.prefs.Preferences;
 
 import constants.MessageTense;
-import constants.ScreenPosition;
 import data.InBuiltCategory;
 import gui.custom.MessageButton;
-import gui.subliminal.PlayMessageTask;
+import gui.subliminal.SubliminalTask;
 import gui.subliminal.SubliminalFrame;
+import gui.util.SetScreenLocation;
 import model.Category;
 import model.Message;
 
@@ -32,37 +32,41 @@ public class MessageController {
 	private ArrayList<Category> categories;
 	private MessageTense messageTense;
 	private SubliminalFrame frame1, frame2, frame3, frame4, frame5;
-	private PlayMessageTask topLeftTask, topRightTask, centerTask, botLeftTask, botRightTask;
+	private SubliminalTask subliminalTask1, subliminalTask2, subliminalTask3, subliminalTask4, subliminalTask5;
 	private List<Message> activeMessages;
 
 	public MessageController() {
 		prefs = Preferences.userRoot().node(this.getClass().getName());
-
 		speed = prefs.getInt("speed", 50);
 		interval = prefs.getInt("interval", 1);
 		categoryIndex = prefs.getInt("categoryIndex", 0);
 		messageTense = (prefs.getInt("tense", 0)) == 0 ? MessageTense.FIRST_PERSON : MessageTense.SECOND_PERSON;
-		
-		frame1 = new SubliminalFrame(ScreenPosition.TOPLEFT);
+
+		frame1 = new SubliminalFrame();
+		SetScreenLocation.topLeft(frame1);
 		frame1.setActive(prefs.getBoolean("topleft", false));
-		
-		frame2 = new SubliminalFrame(ScreenPosition.TOPRIGHT);
+
+		frame2 = new SubliminalFrame();
+		SetScreenLocation.topRight(frame2);
 		frame2.setActive(prefs.getBoolean("topright", false));
-		
-		frame3 = new SubliminalFrame(ScreenPosition.CENTER);
+
+		frame3 = new SubliminalFrame();
+		SetScreenLocation.center(frame3);
 		frame3.setActive(prefs.getBoolean("center", false));
-		
-		frame4 = new SubliminalFrame(ScreenPosition.BOTLEFT);
+
+		frame4 = new SubliminalFrame();
+		SetScreenLocation.botLeft(frame4);
 		frame4.setActive(prefs.getBoolean("bottomleft", false));
-		
-		frame5 = new SubliminalFrame(ScreenPosition.BOTRIGHT);
+
+		frame5 = new SubliminalFrame();
+		SetScreenLocation.botRight(frame5);
 		frame5.setActive(prefs.getBoolean("bottomright", false));
 
-		topLeftTask = new PlayMessageTask(this, frame1);
-		topRightTask = new PlayMessageTask(this, frame2);
-		centerTask = new PlayMessageTask(this, frame3);
-		botLeftTask = new PlayMessageTask(this, frame4);
-		botRightTask = new PlayMessageTask(this, frame5);
+		subliminalTask1 = new SubliminalTask(this, frame1);
+		subliminalTask2 = new SubliminalTask(this, frame2);
+		subliminalTask3 = new SubliminalTask(this, frame3);
+		subliminalTask4 = new SubliminalTask(this, frame4);
+		subliminalTask5 = new SubliminalTask(this, frame5);
 
 		activeMessages = new ArrayList<Message>();
 
@@ -105,68 +109,61 @@ public class MessageController {
 		}
 	}
 
-	/**
-	 * Start/Stop the messages
-	 * 
-	 * @throws InterruptedException
-	 *             check for multithreading exceptions
-	 */
-	public synchronized void changeMessageActivity(boolean msgLocationsSelected[], MessageButton[] messageButtons)
+	public synchronized void startMessageActivity(boolean msgLocationsSelected[], MessageButton[] messageButtons)
 			throws InterruptedException {
-		messagesOn = (messagesOn == true) ? false : true;
-		if (messagesOn) {
-			if (scheduledExecutorService.isShutdown()) {
-				scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-			}
-			if (messageButtons[0].isActive() == true) {
-				frame1.setActive(true);
-				prefs.putBoolean("topleft", true);
-				frame1.setFont(messageButtons[0].getFont());
-				frame1.setColor(messageButtons[0].getActiveColour());
-				scheduledExecutorService.scheduleWithFixedDelay(topLeftTask, startDelay, interval, TimeUnit.SECONDS);
-			} else {
-				prefs.putBoolean("topleft", false);
-			}
-			if (messageButtons[1].isActive() == true) {
-				frame2.setActive(true);
-				prefs.putBoolean("topright", true);
-				frame2.setFont(messageButtons[1].getFont());
-				frame2.setColor(messageButtons[1].getActiveColour());
-				scheduledExecutorService.scheduleWithFixedDelay(topRightTask, startDelay, interval, TimeUnit.SECONDS);
-			} else {
-				prefs.putBoolean("topright", false);
-			}
-			if (messageButtons[2].isActive() == true) {
-				frame3.setActive(true);
-				prefs.putBoolean("center", true);
-				frame3.setFont(messageButtons[2].getFont());
-				frame3.setColor(messageButtons[2].getActiveColour());
-				scheduledExecutorService.scheduleWithFixedDelay(centerTask, startDelay, interval, TimeUnit.SECONDS);
-			} else {
-				prefs.putBoolean("center", false);
-			}
-			if (messageButtons[3].isActive() == true) {
-				frame4.setActive(true);
-				prefs.putBoolean("bottomleft", true);
-				frame4.setFont(messageButtons[3].getFont());
-				frame4.setColor(messageButtons[3].getActiveColour());
-				scheduledExecutorService.scheduleWithFixedDelay(botLeftTask, startDelay, interval, TimeUnit.SECONDS);
-			} else {
-				prefs.putBoolean("bottomleft", false);
-			}
-			if (messageButtons[4].isActive() == true) {
-				frame5.setActive(true);
-				prefs.putBoolean("bottomright", true);
-				frame5.setFont(messageButtons[4].getFont());
-				frame5.setColor(messageButtons[4].getActiveColour());
-				scheduledExecutorService.scheduleWithFixedDelay(botRightTask, startDelay, interval, TimeUnit.SECONDS);
-			} else {
-				prefs.putBoolean("bottomright", false);
-			}
-		} else {
-			scheduledExecutorService.shutdown();
-			System.gc();
+		if (scheduledExecutorService.isShutdown()) {
+			scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 		}
+		if (messageButtons[0].isActive() == true) {
+			frame1.setActive(true);
+			prefs.putBoolean("topleft", true);
+			frame1.setFont(messageButtons[0].getFont());
+			frame1.setColor(messageButtons[0].getActiveColour());
+			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask1, startDelay, interval, TimeUnit.SECONDS);
+		} else {
+			prefs.putBoolean("topleft", false);
+		}
+		if (messageButtons[1].isActive() == true) {
+			frame2.setActive(true);
+			prefs.putBoolean("topright", true);
+			frame2.setFont(messageButtons[1].getFont());
+			frame2.setColor(messageButtons[1].getActiveColour());
+			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask2, startDelay, interval, TimeUnit.SECONDS);
+		} else {
+			prefs.putBoolean("topright", false);
+		}
+		if (messageButtons[2].isActive() == true) {
+			frame3.setActive(true);
+			prefs.putBoolean("center", true);
+			frame3.setFont(messageButtons[2].getFont());
+			frame3.setColor(messageButtons[2].getActiveColour());
+			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask3, startDelay, interval, TimeUnit.SECONDS);
+		} else {
+			prefs.putBoolean("center", false);
+		}
+		if (messageButtons[3].isActive() == true) {
+			frame4.setActive(true);
+			prefs.putBoolean("bottomleft", true);
+			frame4.setFont(messageButtons[3].getFont());
+			frame4.setColor(messageButtons[3].getActiveColour());
+			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask4, startDelay, interval, TimeUnit.SECONDS);
+		} else {
+			prefs.putBoolean("bottomleft", false);
+		}
+		if (messageButtons[4].isActive() == true) {
+			frame5.setActive(true);
+			prefs.putBoolean("bottomright", true);
+			frame5.setFont(messageButtons[4].getFont());
+			frame5.setColor(messageButtons[4].getActiveColour());
+			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask5, startDelay, interval, TimeUnit.SECONDS);
+		} else {
+			prefs.putBoolean("bottomright", false);
+		}
+	}
+
+	public synchronized void stopMessageActivity() throws InterruptedException {
+		scheduledExecutorService.shutdown();
+		System.gc();
 	}
 
 	public boolean isMessagesOn() {
