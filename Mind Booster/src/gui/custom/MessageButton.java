@@ -1,12 +1,12 @@
 package gui.custom;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.prefs.Preferences;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -24,6 +24,7 @@ import utility.FontPicker;
 public class MessageButton extends JPanel {
 
 	private static final long serialVersionUID = -890456094498670386L;
+	private Preferences prefs;
 	private JPopupMenu menu;
 	private JLabel label;
 	private Color activeColour;
@@ -46,9 +47,11 @@ public class MessageButton extends JPanel {
 	public MessageButton(String categoryName, boolean active, Color activeColour, boolean locked, int x, int y, int w,
 			int h) {
 		this.categoryName = categoryName;
-		this.active = active;
 		this.activeColour = activeColour;
 		this.locked = locked;
+
+		prefs = Preferences.userRoot().node(this.getClass().getName());
+		setActive(prefs.getBoolean(categoryName, false));
 
 		createMenu();
 
@@ -74,10 +77,12 @@ public class MessageButton extends JPanel {
 					circlePanel.setActiveColour(CustomColor.lightGrey);
 					circlePanel.repaint();
 					setActive(false);
+					prefs.putBoolean(categoryName, false);
 				} else {
 					circlePanel.setActiveColour(CustomColor.green);
 					circlePanel.repaint();
 					setActive(true);
+					prefs.putBoolean(categoryName, true);
 				}
 			}
 		});

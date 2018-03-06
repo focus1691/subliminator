@@ -4,15 +4,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.MessageController;
 import controller.NetworkController;
@@ -37,7 +32,6 @@ import utility.Sorter;
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 
 	private static final long serialVersionUID = -4312454251947395385L;
-	private JDesktopPane desktopPane;
 	private MessageController messageController;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
@@ -66,7 +60,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setJMenuBar(new CreateMenuBar(messageController, messagePanel));
 			setupUI();
 
-			// Window settings
 			setTitle("Mind Booster");
 			setPreferredSize(new Dimension(1600, 900));
 			setMinimumSize(new Dimension(1200, 750));
@@ -126,11 +119,11 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		messagePanel.getModel().clear();
 		messageController.setCategoryIndex(e.getCategoryIndex());
 		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
-		if (MessageController.messagesOn == false) {
+		if (messageController.isMessagesOn() == false) {
 			try {
-				messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+				messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
 				messageController.setCategoryIndex(e.getCategoryIndex());
-				messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+				messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
@@ -140,9 +133,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void messageEventOccurred(MessageEvent event) {
 		try {
-			messageController.setFonts(settingsPanel.getMessageButtons());
 			messageController.setActiveMessages(messagePanel.getSelectedMessages());
-			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -206,10 +198,10 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void settingsEventOccurred(SettingsEvent e) {
 		try {
-			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
 			messageController.setSpeed(e.getMessageSpeed());
 			messageController.setInterval(e.getMessageInterval());
-			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected());
+			messageController.changeMessageActivity(settingsPanel.getMsgLocationsSelected(), settingsPanel.getMessageButtons());
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}

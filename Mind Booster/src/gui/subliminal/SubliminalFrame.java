@@ -16,6 +16,7 @@ public class SubliminalFrame extends JFrame {
 
 	private static final long serialVersionUID = 2931841309711143361L;
 	private SubliminalMessage subliminalMessage;
+	private boolean active;
 	public static int height = 200;
 	public static int width = 200;
 	private Font font;
@@ -23,7 +24,7 @@ public class SubliminalFrame extends JFrame {
 
 	public SubliminalFrame(ScreenPosition screenPosition) {
 		initComponents();
-
+		
 		setFocusable(false);
 		setUndecorated(true);
 		setBackground(new Color(0, 0, 0, 0));
@@ -91,5 +92,13 @@ public class SubliminalFrame extends JFrame {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

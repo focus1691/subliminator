@@ -22,8 +22,8 @@ import model.Category;
 import model.Message;
 
 public class MessageController {
-	public static boolean messagesOn = false;
-	private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+	private boolean messagesOn = false;
+	private ScheduledExecutorService scheduledExecutorService;
 	private Preferences prefs;
 	private final int startDelay = 0;
 	private int speed;
@@ -35,23 +35,6 @@ public class MessageController {
 	private PlayMessageTask topLeftTask, topRightTask, centerTask, botLeftTask, botRightTask;
 	private List<Message> activeMessages;
 
-	public void setFonts(MessageButton[] messageButtons) {
-		frame1.setFont(messageButtons[0].getFont());
-		frame1.setColor(messageButtons[0].getActiveColour());
-
-		frame2.setFont(messageButtons[1].getFont());
-		frame2.setColor(messageButtons[1].getActiveColour());
-
-		frame3.setFont(messageButtons[2].getFont());
-		frame3.setColor(messageButtons[2].getActiveColour());
-
-		frame4.setFont(messageButtons[3].getFont());
-		frame4.setColor(messageButtons[3].getActiveColour());
-
-		frame5.setFont(messageButtons[4].getFont());
-		frame5.setColor(messageButtons[4].getActiveColour());
-	}
-
 	public MessageController() {
 		prefs = Preferences.userRoot().node(this.getClass().getName());
 
@@ -59,22 +42,31 @@ public class MessageController {
 		interval = prefs.getInt("interval", 1);
 		categoryIndex = prefs.getInt("categoryIndex", 0);
 		messageTense = (prefs.getInt("tense", 0)) == 0 ? MessageTense.FIRST_PERSON : MessageTense.SECOND_PERSON;
-
-		System.out.println(messageTense);
 		
 		frame1 = new SubliminalFrame(ScreenPosition.TOPLEFT);
+		frame1.setActive(prefs.getBoolean("topleft", false));
+		
 		frame2 = new SubliminalFrame(ScreenPosition.TOPRIGHT);
+		frame2.setActive(prefs.getBoolean("topright", false));
+		
 		frame3 = new SubliminalFrame(ScreenPosition.CENTER);
+		frame3.setActive(prefs.getBoolean("center", false));
+		
 		frame4 = new SubliminalFrame(ScreenPosition.BOTLEFT);
+		frame4.setActive(prefs.getBoolean("bottomleft", false));
+		
 		frame5 = new SubliminalFrame(ScreenPosition.BOTRIGHT);
+		frame5.setActive(prefs.getBoolean("bottomright", false));
 
 		topLeftTask = new PlayMessageTask(this, frame1);
 		topRightTask = new PlayMessageTask(this, frame2);
 		centerTask = new PlayMessageTask(this, frame3);
 		botLeftTask = new PlayMessageTask(this, frame4);
 		botRightTask = new PlayMessageTask(this, frame5);
-		
+
 		activeMessages = new ArrayList<Message>();
+
+		scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
 		loadStoredLists();
 	}
@@ -119,30 +111,57 @@ public class MessageController {
 	 * @throws InterruptedException
 	 *             check for multithreading exceptions
 	 */
-	public synchronized void changeMessageActivity(boolean msgLocationsSelected[]) throws InterruptedException {
+	public synchronized void changeMessageActivity(boolean msgLocationsSelected[], MessageButton[] messageButtons)
+			throws InterruptedException {
 		messagesOn = (messagesOn == true) ? false : true;
 		if (messagesOn) {
 			if (scheduledExecutorService.isShutdown()) {
 				scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 			}
-			if (msgLocationsSelected[0] == true) {
+			if (messageButtons[0].isActive() == true) {
+				frame1.setActive(true);
+				prefs.putBoolean("topleft", true);
+				frame1.setFont(messageButtons[0].getFont());
+				frame1.setColor(messageButtons[0].getActiveColour());
 				scheduledExecutorService.scheduleWithFixedDelay(topLeftTask, startDelay, interval, TimeUnit.SECONDS);
+			} else {
+				prefs.putBoolean("topleft", false);
 			}
-			if (msgLocationsSelected[1] == true) {
+			if (messageButtons[1].isActive() == true) {
+				frame2.setActive(true);
+				prefs.putBoolean("topright", true);
+				frame2.setFont(messageButtons[1].getFont());
+				frame2.setColor(messageButtons[1].getActiveColour());
 				scheduledExecutorService.scheduleWithFixedDelay(topRightTask, startDelay, interval, TimeUnit.SECONDS);
+			} else {
+				prefs.putBoolean("topright", false);
 			}
-			if (msgLocationsSelected[2] == true) {
-				scheduledExecutorService.scheduleWithFixedDelay(botLeftTask, startDelay, interval, TimeUnit.SECONDS);
-			}
-			if (msgLocationsSelected[3] == true) {
-				scheduledExecutorService.scheduleWithFixedDelay(botRightTask, startDelay, interval, TimeUnit.SECONDS);
-			}
-			if (msgLocationsSelected[4] == true) {
+			if (messageButtons[2].isActive() == true) {
+				frame3.setActive(true);
+				prefs.putBoolean("center", true);
+				frame3.setFont(messageButtons[2].getFont());
+				frame3.setColor(messageButtons[2].getActiveColour());
 				scheduledExecutorService.scheduleWithFixedDelay(centerTask, startDelay, interval, TimeUnit.SECONDS);
-				scheduledExecutorService.scheduleWithFixedDelay(topRightTask, startDelay, interval, TimeUnit.SECONDS);
-				scheduledExecutorService.scheduleWithFixedDelay(topLeftTask, startDelay, interval, TimeUnit.SECONDS);
-				scheduledExecutorService.scheduleWithFixedDelay(botRightTask, startDelay, interval, TimeUnit.SECONDS);
+			} else {
+				prefs.putBoolean("center", false);
+			}
+			if (messageButtons[3].isActive() == true) {
+				frame4.setActive(true);
+				prefs.putBoolean("bottomleft", true);
+				frame4.setFont(messageButtons[3].getFont());
+				frame4.setColor(messageButtons[3].getActiveColour());
 				scheduledExecutorService.scheduleWithFixedDelay(botLeftTask, startDelay, interval, TimeUnit.SECONDS);
+			} else {
+				prefs.putBoolean("bottomleft", false);
+			}
+			if (messageButtons[4].isActive() == true) {
+				frame5.setActive(true);
+				prefs.putBoolean("bottomright", true);
+				frame5.setFont(messageButtons[4].getFont());
+				frame5.setColor(messageButtons[4].getActiveColour());
+				scheduledExecutorService.scheduleWithFixedDelay(botRightTask, startDelay, interval, TimeUnit.SECONDS);
+			} else {
+				prefs.putBoolean("bottomright", false);
 			}
 		} else {
 			scheduledExecutorService.shutdown();
@@ -150,12 +169,12 @@ public class MessageController {
 		}
 	}
 
-	public static boolean isMessagesOn() {
-		return messagesOn;
+	public boolean isMessagesOn() {
+		return this.messagesOn;
 	}
 
-	public static void setMessagesOn(boolean messagesOn) {
-		MessageController.messagesOn = messagesOn;
+	public void setMessagesOn(boolean messagesOn) {
+		this.messagesOn = messagesOn;
 	}
 
 	/**
@@ -203,7 +222,6 @@ public class MessageController {
 	public List<Message> getMessagesFromActiveTenseCategory() {
 		int i;
 		List<Message> messages = new ArrayList<Message>();
-		System.out.println(messageTense + " inside getMessagesFromActiveTenseCategory");
 		int numMessagesInCategory = categories.get(categoryIndex).getMessages().get(messageTense.getTenseVal()).size();
 
 		for (i = 0; i < numMessagesInCategory; i++) {
