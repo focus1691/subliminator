@@ -41,7 +41,6 @@ public class MessageController {
 		interval = prefs.getInt("interval", 1);
 		categoryIndex = prefs.getInt("categoryIndex", 0);
 		messageTense = (prefs.getInt("tense", 0)) == 0 ? MessageTense.FIRST_PERSON : MessageTense.SECOND_PERSON;
-
 		frame1 = new SubliminalFrame();
 		SetScreenLocation.topLeft(frame1);
 		frame1.setActive(prefs.getBoolean("topleft", false));

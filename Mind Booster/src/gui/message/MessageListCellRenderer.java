@@ -19,9 +19,8 @@ import model.Message;
 public class MessageListCellRenderer extends DefaultListCellRenderer {
 
 	private static final long serialVersionUID = 5844001513309670611L;
-
-	Border greyFaintBorder = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode("#ecf1f5"));
-	CompoundBorder compoundBorder = new CompoundBorder(
+	private final Border greyFaintBorder = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode("#ecf1f5"));
+	private final CompoundBorder compoundBorder = new CompoundBorder(
 			BorderFactory.createMatteBorder(0, 0, 0, 4, Color.decode("#2388d9")),
 			BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode("#ecf1f5")));
 
@@ -33,24 +32,22 @@ public class MessageListCellRenderer extends DefaultListCellRenderer {
 	@Override
 	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 			boolean cellHasFocus) {
-		
+
 		Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-		
+
 		JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected,
 				cellHasFocus);
-		
+
 		Message message = (Message) value;
 		listCellRendererComponent.setText("  " + message.getMessage());
-		
+
 		if (isSelected) {
 			ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
-			System.out.println("Message Image: "+message.getImagePath()+"=> is null: "+(icon==null));
-			if(icon ==null)
-				 icon = new ImageIcon(message.getImagePath());
-			System.out.println("Message Image: "+message.getImagePath()+"=> is null After: "+(icon==null));
+			if (icon == null)
+				icon = new ImageIcon(message.getImagePath());
 			SettingsPanel.pictureLabel.setImageIcon(icon);
 			SettingsPanel.pictureLabel.repaint();
-			
+
 			setBackground(Color.decode("#f5f5f5"));
 			setForeground(Color.decode("#0a95dd"));
 			listCellRendererComponent.setBorder(compoundBorder);

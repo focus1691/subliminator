@@ -134,6 +134,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void messageEventOccurred(MessageEvent event) {
 		try {
 			if (messageController.isMessagesOn() == false) {
+				messageController.setSpeed(settingsPanel.getSpeed());
+				messageController.setInterval(settingsPanel.getInterval());
 				messageController.setActiveMessages(messagePanel.getSelectedMessages());
 				messageController.startMessageActivity(settingsPanel.getMsgLocationsSelected(),
 						settingsPanel.getMessageButtons());
@@ -205,14 +207,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void settingsEventOccurred(SettingsEvent e) {
-		try {
-			messageController.startMessageActivity(settingsPanel.getMsgLocationsSelected(),
-					settingsPanel.getMessageButtons());
-			messageController.setSpeed(e.getMessageSpeed());
-			messageController.setInterval(e.getMessageInterval());
-			messageController.stopMessageActivity();
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
+		messageController.setSpeed(e.getMessageSpeed());
+		messageController.setInterval(e.getMessageInterval());
 	}
 }

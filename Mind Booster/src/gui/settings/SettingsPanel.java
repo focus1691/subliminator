@@ -113,7 +113,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
 		speedSlider.setPreferredSize(new Dimension(300, 75));
-		speedSlider.setValue(speed);
+		speedSlider.setValue(speed == 0 ? 50 : speed);
 		speedSlider.addChangeListener((ChangeListener) this);
 
 		intervalSlider = new JSlider(0, 20);
@@ -124,7 +124,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		intervalSlider.setPaintTicks(true);
 		intervalSlider.setPaintLabels(true);
 		intervalSlider.setPreferredSize(new Dimension(300, 75));
-		intervalSlider.setValue(interval);
+		intervalSlider.setValue(interval == 0 ? 1 : interval);
 		intervalSlider.addChangeListener((ChangeListener) this);
 
 		this.addComponentListener(new ComponentListener() {
@@ -240,7 +240,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(100, 0, 0, 0);
+		gc.insets = new Insets(120, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(intervalLbl, gc);
@@ -251,7 +251,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(130, 0, 0, 0);
+		gc.insets = new Insets(150, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(intervalSlider, gc);
@@ -320,5 +320,13 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 			msgLocationsSelected[4] = true;
 		}
 		return msgLocationsSelected;
+	}
+	
+	public int getSpeed() {
+		return speedSlider.getValue();
+	}
+	
+	public int getInterval() {
+		return intervalSlider.getValue();
 	}
 }
