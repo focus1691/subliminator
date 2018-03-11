@@ -19,6 +19,7 @@ public class SubliminalTask implements Runnable {
 	@Override
 	public void run() {
 		setMessageIndex(RandomNumberGenerator.randInt(0, controller.getActiveMessages().size() - 1));
+		System.out.println("Set message");
 		subliminal.setMessage(controller.getActiveMessages().get(messageIndex));
 		subliminal.setVisible(true);
 		try {

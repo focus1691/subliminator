@@ -50,16 +50,16 @@ public class MessageController {
 		frame2.setActive(prefs.getBoolean("topright", false));
 
 		frame3 = new SubliminalFrame();
-		SetScreenLocation.center(frame3);
-		frame3.setActive(prefs.getBoolean("center", false));
+		SetScreenLocation.botLeft(frame3);
+		frame3.setActive(prefs.getBoolean("bottomleft", false));
 
 		frame4 = new SubliminalFrame();
-		SetScreenLocation.botLeft(frame4);
-		frame4.setActive(prefs.getBoolean("bottomleft", false));
-
+		SetScreenLocation.botRight(frame4);
+		frame4.setActive(prefs.getBoolean("bottomright", false));
+		
 		frame5 = new SubliminalFrame();
-		SetScreenLocation.botRight(frame5);
-		frame5.setActive(prefs.getBoolean("bottomright", false));
+		SetScreenLocation.center(frame5);
+		frame5.setActive(prefs.getBoolean("center", false));
 
 		subliminalTask1 = new SubliminalTask(this, frame1);
 		subliminalTask2 = new SubliminalTask(this, frame2);
@@ -133,30 +133,30 @@ public class MessageController {
 		}
 		if (messageButtons[2].isActive() == true) {
 			frame3.setActive(true);
-			prefs.putBoolean("center", true);
+			prefs.putBoolean("bottomleft", true);
 			frame3.setFont(messageButtons[2].getFont());
 			frame3.setColor(messageButtons[2].getActiveColour());
 			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask3, startDelay, interval, TimeUnit.SECONDS);
 		} else {
-			prefs.putBoolean("center", false);
+			prefs.putBoolean("bottomleft", false);
 		}
 		if (messageButtons[3].isActive() == true) {
 			frame4.setActive(true);
-			prefs.putBoolean("bottomleft", true);
+			prefs.putBoolean("bottomright", true);
 			frame4.setFont(messageButtons[3].getFont());
 			frame4.setColor(messageButtons[3].getActiveColour());
 			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask4, startDelay, interval, TimeUnit.SECONDS);
 		} else {
-			prefs.putBoolean("bottomleft", false);
+			prefs.putBoolean("bottomright", false);
 		}
 		if (messageButtons[4].isActive() == true) {
 			frame5.setActive(true);
-			prefs.putBoolean("bottomright", true);
+			prefs.putBoolean("center", true);
 			frame5.setFont(messageButtons[4].getFont());
 			frame5.setColor(messageButtons[4].getActiveColour());
 			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask5, startDelay, interval, TimeUnit.SECONDS);
 		} else {
-			prefs.putBoolean("bottomright", false);
+			prefs.putBoolean("center", false);
 		}
 	}
 
