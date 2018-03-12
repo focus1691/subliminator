@@ -22,6 +22,8 @@ public class SubliminalMessage extends JPanel {
 	private Image img;
 	private Font font;
 	private Color color;
+	private Color activeBackground;
+	private boolean isBackgroundSelected;
 	private boolean isTextOnly;
 
 	public SubliminalMessage() {
@@ -41,12 +43,20 @@ public class SubliminalMessage extends JPanel {
 
 		g2d.clearRect(0, 0, getWidth(), getHeight());
 
-		g2d.setFont(font/* new Font("Courier New", Font.BOLD, 24) */);
-		g2d.setColor(Color.WHITE);
-		g2d.fillRect(x, 40 - metrics.getAscent(), (int) rect.getWidth(), (int) rect.getHeight());
-		g2d.setColor(color/* Color.RED */);
-		g2d.drawString(message, x, 40);
+		g2d.setFont(font);
+		
+		g2d.setColor(color);
 
+		if (isBackgroundSelected) {
+			g2d.setColor(activeBackground);
+		} else {
+			g2d.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
+		}
+
+		g2d.fillRect(x, 40 - metrics.getAscent(), (int) rect.getWidth(), (int) rect.getHeight());
+		g2d.setColor(color);
+		g2d.drawString(message, x, 40);
+		
 		if (img != null && !isTextOnly) {
 			x = (this.getWidth() - img.getWidth(null)) / 2;
 			y = (this.getHeight() - img.getHeight(null)) / 2;
@@ -56,26 +66,37 @@ public class SubliminalMessage extends JPanel {
 
 	public void setMessage(String message) {
 		this.message = message;
-		repaint();
 	}
 
 	public void setImage(Image image) {
 		this.img = image;
-		repaint();
 	}
 
 	public void setFont(Font font) {
 		this.font = font;
-		repaint();
 	}
 
 	public void setColor(Color color) {
 		this.color = color;
-		repaint();
+	}
+
+	public Color getActiveBackground() {
+		return activeBackground;
+	}
+
+	public void setActiveBackground(Color activeBackground) {
+		this.activeBackground = activeBackground;
+	}
+
+	public boolean isBackgroundSelected() {
+		return isBackgroundSelected;
+	}
+
+	public void setBackgroundSelected(boolean isBackgroundSelected) {
+		this.isBackgroundSelected = isBackgroundSelected;
 	}
 
 	public void setIsTextOnly(boolean isTextOnly) {
 		this.isTextOnly = isTextOnly;
-		repaint();
 	}
 }

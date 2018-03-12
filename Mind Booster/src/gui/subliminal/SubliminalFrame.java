@@ -20,6 +20,8 @@ public class SubliminalFrame extends JFrame {
 	public static int width = 200;
 	private Font font;
 	private Color color;
+	private Color activeBackground;
+	private boolean isBackgroundSelected;
 
 	public SubliminalFrame() {
 		subliminalMessage = new SubliminalMessage();
@@ -35,6 +37,7 @@ public class SubliminalFrame extends JFrame {
 		pack();
 	}
 	
+	public static int count = 0;
 	public void setMessage(Message message) {
 		subliminalMessage.setMessage(message.getMessage());
 		subliminalMessage.setFont(font);
@@ -62,6 +65,22 @@ public class SubliminalFrame extends JFrame {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+	
+	public Color getActiveBackground() {
+		return activeBackground;
+	}
+
+	public void setActiveBackground(Color activeBackground) {
+		this.activeBackground = activeBackground;
+	}
+	
+	public boolean isBackgroundSelected() {
+		return isBackgroundSelected;
+	}
+
+	public void setBackgroundSelected(boolean isBackgroundSelected) {
+		this.isBackgroundSelected = isBackgroundSelected;
 	}
 
 	public boolean isActive() {

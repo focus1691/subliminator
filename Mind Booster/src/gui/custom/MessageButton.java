@@ -33,7 +33,7 @@ public class MessageButton extends JPanel {
 	private Preferences prefs;
 	private JPopupMenu menu;
 	private JLabel label;
-	private boolean backgroundSelected;
+	private boolean isBackgroundSelected;
 	private Color activeColour, activeBackground;
 	private CirclePanel circlePanel;
 	private String categoryName;
@@ -199,13 +199,8 @@ public class MessageButton extends JPanel {
 		this.activeColour = activeColour;
 	}
 
-	
-	public boolean isBackgroundSelected() {
-		return backgroundSelected;
-	}
-
-	public void setBackgroundSelected(boolean backgroundSelected) {
-		this.backgroundSelected = backgroundSelected;
+	public void setBackgroundSelected(boolean isBackgroundSelected) {
+		this.isBackgroundSelected = isBackgroundSelected;
 	}
 
 	public Color getActiveBackground() {
