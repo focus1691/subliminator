@@ -44,8 +44,6 @@ public class SubliminalMessage extends JPanel {
 		g2d.clearRect(0, 0, getWidth(), getHeight());
 
 		g2d.setFont(font);
-		
-		g2d.setColor(color);
 
 		if (isBackgroundSelected) {
 			g2d.setColor(activeBackground);

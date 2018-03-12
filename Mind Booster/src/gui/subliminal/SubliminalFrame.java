@@ -42,6 +42,8 @@ public class SubliminalFrame extends JFrame {
 		subliminalMessage.setMessage(message.getMessage());
 		subliminalMessage.setFont(font);
 		subliminalMessage.setColor(color == null ? new Color(0, 0, 0) : color);
+		subliminalMessage.setActiveBackground(activeBackground);
+		subliminalMessage.setBackgroundSelected(isBackgroundSelected);
 		ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
 		if (icon != null) {
 			Image img = IconFetch.getInstance().getScaledImage(icon.getImage(), width, height);

@@ -118,6 +118,8 @@ public class MessageController {
 			prefs.putBoolean("topleft", true);
 			frame1.setFont(messageButtons[0].getFont());
 			frame1.setColor(messageButtons[0].getActiveColour());
+			frame1.setActiveBackground(messageButtons[0].getActiveBackground());
+			frame1.setBackgroundSelected(messageButtons[0].isBackgroundSelected());
 			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask1, startDelay, interval, TimeUnit.SECONDS);
 		} else {
 			prefs.putBoolean("topleft", false);
@@ -127,6 +129,8 @@ public class MessageController {
 			prefs.putBoolean("topright", true);
 			frame2.setFont(messageButtons[1].getFont());
 			frame2.setColor(messageButtons[1].getActiveColour());
+			frame2.setActiveBackground(messageButtons[1].getActiveBackground());
+			frame2.setBackgroundSelected(messageButtons[1].isBackgroundSelected());
 			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask2, startDelay, interval, TimeUnit.SECONDS);
 		} else {
 			prefs.putBoolean("topright", false);
@@ -136,6 +140,8 @@ public class MessageController {
 			prefs.putBoolean("bottomleft", true);
 			frame3.setFont(messageButtons[2].getFont());
 			frame3.setColor(messageButtons[2].getActiveColour());
+			frame3.setActiveBackground(messageButtons[2].getActiveBackground());
+			frame3.setBackgroundSelected(messageButtons[2].isBackgroundSelected());
 			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask3, startDelay, interval, TimeUnit.SECONDS);
 		} else {
 			prefs.putBoolean("bottomleft", false);
@@ -145,6 +151,8 @@ public class MessageController {
 			prefs.putBoolean("bottomright", true);
 			frame4.setFont(messageButtons[3].getFont());
 			frame4.setColor(messageButtons[3].getActiveColour());
+			frame4.setActiveBackground(messageButtons[3].getActiveBackground());
+			frame4.setBackgroundSelected(messageButtons[3].isBackgroundSelected());
 			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask4, startDelay, interval, TimeUnit.SECONDS);
 		} else {
 			prefs.putBoolean("bottomright", false);
@@ -154,6 +162,8 @@ public class MessageController {
 			prefs.putBoolean("center", true);
 			frame5.setFont(messageButtons[4].getFont());
 			frame5.setColor(messageButtons[4].getActiveColour());
+			frame5.setActiveBackground(messageButtons[4].getActiveBackground());
+			frame5.setBackgroundSelected(messageButtons[4].isBackgroundSelected());
 			scheduledExecutorService.scheduleWithFixedDelay(subliminalTask5, startDelay, interval, TimeUnit.SECONDS);
 		} else {
 			prefs.putBoolean("center", false);

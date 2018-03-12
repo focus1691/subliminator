@@ -33,7 +33,6 @@ public class MessageButton extends JPanel {
 	private Preferences prefs;
 	private JPopupMenu menu;
 	private JLabel label;
-	private boolean isBackgroundSelected;
 	private Color activeColour, activeBackground;
 	private CirclePanel circlePanel;
 	private String categoryName;
@@ -41,6 +40,7 @@ public class MessageButton extends JPanel {
 	private double btnToScreenWRatio, btnToScreenHRatio;
 	private boolean active = false;
 	private boolean locked = true;
+	JRadioButtonMenuItem bgOff, bgOn;
 	private Font font;
 
 	public boolean isActive() {
@@ -134,8 +134,8 @@ public class MessageButton extends JPanel {
 			}
 		});
 
-		JRadioButtonMenuItem bgOff = new JRadioButtonMenuItem("Background Off");
-		JRadioButtonMenuItem bgOn = new JRadioButtonMenuItem("Background On");
+		bgOff = new JRadioButtonMenuItem("Background Off");
+		bgOn = new JRadioButtonMenuItem("Background On");
 		bgOff.setSelected(true);
 
 		ButtonGroup bg = new ButtonGroup();
@@ -192,19 +192,19 @@ public class MessageButton extends JPanel {
 	}
 
 	public Color getActiveColour() {
-		return activeColour;
+		return label.getForeground();
 	}
 
 	public void setActiveColour(Color activeColour) {
 		this.activeColour = activeColour;
 	}
-
-	public void setBackgroundSelected(boolean isBackgroundSelected) {
-		this.isBackgroundSelected = isBackgroundSelected;
+	
+	public boolean isBackgroundSelected() {
+		return bgOff.isSelected() ? false : true;
 	}
 
 	public Color getActiveBackground() {
-		return activeBackground;
+		return label.getBackground();
 	}
 
 	public void setActiveBackground(Color activeBackground) {
