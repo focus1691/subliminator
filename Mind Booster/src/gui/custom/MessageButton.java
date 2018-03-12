@@ -60,8 +60,7 @@ public class MessageButton extends JPanel {
 
 		prefs = Preferences.userRoot().node(this.getClass().getName());
 		active = prefs.getBoolean(categoryName, false);
-
-
+		
 		createMenu();
 
 		font = FontPicker.getFont(FontPicker.latoBlack, 20);
@@ -75,7 +74,6 @@ public class MessageButton extends JPanel {
 
 		circlePanel = new CirclePanel(CustomColor.green);
 		circlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		circlePanel.setBackground(Color.RED);
 		circlePanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
