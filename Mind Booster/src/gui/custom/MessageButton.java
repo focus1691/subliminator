@@ -1,6 +1,8 @@
 package gui.custom;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,13 +10,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.prefs.Preferences;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 
 import constants.CustomColor;
 import gui.JFontChooser;
@@ -27,7 +33,8 @@ public class MessageButton extends JPanel {
 	private Preferences prefs;
 	private JPopupMenu menu;
 	private JLabel label;
-	private Color activeColour;
+	private boolean backgroundSelected;
+	private Color activeColour, activeBackground;
 	private CirclePanel circlePanel;
 	private String categoryName;
 	private ImageIcon image;
@@ -44,32 +51,31 @@ public class MessageButton extends JPanel {
 		this.active = active;
 	}
 
-	public MessageButton(String categoryName, boolean active, Color activeColour, boolean locked, int x, int y, int w,
+	public MessageButton(String categoryName, boolean active, Color activeColour, Color activeBackground, boolean locked, int x, int y, int w,
 			int h) {
 		this.categoryName = categoryName;
 		this.activeColour = activeColour;
+		this.activeBackground = activeBackground;
 		this.locked = locked;
 
 		prefs = Preferences.userRoot().node(this.getClass().getName());
-		setActive(prefs.getBoolean(categoryName, false));
-		
+		active = prefs.getBoolean(categoryName, false);
+
+
 		createMenu();
 
 		font = FontPicker.getFont(FontPicker.latoBlack, 20);
 
 		label = new JLabel(categoryName, JLabel.CENTER);
+		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		label.setForeground(activeColour);
 		label.setBackground(Color.WHITE);
 		label.setFont(font);
 		label.setOpaque(true);
-		label.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				menu.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
 
 		circlePanel = new CirclePanel(CustomColor.green);
+		circlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		circlePanel.setBackground(Color.RED);
 		circlePanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -87,10 +93,17 @@ public class MessageButton extends JPanel {
 			}
 		});
 
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(label);
-		add(circlePanel);
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menu.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(label, BorderLayout.CENTER);
+		add(circlePanel);
+		setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		setBounds(x, y, w, h);
 		setOpaque(true);
 		setBackground(Color.WHITE);
@@ -113,13 +126,37 @@ public class MessageButton extends JPanel {
 		this.menu = new JPopupMenu();
 
 		JMenuItem colourPickerItem = new JMenuItem("Choose Colour");
-		colourPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		colourPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
 		colourPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
 				label.setForeground(newColor);
 				label.repaint();
+			}
+		});
+
+		JRadioButtonMenuItem bgOff = new JRadioButtonMenuItem("Background Off");
+		JRadioButtonMenuItem bgOn = new JRadioButtonMenuItem("Background On");
+		bgOff.setSelected(true);
+
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(bgOff);
+		bg.add(bgOn);
+
+		JMenuItem backgroundPickerItem = new JMenuItem("Choose Background");
+		backgroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		backgroundPickerItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (bgOn.isSelected()) {
+					Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
+					label.setBackground(newColor);
+					label.repaint();
+				} else {
+					JOptionPane.showMessageDialog(null, "Background selector is turned off. Turn it on to change it.",
+							"Message Background", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 
@@ -140,8 +177,11 @@ public class MessageButton extends JPanel {
 			}
 		});
 
-		this.menu.add(colourPickerItem);
-		this.menu.add(fontPickerItem);
+		menu.add(colourPickerItem);
+		menu.add(bgOff);
+		menu.add(bgOn);
+		menu.add(backgroundPickerItem);
+		menu.add(fontPickerItem);
 	}
 
 	@Override
@@ -161,6 +201,22 @@ public class MessageButton extends JPanel {
 		this.activeColour = activeColour;
 	}
 
+	
+	public boolean isBackgroundSelected() {
+		return backgroundSelected;
+	}
+
+	public void setBackgroundSelected(boolean backgroundSelected) {
+		this.backgroundSelected = backgroundSelected;
+	}
+
+	public Color getActiveBackground() {
+		return activeBackground;
+	}
+
+	public void setActiveBackground(Color activeBackground) {
+		this.activeBackground = activeBackground;
+	}
 	public double getBtnToScreenWRatio() {
 		return btnToScreenWRatio;
 	}
