@@ -17,7 +17,6 @@ import javax.swing.WindowConstants;
 import constants.MessageTense;
 import controller.MessageController;
 import gui.message.MessagePanel;
-import gui.util.SetScreenLocation;
 import utility.Validator;
 
 public class EditMessage extends JInternalFrame {

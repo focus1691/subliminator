@@ -1,13 +1,12 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -37,6 +36,7 @@ import utility.Sorter;
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 
 	private static final long serialVersionUID = -4312454251947395385L;
+	public static final String appName = "Mind Booster";
 	private MessageController messageController;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
@@ -44,6 +44,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private ControlPanel controlPanel;
 	private JDesktopPane desktopPane;
 	private JPanel mainPanel;
+	private HideToSystemTray hideToSystemTray;
 
 	public MainFrame() {
 
@@ -64,6 +65,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			controlPanel = new ControlPanel();
 			controlPanel.setMessageStartListener(this);
 
+			hideToSystemTray = new HideToSystemTray(this);
 			setJMenuBar(new CreateMenuBar(messageController, messagePanel));
 			setupUI();
 
@@ -72,8 +74,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 					mainPanel.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 0.915));
 				}
 			});
-
-			setTitle("Mind Booster");
+			setTitle(appName);
 			setPreferredSize(new Dimension(1600, 900));
 			setMinimumSize(new Dimension(1200, 750));
 			pack();
@@ -84,15 +85,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	}
 
 	private void setupUI() {
-
 		mainPanel = new JPanel(new GridBagLayout());
-		mainPanel.setBackground(Color.decode("#1975bf"));
 		mainPanel.setVisible(true);
-
-		desktopPane = new JDesktopPane();
-		desktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-		desktopPane.add(mainPanel);
-		setContentPane(desktopPane);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -133,6 +127,12 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weighty = 0.2;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		mainPanel.add(controlPanel, gbc);
+
+		desktopPane = new JDesktopPane();
+		desktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
+		desktopPane.add(mainPanel);
+
+		setContentPane(desktopPane);
 	}
 
 	@Override
@@ -156,6 +156,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void messageEventOccurred(MessageEvent event) {
 		try {
 			if (messageController.isMessagesOn() == false) {
+				setState(ICONIFIED);
+				dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_ICONIFIED));
 				messageController.setSpeed(settingsPanel.getSpeed());
 				messageController.setInterval(settingsPanel.getInterval());
 				messageController.setActiveMessages(messagePanel.getSelectedMessages());
@@ -193,8 +195,10 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void editMessageEventOccurred(MessageEvent e) {
 
-		if (messagePanel.getMessageListSelectionModel().isSelectedIndex(messagePanel.getMessageListSelectionModel().getLastSelection())) {
-			EditMessage editMessage = new EditMessage(messageController, messagePanel, messagePanel.getMessageListSelectionModel().getLastSelection());
+		if (messagePanel.getMessageListSelectionModel()
+				.isSelectedIndex(messagePanel.getMessageListSelectionModel().getLastSelection())) {
+			EditMessage editMessage = new EditMessage(messageController, messagePanel,
+					messagePanel.getMessageListSelectionModel().getLastSelection());
 			desktopPane.add(editMessage);
 			editMessage.setLocation(1600 / 5, 1000 / 5);
 			editMessage.setVisible(true);
@@ -229,7 +233,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			return;
 		}
 		Message message = (Message) messagePanel.getMessageList().getSelectedValue();
-		EditImage editImage = new EditImage(messageController, message, messagePanel, messagePanel.getMessageListSelectionModel().getLastSelection());
+		EditImage editImage = new EditImage(messageController, message, messagePanel,
+				messagePanel.getMessageListSelectionModel().getLastSelection());
 		desktopPane.add(editImage);
 		editImage.setLocation(1600 / 5, 1000 / 5);
 		editImage.setVisible(true);

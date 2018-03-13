@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +20,6 @@ import constants.MessageTense;
 import controller.MessageController;
 import gui.custom.BlueCurvedScrollBar;
 import gui.message.MessagePanel;
-import gui.util.SetScreenLocation;
 
 public class DeleteMessage extends JInternalFrame {
 	

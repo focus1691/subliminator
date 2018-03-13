@@ -16,7 +16,6 @@ import java.nio.file.Files;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -29,7 +28,6 @@ import constants.MessageTense;
 import controller.MessageController;
 import gui.message.MessagePanel;
 import gui.util.IconFetch;
-import gui.util.SetScreenLocation;
 import model.Message;
 
 public class EditImage extends JInternalFrame {
