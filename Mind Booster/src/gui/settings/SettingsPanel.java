@@ -57,24 +57,24 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		screenPanel.setBounds(screenRect);
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
-		msgOne = new MessageButton("Top Left", false, CustomColor.green, Color.WHITE, true, screenPanel.getWidth() / 8,
+		msgOne = new MessageButton("Top Left", CustomColor.green, Color.WHITE, true, screenPanel.getWidth() / 8,
 				screenPanel.getHeight() / 8, 185, 60);
 		msgOne.setToolTipText("Message top left of screen");
 
-		msgTwo = new MessageButton("Top Right", false, Color.RED, Color.WHITE, true,
+		msgTwo = new MessageButton("Top Right", Color.RED, Color.WHITE, true,
 				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, screenPanel.getHeight() / 8, 185, 60);
 		msgTwo.setToolTipText("Message top right of screen");
 		
-		msgThree = new MessageButton("Bottom Left", false, Color.ORANGE, Color.WHITE, true, screenPanel.getWidth() / 8,
+		msgThree = new MessageButton("Bottom Left", Color.ORANGE, Color.WHITE, true, screenPanel.getWidth() / 8,
 				(screenPanel.getHeight() / 2) - 20, 185, 60);
 		msgThree.setToolTipText("Message bottom left of screen");
 		
-		msgFour = new MessageButton("Bottom Right", false, Color.BLUE, Color.WHITE, true,
+		msgFour = new MessageButton("Bottom Right", Color.BLUE, Color.WHITE, true,
 				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, (screenPanel.getHeight() / 2) - 20, 185,
 				60);
 		msgFour.setToolTipText("Message bottom right of screen");
 		
-		msgFive = new MessageButton("Center", true, Color.MAGENTA, Color.WHITE, false, (screenPanel.getWidth() / 2) - 100,
+		msgFive = new MessageButton("Center", Color.MAGENTA, Color.WHITE, false, (screenPanel.getWidth() / 2) - 100,
 				(screenPanel.getHeight() / 2) - 85, 185, 60);
 		msgFive.setToolTipText("Message center of screen");
 		

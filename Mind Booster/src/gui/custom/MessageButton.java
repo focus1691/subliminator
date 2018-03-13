@@ -35,12 +35,11 @@ public class MessageButton extends JPanel {
 	private JLabel label;
 	private Color activeColour, activeBackground;
 	private CirclePanel circlePanel;
-	private String categoryName;
+	private final String categoryName;
 	private ImageIcon image;
 	private double btnToScreenWRatio, btnToScreenHRatio;
 	private boolean active = false;
-	private boolean locked = true;
-	JRadioButtonMenuItem bgOff, bgOn;
+	private JRadioButtonMenuItem bgOff, bgOn;
 	private Font font;
 
 	public boolean isActive() {
@@ -51,16 +50,17 @@ public class MessageButton extends JPanel {
 		this.active = active;
 	}
 
-	public MessageButton(String categoryName, boolean active, Color activeColour, Color activeBackground, boolean locked, int x, int y, int w,
-			int h) {
+	public MessageButton(final String categoryName, Color activeColour, Color activeBackground, boolean locked, int x,
+			int y, int w, int h) {
 		this.categoryName = categoryName;
 		this.activeColour = activeColour;
 		this.activeBackground = activeBackground;
-		this.locked = locked;
 
 		prefs = Preferences.userRoot().node(this.getClass().getName());
-		active = prefs.getBoolean(categoryName, false);
-		
+		active = prefs.getBoolean(categoryName + "active", false);
+		activeColour = new Color(prefs.getInt(categoryName + "colorforeground", 000000));
+		activeBackground = new Color(prefs.getInt(categoryName + "colorbackground", -1));
+
 		createMenu();
 
 		font = FontPicker.getFont(FontPicker.latoBlack, 20);
@@ -68,11 +68,12 @@ public class MessageButton extends JPanel {
 		label = new JLabel(categoryName, JLabel.CENTER);
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		label.setForeground(activeColour);
-		label.setBackground(Color.WHITE);
+		label.setBackground(activeBackground);
 		label.setFont(font);
 		label.setOpaque(true);
 
 		circlePanel = new CirclePanel(CustomColor.green);
+		circlePanel.setActiveColour(active ? CustomColor.green : CustomColor.lightGrey);
 		circlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		circlePanel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -81,12 +82,12 @@ public class MessageButton extends JPanel {
 					circlePanel.setActiveColour(CustomColor.lightGrey);
 					circlePanel.repaint();
 					setActive(false);
-					prefs.putBoolean(categoryName, false);
+					prefs.putBoolean(categoryName + "active", false);
 				} else {
 					circlePanel.setActiveColour(CustomColor.green);
 					circlePanel.repaint();
 					setActive(true);
-					prefs.putBoolean(categoryName, true);
+					prefs.putBoolean(categoryName + "active", true);
 				}
 			}
 		});
@@ -113,34 +114,49 @@ public class MessageButton extends JPanel {
 			circlePanel.setActiveColour(CustomColor.lightGrey);
 			setActive(false);
 		}
-		if (isLocked()) {
-			lock();
-		} else {
-			unlock();
-		}
 	}
 
 	private void createMenu() {
 		this.menu = new JPopupMenu();
 
-		JMenuItem colourPickerItem = new JMenuItem("Choose Colour");
-		colourPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
-		colourPickerItem.addActionListener(new ActionListener() {
+		bgOff = new JRadioButtonMenuItem("Background Off");
+		bgOff.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		bgOff.setSelected(prefs.getBoolean(categoryName + "Off", true));
+		bgOff.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
-				label.setForeground(newColor);
-				label.repaint();
+				prefs.putBoolean(categoryName + "bgOn", false);
+				prefs.putBoolean(categoryName + "bgOff", true);
 			}
 		});
 
-		bgOff = new JRadioButtonMenuItem("Background Off");
 		bgOn = new JRadioButtonMenuItem("Background On");
-		bgOff.setSelected(true);
+		bgOn.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		bgOn.setSelected(prefs.getBoolean(categoryName + "On", false));
+		bgOn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				prefs.putBoolean(categoryName + "bgOn", true);
+				prefs.putBoolean(categoryName + "bgOff", false);
+			}
+		});
 
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(bgOff);
 		bg.add(bgOn);
+		
+		JMenuItem foregroundPickerItem = new JMenuItem("Choose Colour");
+		foregroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		foregroundPickerItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
+				System.out.println(newColor.getRGB());
+				prefs.putInt(categoryName + "colorforeground", newColor.getRGB());
+				label.setForeground(newColor);
+				label.repaint();
+			}
+		});
 
 		JMenuItem backgroundPickerItem = new JMenuItem("Choose Background");
 		backgroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
@@ -149,6 +165,7 @@ public class MessageButton extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (bgOn.isSelected()) {
 					Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
+					prefs.putInt(categoryName + "colorbackground", newColor.getRGB());
 					label.setBackground(newColor);
 					label.repaint();
 				} else {
@@ -175,7 +192,7 @@ public class MessageButton extends JPanel {
 			}
 		});
 
-		menu.add(colourPickerItem);
+		menu.add(foregroundPickerItem);
 		menu.add(bgOff);
 		menu.add(bgOn);
 		menu.add(backgroundPickerItem);
@@ -198,7 +215,7 @@ public class MessageButton extends JPanel {
 	public void setActiveColour(Color activeColour) {
 		this.activeColour = activeColour;
 	}
-	
+
 	public boolean isBackgroundSelected() {
 		return bgOff.isSelected() ? false : true;
 	}
@@ -210,6 +227,7 @@ public class MessageButton extends JPanel {
 	public void setActiveBackground(Color activeBackground) {
 		this.activeBackground = activeBackground;
 	}
+
 	public double getBtnToScreenWRatio() {
 		return btnToScreenWRatio;
 	}
@@ -230,28 +248,11 @@ public class MessageButton extends JPanel {
 		return categoryName;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
 	public ImageIcon getImage() {
 		return image;
 	}
 
 	public void setImage(ImageIcon image) {
 		this.image = image;
-	}
-
-	public boolean isLocked() {
-		return locked;
-	}
-
-	public void lock() {
-		this.locked = true;
-		label.setIcon(IconFetch.getInstance().getIcon("/com/psychotechnology/images/lock2.png"));
-	}
-
-	public void unlock() {
-		this.locked = false;
 	}
 }
