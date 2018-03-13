@@ -18,10 +18,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
 import constants.MessageTense;
 import controller.MessageController;
@@ -30,7 +32,7 @@ import gui.util.IconFetch;
 import gui.util.SetScreenLocation;
 import model.Message;
 
-public class EditImage extends JDialog {
+public class EditImage extends JInternalFrame {
 
 	private static final long serialVersionUID = 8614724076980880135L;
 	private MessageController controller;
@@ -49,6 +51,7 @@ public class EditImage extends JDialog {
 	private MessagePanel messagePanel;
 
 	public EditImage(MessageController controller, Message message, MessagePanel messagePanel, int index) {
+		super("Edit Image", true, true, true, true);
 		this.controller = controller;
 		this.message = message;
 		this.messagePanel = messagePanel;
@@ -56,13 +59,12 @@ public class EditImage extends JDialog {
 		selected_message = index;
 		initComponents();
 		setupUI();
-		SetScreenLocation.centerFrame(this);
 		this.getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(400, 350);
-		setModal(true);
 		setResizable(false);
 		setVisible(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.requestFocus();
 	}
 
 	public void initComponents() {

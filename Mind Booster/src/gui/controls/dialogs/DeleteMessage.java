@@ -10,10 +10,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
 import constants.MessageTense;
 import controller.MessageController;
@@ -21,7 +23,7 @@ import gui.custom.BlueCurvedScrollBar;
 import gui.message.MessagePanel;
 import gui.util.SetScreenLocation;
 
-public class DeleteMessage extends JDialog {
+public class DeleteMessage extends JInternalFrame {
 	
 	private static final long serialVersionUID = 5549429493881002578L;
 	private MessageController controller;
@@ -32,7 +34,7 @@ public class DeleteMessage extends JDialog {
 	private JButton deleteBtn;
 
 	public DeleteMessage(final MessageController controller,final MessagePanel messagePanel, final int[] selectedMsgs) {
-
+		super("Delete Message", true, true, true, true);
 		this.controller = controller;
 		initComponents();
 		setupUI();
@@ -49,13 +51,11 @@ public class DeleteMessage extends JDialog {
 				messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 			}
 		});
-
-		SetScreenLocation.centerFrame(this);
 		this.getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(1000, 350);
-		setModal(true);
 		setVisible(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.requestFocus();
 	}
 
 	public void initComponents() {

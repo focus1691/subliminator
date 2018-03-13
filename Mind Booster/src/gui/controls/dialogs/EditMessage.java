@@ -9,9 +9,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import constants.MessageTense;
 import controller.MessageController;
@@ -19,7 +20,7 @@ import gui.message.MessagePanel;
 import gui.util.SetScreenLocation;
 import utility.Validator;
 
-public class EditMessage extends JDialog {
+public class EditMessage extends JInternalFrame {
 
 	private static final long serialVersionUID = 5470112838506529493L;
 	private MessageController controller;
@@ -30,6 +31,7 @@ public class EditMessage extends JDialog {
 	private JCheckBox text_only_2;
 
 	public EditMessage(final MessageController controller, final MessagePanel messagePanel, final int index) {
+		super("Edit Message", true, true, true, true);
 		this.controller = controller;
 		initComponents(index);
 		setupUI();
@@ -62,13 +64,12 @@ public class EditMessage extends JDialog {
 				}
 			}
 		});
-		SetScreenLocation.centerFrame(this);
 		this.getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(400, 225);
-		setModal(true);
 		setResizable(false);
 		setVisible(true);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.requestFocus();
 	}
 
 	public void initComponents(int index) {
