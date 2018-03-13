@@ -37,7 +37,6 @@ public class SubliminalFrame extends JFrame {
 		pack();
 	}
 	
-	public static int count = 0;
 	public void setMessage(Message message) {
 		subliminalMessage.setMessage(message.getMessage());
 		subliminalMessage.setFont(font);

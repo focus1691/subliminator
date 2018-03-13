@@ -7,6 +7,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
@@ -25,41 +26,48 @@ public class SubliminalMessage extends JPanel {
 	private Color activeBackground;
 	private boolean isBackgroundSelected;
 	private boolean isTextOnly;
+	private boolean isPainted;
 
 	public SubliminalMessage() {
 		setOpaque(false);
 		setPreferredSize(new Dimension(900, 450));
 	}
 
+	static int count = 0;
+
 	@Override
-	protected void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		System.out.println(++count + " " + message);
 
 		Graphics2D g2d = (Graphics2D) g;
+		
 		FontMetrics metrics = g2d.getFontMetrics(new Font("Courier New", Font.BOLD, 24));
-		Rectangle2D rect = metrics.getStringBounds(message, g2d);
-		int x = this.getX() + (getWidth() - metrics.stringWidth(message)) / 2;
-		int y;
 
+		Rectangle2D rect = metrics.getStringBounds(message, g2d);
+
+		int x = getX() + (getWidth() - metrics.stringWidth(message)) / 2;
+		int y;
+		
 		g2d.clearRect(0, 0, getWidth(), getHeight());
 
 		g2d.setFont(font);
-
-		if (isBackgroundSelected) {
-			g2d.setColor(activeBackground);
-		} else {
-			g2d.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
-		}
+		g2d.setColor(isBackgroundSelected ? activeBackground : new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
 
 		g2d.fillRect(x, 40 - metrics.getAscent(), (int) rect.getWidth(), (int) rect.getHeight());
 		g2d.setColor(color);
 		g2d.drawString(message, x, 40);
-		
+
 		if (img != null && !isTextOnly) {
-			x = (this.getWidth() - img.getWidth(null)) / 2;
-			y = (this.getHeight() - img.getHeight(null)) / 2;
+			x = (getWidth() - img.getWidth(null)) / 2;
+			y = (getHeight() - img.getHeight(null)) / 2;
 			g2d.drawImage(img, x, y, this);
 		}
+	}
+
+	public void setPainted(boolean isPainted) {
+		this.isPainted = isPainted;
 	}
 
 	public void setMessage(String message) {

@@ -1,6 +1,9 @@
 package gui.subliminal;
 
-import java.util.concurrent.TimeUnit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
 
 import controller.MessageController;
 import utility.RandomNumberGenerator;
@@ -19,15 +22,17 @@ public class SubliminalTask implements Runnable {
 	@Override
 	public void run() {
 		setMessageIndex(RandomNumberGenerator.randInt(0, controller.getActiveMessages().size() - 1));
-		System.out.println("Set message");
 		subliminal.setMessage(controller.getActiveMessages().get(messageIndex));
 		subliminal.setVisible(true);
-		try {
-			TimeUnit.MILLISECONDS.sleep(controller.getSpeed());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		subliminal.setVisible(false);
+		
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+            	subliminal.setVisible(false);
+            }
+        };
+        Timer timer = new Timer(controller.getSpeed() ,taskPerformer);
+        timer.setRepeats(false);
+        timer.start();
 	}
 
 	public void setMessageIndex(int messageIndex) {

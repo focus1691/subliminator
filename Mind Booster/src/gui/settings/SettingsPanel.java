@@ -123,8 +123,9 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		intervalSlider.setMajorTickSpacing(2);
 		intervalSlider.setPaintTicks(true);
 		intervalSlider.setPaintLabels(true);
+		intervalSlider.setMinimum(2);
 		intervalSlider.setPreferredSize(new Dimension(300, 75));
-		intervalSlider.setValue(interval == 0 ? 1 : interval);
+		intervalSlider.setValue(interval == 0 ? 2 : interval);
 		intervalSlider.addChangeListener((ChangeListener) this);
 
 		this.addComponentListener(new ComponentListener() {
