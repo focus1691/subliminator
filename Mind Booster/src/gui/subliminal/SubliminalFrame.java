@@ -26,7 +26,7 @@ public class SubliminalFrame extends JFrame {
 	public SubliminalFrame() {
 		subliminalMessage = new SubliminalMessage();
 		add(subliminalMessage);
-		
+
 		setFocusable(false);
 		setUndecorated(true);
 		setBackground(new Color(0, 0, 0, 0));
@@ -36,7 +36,7 @@ public class SubliminalFrame extends JFrame {
 		setEnabled(false);
 		pack();
 	}
-	
+
 	public void setMessage(Message message) {
 		subliminalMessage.setMessage(message.getMessage());
 		subliminalMessage.setFont(font);
@@ -49,9 +49,8 @@ public class SubliminalFrame extends JFrame {
 			subliminalMessage.setImage(img);
 		}
 		subliminalMessage.setIsTextOnly(message.getIsTextOnly());
-
 	}
-	
+
 	public Font getFont() {
 		return font;
 	}
@@ -67,7 +66,7 @@ public class SubliminalFrame extends JFrame {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
 	public Color getActiveBackground() {
 		return activeBackground;
 	}
@@ -75,7 +74,7 @@ public class SubliminalFrame extends JFrame {
 	public void setActiveBackground(Color activeBackground) {
 		this.activeBackground = activeBackground;
 	}
-	
+
 	public boolean isBackgroundSelected() {
 		return isBackgroundSelected;
 	}

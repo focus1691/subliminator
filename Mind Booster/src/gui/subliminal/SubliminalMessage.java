@@ -26,7 +26,6 @@ public class SubliminalMessage extends JPanel {
 	private Color activeBackground;
 	private boolean isBackgroundSelected;
 	private boolean isTextOnly;
-	private boolean isPainted;
 
 	public SubliminalMessage() {
 		setOpaque(false);
@@ -37,37 +36,41 @@ public class SubliminalMessage extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		
+		super.paintComponents(g);
+
 		System.out.println(++count + " " + message);
 
 		Graphics2D g2d = (Graphics2D) g;
-		
-		FontMetrics metrics = g2d.getFontMetrics(new Font("Courier New", Font.BOLD, 24));
+
+		FontMetrics metrics = g2d.getFontMetrics(font);
 
 		Rectangle2D rect = metrics.getStringBounds(message, g2d);
 
 		int x = getX() + (getWidth() - metrics.stringWidth(message)) / 2;
 		int y;
 		
-		g2d.clearRect(0, 0, getWidth(), getHeight());
+		g.clearRect(0, 0, getWidth(), getHeight());
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g2d.setFont(font);
-		g2d.setColor(isBackgroundSelected ? activeBackground : new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
+		g2d.setColor(isBackgroundSelected ? activeBackground
+				: new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
 
 		g2d.fillRect(x, 40 - metrics.getAscent(), (int) rect.getWidth(), (int) rect.getHeight());
 		g2d.setColor(color);
-		g2d.drawString(message, x, 40);
+		
+		if (!message.equals("")) {
+		
+			g2d.drawString(message, x, 40);
+			repaint();
+		}
 
 		if (img != null && !isTextOnly) {
 			x = (getWidth() - img.getWidth(null)) / 2;
 			y = (getHeight() - img.getHeight(null)) / 2;
 			g2d.drawImage(img, x, y, this);
 		}
-	}
-
-	public void setPainted(boolean isPainted) {
-		this.isPainted = isPainted;
+		message = "";
 	}
 
 	public void setMessage(String message) {
