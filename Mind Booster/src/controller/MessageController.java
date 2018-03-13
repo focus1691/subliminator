@@ -56,7 +56,7 @@ public class MessageController {
 		frame4 = new SubliminalFrame();
 		SetScreenLocation.botRight(frame4);
 		frame4.setActive(prefs.getBoolean("bottomright", false));
-		
+
 		frame5 = new SubliminalFrame();
 		SetScreenLocation.center(frame5);
 		frame5.setActive(prefs.getBoolean("center", false));

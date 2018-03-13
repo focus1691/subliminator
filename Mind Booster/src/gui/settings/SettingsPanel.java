@@ -20,7 +20,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import constants.CustomColor;
 import gui.PictureLabel;
 import gui.custom.MessageButton;
 import gui.util.IconFetch;
@@ -42,7 +41,6 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	private JSlider speedSlider, intervalSlider;
 	private JLabel speedLbl, intervalLbl;
 	private SettingsListener settingsListener;
-	private MultiMessageListener multiMessageListener;
 
 	public SettingsPanel(int speed, int interval) {
 		initComponents(speed, interval);
@@ -57,34 +55,32 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		screenPanel.setBounds(screenRect);
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
-		msgOne = new MessageButton("Top Left", CustomColor.green, Color.WHITE, true, screenPanel.getWidth() / 8,
-				screenPanel.getHeight() / 8, 185, 60);
+		msgOne = new MessageButton("Top Left", screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 185, 60);
 		msgOne.setToolTipText("Message top left of screen");
 
-		msgTwo = new MessageButton("Top Right", Color.RED, Color.WHITE, true,
-				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, screenPanel.getHeight() / 8, 185, 60);
+		msgTwo = new MessageButton("Top Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
+				screenPanel.getHeight() / 8, 185, 60);
 		msgTwo.setToolTipText("Message top right of screen");
-		
-		msgThree = new MessageButton("Bottom Left", Color.ORANGE, Color.WHITE, true, screenPanel.getWidth() / 8,
-				(screenPanel.getHeight() / 2) - 20, 185, 60);
-		msgThree.setToolTipText("Message bottom left of screen");
-		
-		msgFour = new MessageButton("Bottom Right", Color.BLUE, Color.WHITE, true,
-				screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185, (screenPanel.getHeight() / 2) - 20, 185,
+
+		msgThree = new MessageButton("Bottom Left", screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2) - 20, 185,
 				60);
+		msgThree.setToolTipText("Message bottom left of screen");
+
+		msgFour = new MessageButton("Bottom Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
+				(screenPanel.getHeight() / 2) - 20, 185, 60);
 		msgFour.setToolTipText("Message bottom right of screen");
-		
-		msgFive = new MessageButton("Center", Color.MAGENTA, Color.WHITE, false, (screenPanel.getWidth() / 2) - 100,
-				(screenPanel.getHeight() / 2) - 85, 185, 60);
+
+		msgFive = new MessageButton("Center", (screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85,
+				185, 60);
 		msgFive.setToolTipText("Message center of screen");
-		
+
 		messageButtons = new MessageButton[5];
 		messageButtons[0] = msgOne;
 		messageButtons[1] = msgTwo;
 		messageButtons[2] = msgThree;
 		messageButtons[3] = msgFour;
 		messageButtons[4] = msgFive;
-		
+
 		screenContainer = new JLayeredPane();
 		screenContainer.add(screenPanel, new Integer(0), 0);
 		screenContainer.add(msgOne, new Integer(1), 0);
@@ -287,11 +283,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public void setSettingsListener(SettingsListener settingsListener) {
 		this.settingsListener = settingsListener;
 	}
-
-	public void setmultiMessageListener(MultiMessageListener multiMessageListener) {
-		this.multiMessageListener = multiMessageListener;
-	}
-
+	
 	public MessageButton[] getMessageButtons() {
 		return messageButtons;
 	}
@@ -322,11 +314,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		}
 		return msgLocationsSelected;
 	}
-	
+
 	public int getSpeed() {
 		return speedSlider.getValue();
 	}
-	
+
 	public int getInterval() {
 		return intervalSlider.getValue();
 	}

@@ -24,7 +24,6 @@ import javax.swing.JRadioButtonMenuItem;
 
 import constants.CustomColor;
 import gui.JFontChooser;
-import gui.util.IconFetch;
 import utility.FontPicker;
 
 public class MessageButton extends JPanel {
@@ -50,11 +49,9 @@ public class MessageButton extends JPanel {
 		this.active = active;
 	}
 
-	public MessageButton(final String categoryName, Color activeColour, Color activeBackground, boolean locked, int x,
-			int y, int w, int h) {
+	public MessageButton(final String categoryName, int x, int y, int w, int h) {
 		this.categoryName = categoryName;
-		this.activeColour = activeColour;
-		this.activeBackground = activeBackground;
+		setBounds(x, y, w, h);
 
 		prefs = Preferences.userRoot().node(this.getClass().getName());
 		active = prefs.getBoolean(categoryName + "active", false);
@@ -103,7 +100,6 @@ public class MessageButton extends JPanel {
 		add(label, BorderLayout.CENTER);
 		add(circlePanel);
 		setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		setBounds(x, y, w, h);
 		setOpaque(true);
 		setBackground(Color.WHITE);
 
@@ -121,7 +117,7 @@ public class MessageButton extends JPanel {
 
 		bgOff = new JRadioButtonMenuItem("Background Off");
 		bgOff.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
-		bgOff.setSelected(prefs.getBoolean(categoryName + "Off", true));
+		bgOff.setSelected(prefs.getBoolean(categoryName + "bgOff", true));
 		bgOff.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -132,7 +128,7 @@ public class MessageButton extends JPanel {
 
 		bgOn = new JRadioButtonMenuItem("Background On");
 		bgOn.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
-		bgOn.setSelected(prefs.getBoolean(categoryName + "On", false));
+		bgOn.setSelected(prefs.getBoolean(categoryName + "bgOn", true));
 		bgOn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,14 +140,13 @@ public class MessageButton extends JPanel {
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(bgOff);
 		bg.add(bgOn);
-		
+
 		JMenuItem foregroundPickerItem = new JMenuItem("Choose Colour");
 		foregroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
 		foregroundPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
-				System.out.println(newColor.getRGB());
 				prefs.putInt(categoryName + "colorforeground", newColor.getRGB());
 				label.setForeground(newColor);
 				label.repaint();
