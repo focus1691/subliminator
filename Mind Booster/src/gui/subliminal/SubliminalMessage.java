@@ -38,8 +38,6 @@ public class SubliminalMessage extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
 
-		System.out.println(++count + " " + message);
-
 		Graphics2D g2d = (Graphics2D) g;
 
 		FontMetrics metrics = g2d.getFontMetrics(font);
