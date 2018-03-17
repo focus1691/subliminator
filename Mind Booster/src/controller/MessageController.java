@@ -14,7 +14,7 @@ import java.util.prefs.Preferences;
 
 import constants.MessageTense;
 import data.InBuiltCategory;
-import gui.custom.MessageButton;
+import gui.component.MessageButton;
 import gui.subliminal.SubliminalFrame;
 import gui.subliminal.SubliminalTask;
 import gui.util.SetScreenLocation;

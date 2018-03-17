@@ -29,6 +29,8 @@ import gui.message.MessagePanel;
 import gui.settings.SettingsEvent;
 import gui.settings.SettingsListener;
 import gui.settings.SettingsPanel;
+import gui.util.CreateMenuBar;
+import gui.util.HideToSystemTray;
 import gui.util.SetScreenLocation;
 import model.Message;
 import utility.Sorter;

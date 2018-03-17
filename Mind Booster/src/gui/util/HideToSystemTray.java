@@ -1,4 +1,4 @@
-package gui;
+package gui.util;
 
 import java.awt.AWTException;
 import java.awt.PopupMenu;
@@ -11,7 +11,7 @@ import java.awt.event.WindowStateListener;
 
 import javax.swing.JFrame;
 
-import gui.util.IconFetch;
+import gui.MainFrame;
 
 public class HideToSystemTray {
 

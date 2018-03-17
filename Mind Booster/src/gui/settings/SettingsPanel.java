@@ -20,8 +20,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import gui.PictureLabel;
-import gui.custom.MessageButton;
+import gui.component.MessageButton;
+import gui.component.PictureLabel;
 import gui.util.IconFetch;
 import utility.FontPicker;
 

@@ -1,4 +1,4 @@
-package gui.custom;
+package gui.component;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,7 +23,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import constants.CustomColor;
-import gui.JFontChooser;
+import gui.util.JFontChooser;
 import utility.FontPicker;
 
 public class MessageButton extends JPanel {
@@ -171,7 +171,7 @@ public class MessageButton extends JPanel {
 		});
 
 		JMenuItem fontPickerItem = new JMenuItem("Choose Font");
-		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 28));
 		fontPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -28,10 +28,10 @@ import javax.swing.border.EmptyBorder;
 
 import constants.MessageTense;
 import controller.MessageController;
+import gui.component.BlueCurvedScrollBar;
+import gui.component.RoundButton;
 import gui.controls.MessageEvent;
 import gui.controls.MessageListener;
-import gui.custom.BlueCurvedScrollBar;
-import gui.custom.RoundButton;
 import gui.util.IconFetch;
 import model.Message;
 import utility.FontPicker;

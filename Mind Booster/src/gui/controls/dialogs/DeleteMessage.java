@@ -18,7 +18,7 @@ import javax.swing.WindowConstants;
 
 import constants.MessageTense;
 import controller.MessageController;
-import gui.custom.BlueCurvedScrollBar;
+import gui.component.BlueCurvedScrollBar;
 import gui.message.MessagePanel;
 
 public class DeleteMessage extends JInternalFrame {

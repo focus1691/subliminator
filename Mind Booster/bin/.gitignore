@@ -1,13 +1,4 @@
-/Application$1.class
-/Application.class
-/build.xml
-/constants/
-/controller/
-/data/
-/font/
 /gui/
-/images/
 /model/
-/run.bat
-/run.sh
 /utility/
+/controller/
