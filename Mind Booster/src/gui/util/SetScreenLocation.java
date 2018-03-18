@@ -27,27 +27,27 @@ public class SetScreenLocation {
 		dialog.setLocation(x, y);
 	}
 	
-	public static void center(JFrame message) {
+	public static void center(JDialog message) {
 		int x = (int) ((screenSize.getWidth() - message.getWidth()) / 2);
 		int y = (int) ((screenSize.getHeight() - message.getHeight()) / 2);
 		message.setLocation(x, y);
 	}
 
-	public static void topLeft(JFrame message) {
+	public static void topLeft(JDialog message) {
 		message.setLocation(0, 0);
 	}
 
-	public static void topRight(JFrame message) {
+	public static void topRight(JDialog message) {
 		int x = (int) ((screenSize.getWidth() - message.getWidth()));
 		message.setLocation(x, 0);
 	}
 
-	public static void botLeft(JFrame message) {
+	public static void botLeft(JDialog message) {
 		int y = (int) ((screenSize.getHeight() - message.getHeight()));
 		message.setLocation(0, y);
 	}
 
-	public static void botRight(JFrame message) {
+	public static void botRight(JDialog message) {
 		int x = (int) ((screenSize.getWidth() - message.getWidth()));
 		int y = (int) ((screenSize.getHeight() - message.getHeight()));
 		message.setLocation(x, y);

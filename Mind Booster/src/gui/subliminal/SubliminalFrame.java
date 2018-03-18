@@ -5,13 +5,13 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 
 import gui.util.IconFetch;
 import gui.util.SetScreenLocation;
 import model.Message;
 
-public class SubliminalFrame extends JFrame {
+public class SubliminalFrame extends JDialog {
 
 	private static final long serialVersionUID = 2931841309711143361L;
 	private SubliminalMessage subliminalMessage;

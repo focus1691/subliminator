@@ -30,6 +30,7 @@ import gui.settings.SettingsEvent;
 import gui.settings.SettingsListener;
 import gui.settings.SettingsPanel;
 import gui.util.CreateMenuBar;
+import gui.util.IconFetch;
 import gui.util.MBSystemTray;
 import gui.util.SetScreenLocation;
 import model.Message;
@@ -88,6 +89,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				}
 			});
 			setTitle(appName);
+			setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
 			setPreferredSize(new Dimension(W, H));
 			setMinimumSize(new Dimension(minW, minH));
 			pack();
