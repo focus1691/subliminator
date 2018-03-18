@@ -48,7 +48,11 @@ public class MessageListCellRenderer extends DefaultListCellRenderer {
 			SettingsPanel.pictureLabel.setImageIcon(icon);
 			SettingsPanel.pictureLabel.repaint();
 
-			setBackground(Color.decode("#f5f5f5"));
+			if (list.getLeadSelectionIndex() == index) {
+				setBackground(Color.decode("#e9dddd"));
+			} else {
+				setBackground(Color.decode("#f5f5f5"));
+			}
 			setForeground(Color.decode("#0a95dd"));
 			listCellRendererComponent.setBorder(compoundBorder);
 		} else {

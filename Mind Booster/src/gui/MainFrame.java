@@ -155,7 +155,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		mainPanel.add(controlPanel, gbc);
 
 		desktopPane = new JDesktopPane();
-		desktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
+		desktopPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		desktopPane.add(mainPanel);
 
 		setContentPane(desktopPane);
