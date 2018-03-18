@@ -12,7 +12,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.MessageController;
@@ -43,6 +42,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	private static final long serialVersionUID = -4312454251947395385L;
 	public static final String appName = "Mind Booster";
+	public static final int W = 1600, H = 900, minW = 1200, minH = 750;
 	private MessageController messageController;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
@@ -89,8 +89,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				}
 			});
 			setTitle(appName);
-			setPreferredSize(new Dimension(1600, 900));
-			setMinimumSize(new Dimension(1200, 750));
+			setPreferredSize(new Dimension(W, H));
+			setMinimumSize(new Dimension(minW, minH));
 			pack();
 			SetScreenLocation.centerFrame(this);
 			setVisible(true);
@@ -192,7 +192,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 						errorMsg.setVisible(true);
 						controlPanel.showStartButton();
 					} else {
-						System.out.println(settingsPanel.getSelectedScreenPositions().length);
 						setState(ICONIFIED);
 						dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_ICONIFIED));
 						messageController.setSpeed(settingsPanel.getSpeed());
@@ -228,7 +227,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void addMessageEventOccurred(MessageEvent e) {
 		AddMessage addMessage = new AddMessage(messageController, messagePanel);
 		desktopPane.add(addMessage);
-		addMessage.setLocation(1600 / 5, 1000 / 5);
+		addMessage.setLocation(W / 5, (H - 100) / 5);
 		addMessage.setVisible(true);
 		messageController.save();
 	}
@@ -241,27 +240,30 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			EditMessage editMessage = new EditMessage(messageController, messagePanel,
 					messagePanel.getMessageListSelectionModel().getLastSelection());
 			desktopPane.add(editMessage);
-			editMessage.setLocation(1600 / 5, 1000 / 5);
+			editMessage.setLocation(W / 5, (H - 100) / 5);
 			editMessage.setVisible(true);
+			errorMsg.setVisible(false);
 			messageController.save();
 		} else {
-			JOptionPane.showMessageDialog(this, "You must selected a message to edit.", "Warning",
-					JOptionPane.ERROR_MESSAGE);
+			errorMsg.setText("You need to select a message to edit");
+			errorMsg.setVisible(true);
 		}
 	}
 
 	@Override
 	public void deleteMessageEventOccurred(MessageEvent e) {
 		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
-
-		if (selectedMsgs == null) {
-			JOptionPane.showMessageDialog(this, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
+		
+		if (selectedMsgs == null || selectedMsgs.length == 0) {
+			errorMsg.setText("You need to select a message to delete");
+			errorMsg.setVisible(true);
 		} else {
 			Sorter.getInstance().doInsertionSort(selectedMsgs);
 			DeleteMessage deleteMessage = new DeleteMessage(messageController, messagePanel, selectedMsgs);
 			desktopPane.add(deleteMessage);
-			deleteMessage.setLocation(1600 / 5, 1000 / 5);
+			deleteMessage.setLocation(W / 5, (H - 100) / 5);
 			deleteMessage.setVisible(true);
+			errorMsg.setVisible(false);
 			messageController.save();
 		}
 	}
@@ -270,15 +272,16 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void editImageEventOccurred(MessageEvent e) {
 		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
 		if (messagePanel.getMessageListSelectionModel().getLastSelection() < 0) {
-			JOptionPane.showMessageDialog(this, "No messages selected.", "Warning", JOptionPane.ERROR_MESSAGE);
-			return;
+			errorMsg.setText("You need to select a message to edit");
+			errorMsg.setVisible(true);
 		}
 		Message message = (Message) messagePanel.getMessageList().getSelectedValue();
 		EditImage editImage = new EditImage(messageController, message, messagePanel,
 				messagePanel.getMessageListSelectionModel().getLastSelection());
 		desktopPane.add(editImage);
-		editImage.setLocation(1600 / 5, 1000 / 5);
+		editImage.setLocation(W / 5, (H - 100) / 5);
 		editImage.setVisible(true);
+		errorMsg.setVisible(false);
 		messageController.save();
 	}
 

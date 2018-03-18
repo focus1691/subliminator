@@ -171,7 +171,7 @@ public class MessageButton extends JPanel {
 		});
 
 		JMenuItem fontPickerItem = new JMenuItem("Choose Font");
-		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 28));
+		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
 		fontPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
