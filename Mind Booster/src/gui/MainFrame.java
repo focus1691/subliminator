@@ -42,7 +42,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	private static final long serialVersionUID = -4312454251947395385L;
 	public static final String appName = "Mind Booster";
-	public static final int W = 1600, H = 900, minW = 1200, minH = 750;
+	public static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
 	private MessageController messageController;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;

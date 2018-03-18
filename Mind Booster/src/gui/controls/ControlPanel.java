@@ -107,12 +107,22 @@ public class ControlPanel extends JPanel implements ActionListener {
 		deselectBtn.setPreferredSize(new Dimension(160, 30));
 		deselectBtn.addActionListener(this);
 		deselectBtn.setRolloverEnabled(false);
+		deselectBtn.setBorderPainted(false);
+		deselectBtn.setContentAreaFilled(false);
+		deselectBtn.setFocusPainted(false);
+		deselectBtn.setOpaque(false);
+		deselectBtn.setContentAreaFilled(false);
 
 		selectBtn = new JRadioButton("Select All");
 		selectBtn.setForeground(Color.WHITE);
 		selectBtn.setPreferredSize(new Dimension(160, 30));
 		selectBtn.addActionListener(this);
 		selectBtn.setRolloverEnabled(false);
+		selectBtn.setBorderPainted(false);
+		selectBtn.setContentAreaFilled(false);
+		selectBtn.setFocusPainted(false);
+		selectBtn.setOpaque(false);
+		selectBtn.setContentAreaFilled(false);
 
 		messageSelectorGroup = new ButtonGroup();
 		messageSelectorGroup.add(deselectBtn);
