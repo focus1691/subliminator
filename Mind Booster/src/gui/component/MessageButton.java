@@ -99,7 +99,7 @@ public class MessageButton extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(label, BorderLayout.CENTER);
 		add(circlePanel);
-		setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		setBorder(BorderFactory.createEtchedBorder(Color.decode("#f5f5f5"), Color.decode("#f5f5f5")));
 		setOpaque(true);
 		setBackground(Color.WHITE);
 
@@ -147,9 +147,11 @@ public class MessageButton extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
-				prefs.putInt(categoryName + "colorforeground", newColor.getRGB());
-				label.setForeground(newColor);
-				label.repaint();
+				if (newColor != null) {
+					prefs.putInt(categoryName + "colorforeground", newColor.getRGB());
+					label.setForeground(newColor);
+					label.repaint();
+				}
 			}
 		});
 
@@ -160,9 +162,11 @@ public class MessageButton extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (bgOn.isSelected()) {
 					Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
-					prefs.putInt(categoryName + "colorbackground", newColor.getRGB());
-					label.setBackground(newColor);
-					label.repaint();
+					if (newColor != null) {
+						prefs.putInt(categoryName + "colorbackground", newColor.getRGB());
+						label.setBackground(newColor);
+						label.repaint();
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Background selector is turned off. Turn it on to change it.",
 							"Message Background", JOptionPane.WARNING_MESSAGE);
