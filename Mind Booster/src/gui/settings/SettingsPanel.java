@@ -292,7 +292,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		this.messageButtons = messageButtons;
 	}
 
-	public boolean[] getMsgLocationsSelected() {
+	public boolean[] getSelectedScreenPositions() {
 
 		boolean msgLocationsSelected[] = new boolean[5];
 		Arrays.fill(msgLocationsSelected, false);

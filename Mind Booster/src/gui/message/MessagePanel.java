@@ -50,11 +50,11 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private ImageIcon activeIcon, inactiveIcon;
 	private JPopupMenu popupMenu;
 	private JMenuItem addItem, editItem, deleteItem, changeItem;
-	private MessageController controller;
+	private MessageController messageController;
 	private MessageListener messageListener;
 
-	public MessagePanel(MessageController controller) {
-		this.controller = controller;
+	public MessagePanel(MessageController messageController) {
+		this.messageController = messageController;
 		initComponents();
 		setupUI();
 	}
@@ -62,19 +62,19 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private void switchPersonMode(MessageTense messageTense) {
 		int[] selectedIndices = messageList.getSelectedIndices();
 		model.clear();
-		controller.setMessageTense(messageTense);
+		messageController.setMessageTense(messageTense);
 		firstPersonBtn.setIcon(inactiveIcon);
 		secondPersonBtn.setIcon(activeIcon);
-		setMessageList(controller.getMessagesFromTenseCategory(messageTense));
+		setMessageList(messageController.getMessagesFromTenseCategory(messageTense));
 		messageListSelectionModel.setMgsSelected(selectedIndices);
 	}
 
 	private void initComponents() {
 		popupMenu = createMessageMenu();
 
-		setMessageList(controller.getMessagesFromActiveTenseCategory());
+		setMessageList(messageController.getMessagesFromActiveTenseCategory());
 		messageListSelectionModel = new MessageListSelectionModel(
-				controller.getMessagesFromActiveTenseCategory().size());
+				messageController.getMessagesFromActiveTenseCategory().size());
 
 		messageList = new JList<Message>(model);
 		messageList.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
@@ -106,10 +106,10 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		secondPersonBtn.setToolTipText("Message list in second person");
 		secondPersonBtn.addMouseListener(this);
 
-		if (controller.getMessageTense() == MessageTense.FIRST_PERSON) {
+		if (messageController.getMessageTense() == MessageTense.FIRST_PERSON) {
 			firstPersonBtn.setIcon(activeIcon);
 			secondPersonBtn.setIcon(inactiveIcon);
-		} else if (controller.getMessageTense() == MessageTense.SECOND_PERSON) {
+		} else if (messageController.getMessageTense() == MessageTense.SECOND_PERSON) {
 			firstPersonBtn.setIcon(inactiveIcon);
 			secondPersonBtn.setIcon(activeIcon);
 		}
@@ -250,12 +250,12 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	public void mouseClicked(MouseEvent e) {
 
 		if ((e.getSource() == firstPersonBtn || e.getSource() == firstPersonLabel)
-				&& controller.getMessageTense() != MessageTense.FIRST_PERSON) {
+				&& messageController.getMessageTense() != MessageTense.FIRST_PERSON) {
 			switchPersonMode(MessageTense.FIRST_PERSON);
 			firstPersonBtn.setIcon(activeIcon);
 			secondPersonBtn.setIcon(inactiveIcon);
 		} else if ((e.getSource() == secondPersonBtn || e.getSource() == secondPersonLabel)
-				&& controller.getMessageTense() != MessageTense.SECOND_PERSON) {
+				&& messageController.getMessageTense() != MessageTense.SECOND_PERSON) {
 			switchPersonMode(MessageTense.SECOND_PERSON);
 			firstPersonBtn.setIcon(inactiveIcon);
 			secondPersonBtn.setIcon(activeIcon);
@@ -323,9 +323,9 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 
 		List<Message> selectedMessages = new ArrayList<Message>();
 
-		for (i = 0; i < controller.getMessagesFromActiveTenseCategory().size(); i++) {
+		for (i = 0; i < messageController.getMessagesFromActiveTenseCategory().size(); i++) {
 			if (messageListSelectionModel.isSelectedIndex(i)) {
-				Message message = controller.getMessageFromActiveTenseCategory(i);
+				Message message = messageController.getMessageFromActiveTenseCategory(i);
 				selectedMessages.add(message);
 			}
 		}

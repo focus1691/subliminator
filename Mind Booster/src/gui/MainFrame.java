@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,6 +11,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -33,7 +35,9 @@ import gui.util.CreateMenuBar;
 import gui.util.HideToSystemTray;
 import gui.util.SetScreenLocation;
 import model.Message;
+import utility.FontPicker;
 import utility.Sorter;
+import validation.ArrayValidator;
 
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 
@@ -47,6 +51,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private JDesktopPane desktopPane;
 	private JPanel mainPanel;
 	private HideToSystemTray hideToSystemTray;
+	private JLabel errorMsg;
 
 	public MainFrame() {
 
@@ -68,7 +73,14 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			controlPanel.setMessageStartListener(this);
 
 			hideToSystemTray = new HideToSystemTray(this);
+
+			errorMsg = new JLabel();
+			errorMsg.setForeground(Color.RED);
+			errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
+			errorMsg.setVisible(false);
+
 			setJMenuBar(new CreateMenuBar(messageController, messagePanel));
+
 			setupUI();
 
 			this.addComponentListener(new ComponentAdapter() {
@@ -98,6 +110,18 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridheight = 1;
 		gbc.weightx = 0.4;
 		gbc.weighty = 0.8;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		mainPanel.add(errorMsg, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		gbc.weightx = 0.4;
+		gbc.weighty = 0.8;
+		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		mainPanel.add(categoryPanel, gbc);
@@ -144,7 +168,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
 		if (messageController.isMessagesOn() == false) {
 			try {
-				messageController.startMessageActivity(settingsPanel.getMsgLocationsSelected(),
+				messageController.startMessageActivity(settingsPanel.getSelectedScreenPositions(),
 						settingsPanel.getMessageButtons());
 				messageController.setCategoryIndex(e.getCategoryIndex());
 				messageController.stopMessageActivity();
@@ -158,14 +182,29 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void messageEventOccurred(MessageEvent event) {
 		try {
 			if (messageController.isMessagesOn() == false) {
-				setState(ICONIFIED);
-				dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_ICONIFIED));
-				messageController.setSpeed(settingsPanel.getSpeed());
-				messageController.setInterval(settingsPanel.getInterval());
-				messageController.setActiveMessages(messagePanel.getSelectedMessages());
-				messageController.startMessageActivity(settingsPanel.getMsgLocationsSelected(),
-						settingsPanel.getMessageButtons());
-				messageController.setMessagesOn(true);
+				if (messagePanel.getSelectedMessages().isEmpty()) {
+					errorMsg.setText("No messages selected");
+					errorMsg.setVisible(true);
+					controlPanel.showStartButton();
+				} else {
+					if (ArrayValidator.areAllFalse(settingsPanel.getSelectedScreenPositions())) {
+						errorMsg.setText("No message locations selected");
+						errorMsg.setVisible(true);
+						controlPanel.showStartButton();
+					} else {
+						System.out.println(settingsPanel.getSelectedScreenPositions().length);
+						setState(ICONIFIED);
+						dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_ICONIFIED));
+						messageController.setSpeed(settingsPanel.getSpeed());
+						messageController.setInterval(settingsPanel.getInterval());
+						messageController.setActiveMessages(messagePanel.getSelectedMessages());
+						messageController.startMessageActivity(settingsPanel.getSelectedScreenPositions(),
+								settingsPanel.getMessageButtons());
+						messageController.setMessagesOn(true);
+						errorMsg.setText("");
+						errorMsg.setVisible(false);
+					}
+				}
 			} else if (messageController.isMessagesOn() == true) {
 				messageController.stopMessageActivity();
 				messageController.setMessagesOn(false);

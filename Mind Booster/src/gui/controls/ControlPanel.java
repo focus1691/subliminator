@@ -182,10 +182,10 @@ public class ControlPanel extends JPanel implements ActionListener {
 			if (messageListener != null) {
 				if (active == false) {
 					active = true;
-					startBtn.setIcon(IconFetch.getInstance().getIcon("/images/stop.jpg"));
+					showStopButton();
 				} else {
 					active = false;
-					startBtn.setIcon(IconFetch.getInstance().getIcon("/images/start.jpg"));
+					showStartButton();
 				}
 				messageListener.messageEventOccurred(messageEvent);
 			}
@@ -220,6 +220,14 @@ public class ControlPanel extends JPanel implements ActionListener {
 				messageListener.messageSelectionEventOccurred(messageEvent);
 			}
 		}
+	}
+
+	public void showStopButton() {
+		startBtn.setIcon(IconFetch.getInstance().getIcon("/images/stop.jpg"));
+	}
+
+	public void showStartButton() {
+		startBtn.setIcon(IconFetch.getInstance().getIcon("/images/start.jpg"));
 	}
 
 	public void setMessageStartListener(MessageListener messageListener) {
