@@ -1,6 +1,6 @@
-package utility;
+package validation;
 
-public class Validator {
+public class MessageValidator {
 
 	public static boolean isMoreThanThreeChars(String message) {
 		if (message.length() < 3) {

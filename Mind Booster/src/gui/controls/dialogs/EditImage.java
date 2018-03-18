@@ -33,6 +33,7 @@ import model.Message;
 public class EditImage extends JInternalFrame {
 
 	private static final long serialVersionUID = 8614724076980880135L;
+	public static final int W = 400, H = 350, X = 150, Y = 150;
 	private MessageController controller;
 	private JLabel deleteMsg;
 	private JButton deleteBtn;
@@ -58,7 +59,8 @@ public class EditImage extends JInternalFrame {
 		initComponents();
 		setupUI();
 		this.getContentPane().setBackground(Color.decode("#1975bf"));
-		setSize(400, 350);
+		setSize(W, H);
+		setLocation(X, Y);
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

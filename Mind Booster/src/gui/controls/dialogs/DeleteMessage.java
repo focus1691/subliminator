@@ -24,6 +24,7 @@ import gui.message.MessagePanel;
 public class DeleteMessage extends JInternalFrame {
 	
 	private static final long serialVersionUID = 5549429493881002578L;
+	public static final int W = 1000, H = 350, X = 150, Y = 150;
 	private MessageController controller;
 	private JScrollPane scroller;
 	private JTextArea selectedMessagesTxt;
@@ -50,7 +51,8 @@ public class DeleteMessage extends JInternalFrame {
 			}
 		});
 		this.getContentPane().setBackground(Color.decode("#1975bf"));
-		setSize(1000, 350);
+		setSize(W, H);
+		setLocation(X, Y);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.requestFocus();

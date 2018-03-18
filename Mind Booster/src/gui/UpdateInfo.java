@@ -10,6 +10,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -32,7 +33,7 @@ public class UpdateInfo extends JFrame{
 
     private void initComponents() {
 
-        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setTitle("New Update Found");
         pan1 = new JPanel();
         pan1.setLayout(new BorderLayout());

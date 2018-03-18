@@ -7,7 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -31,7 +30,7 @@ import gui.settings.SettingsEvent;
 import gui.settings.SettingsListener;
 import gui.settings.SettingsPanel;
 import gui.util.CreateMenuBar;
-import gui.util.HideToSystemTray;
+import gui.util.MBSystemTray;
 import gui.util.SetScreenLocation;
 import model.Message;
 import utility.FontPicker;
@@ -50,7 +49,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private ControlPanel controlPanel;
 	private JDesktopPane desktopPane;
 	private JPanel mainPanel;
-	private HideToSystemTray hideToSystemTray;
+	private MBSystemTray hideToSystemTray;
 	private JLabel errorMsg;
 
 	public MainFrame() {
@@ -72,7 +71,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			controlPanel = new ControlPanel();
 			controlPanel.setMessageStartListener(this);
 
-			hideToSystemTray = new HideToSystemTray(this);
+			hideToSystemTray = new MBSystemTray(this);
 
 			errorMsg = new JLabel();
 			errorMsg.setForeground(Color.RED);
@@ -192,8 +191,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 						errorMsg.setVisible(true);
 						controlPanel.showStartButton();
 					} else {
-						setState(ICONIFIED);
-						dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_ICONIFIED));
+						hideToSystemTray.hide();
 						messageController.setSpeed(settingsPanel.getSpeed());
 						messageController.setInterval(settingsPanel.getInterval());
 						messageController.setActiveMessages(messagePanel.getSelectedMessages());

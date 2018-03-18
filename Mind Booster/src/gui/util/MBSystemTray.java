@@ -13,14 +13,14 @@ import javax.swing.JFrame;
 
 import gui.MainFrame;
 
-public class HideToSystemTray {
+public class MBSystemTray {
 
 	private JFrame frame;
 	private PopupMenu trayPopupMenu;
 	private SystemTray systemTray;
 	private TrayIcon trayIcon;
 
-	public HideToSystemTray(JFrame frame) {
+	public MBSystemTray(JFrame frame) {
 		this.frame = frame;
 		setup();
 	}
@@ -29,27 +29,21 @@ public class HideToSystemTray {
 		trayPopupMenu = new PopupMenu();
 		systemTray = SystemTray.getSystemTray();
 
-		trayIcon = new TrayIcon(IconFetch.getInstance().getIcon("/images/editItem.png").getImage(),
-				MainFrame.appName, trayPopupMenu);
+		trayIcon = new TrayIcon(IconFetch.getInstance().getIcon("/images/editItem.png").getImage(), MainFrame.appName,
+				trayPopupMenu);
 		trayIcon.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				systemTray.remove(trayIcon);
 				frame.setVisible(true);
+				frame.setState(java.awt.Frame.NORMAL);
+				frame.toFront();
 			}
 		});
-		
+
 		frame.addWindowStateListener(new WindowStateListener() {
 			public void windowStateChanged(WindowEvent e) {
-				if (e.getNewState() == JFrame.ICONIFIED) {
-					try {
-						System.out.println("Iconified");
-						systemTray.add(trayIcon);
-						frame.setVisible(false);
-					} catch (AWTException ex) {
-						System.out.println("unable to add to tray");
-					}
-				}
+
 				if (e.getNewState() == 7) {
 					try {
 						System.out.println("7");
@@ -74,8 +68,13 @@ public class HideToSystemTray {
 			}
 		});
 	}
-	
+
 	public void hide() {
-		
+		try {
+			systemTray.add(trayIcon);
+			frame.setVisible(false);
+		} catch (AWTException e) {
+			System.out.println("unable to add to tray");
+		}
 	}
 }

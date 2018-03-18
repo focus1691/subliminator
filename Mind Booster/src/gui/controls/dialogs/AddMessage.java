@@ -1,14 +1,11 @@
 package gui.controls.dialogs;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,21 +14,23 @@ import javax.swing.WindowConstants;
 
 import constants.MessageTense;
 import controller.MessageController;
+import gui.component.JRoundRectButton;
 import gui.message.MessagePanel;
 import model.Message;
-import utility.Validator;
+import utility.FontPicker;
+import validation.MessageValidator;
 
 public class AddMessage extends JInternalFrame {
 
 	private static final long serialVersionUID = 1447537632437945694L;
+	public static final int W = 600, H = 250, X = 150, Y = 150;
 	private MessageController controller;
+	private JLabel errorMsg;
 	private JLabel firstPersonLabel;
 	private JLabel secondPersonLabel;
 	private JTextField firstPersonMsg;
 	private JTextField secondPersonMsg;
-	private JButton submitBtn;
-	private JCheckBox text_only_1;
-	private JCheckBox text_only_2;
+	private JRoundRectButton submitBtn;
 
 	public AddMessage(final MessageController controller, final MessagePanel messagePanel) {
 		super("Add Message", true, true, true, true);
@@ -45,10 +44,11 @@ public class AddMessage extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				String msg1 = firstPersonMsg.getText();
 				String msg2 = secondPersonMsg.getText();
-				boolean is_text_only1 = text_only_1.isSelected();
-				boolean is_text_only2 = text_only_2.isSelected();
+				boolean is_text_only1 = false;
+				boolean is_text_only2 = false;
 
-				if (Validator.isMoreThanThreeChars(msg1) && Validator.isMoreThanThreeChars(msg2)) {
+				if (MessageValidator.isMoreThanThreeChars(msg1) && MessageValidator.isMoreThanThreeChars(msg2)) {
+					errorMsg.setVisible(false);
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
 							.add(new Message(msg1, "/Images/7.jpg", is_text_only1));
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
@@ -63,19 +63,19 @@ public class AddMessage extends JInternalFrame {
 							"Congratulations", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 				} else {
-					JOptionPane.showMessageDialog(null, "Enter a Message with More than 3 Characters.", "Short Message",
-							JOptionPane.WARNING_MESSAGE);
+					errorMsg.setText("Enter a Message with More than 3 Characters");
+					errorMsg.setVisible(true);
 				}
 			}
 		});
-		this.getContentPane().setBackground(Color.decode("#1975bf"));
-		setSize(600, 150);
-		setLocation(500, 500);
+		getContentPane().setBackground(Color.decode("#1975bf"));
+		setSize(W, H);
+		setLocation(X, Y);
 		pack();
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		
+
 		this.requestFocus();
 	}
 
@@ -91,27 +91,24 @@ public class AddMessage extends JInternalFrame {
 		firstPersonMsg = new JTextField(20);
 		secondPersonMsg = new JTextField(20);
 
-		submitBtn = new JButton("Add");
-
-		text_only_1 = new JCheckBox("Text Ony?");
-		text_only_1.setForeground(Color.WHITE);
-
-		text_only_2 = new JCheckBox("Text Ony?");
-		text_only_2.setForeground(Color.WHITE);
+		submitBtn = new JRoundRectButton("Add");
+		submitBtn.setToolTipText("Add this message to " + controller.getActiveCategoryName());
+		
+		errorMsg = new JLabel();
+		errorMsg.setForeground(Color.RED);
+		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
 	}
 
 	public void setupUI() {
-
-		submitBtn.setPreferredSize(new Dimension(75, 50));
-		submitBtn.setToolTipText("Add this message to " + controller.getActiveCategoryName());
-
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
-
+		
 		gc.gridx = 0;
 		gc.gridy = 0;
-		gc.fill = GridBagConstraints.HORIZONTAL;
+		add(errorMsg, gc);
+
+		gc.gridy++;
 		add(firstPersonLabel, gc);
 
 		gc.gridx++;
@@ -125,10 +122,8 @@ public class AddMessage extends JInternalFrame {
 		add(secondPersonMsg, gc);
 
 		gc.gridy++;
-		add(text_only_2, gc);
-
-		gc.gridy++;
-		gc.gridx = 0;
+		gc.gridx = 1;
+		gc.fill = GridBagConstraints.NONE;
 		gc.anchor = GridBagConstraints.CENTER;
 		add(submitBtn, gc);
 	}
