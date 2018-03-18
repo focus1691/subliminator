@@ -48,30 +48,30 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	}
 
 	public void initComponents(int speed, int interval) {
-		screenRect = new Rectangle(0, 0, 650, 410);
+		screenRect = new Rectangle(0, 0, 650, 450);
 
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new BorderLayout());
 		screenPanel.setBounds(screenRect);
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
-		msgOne = new MessageButton("Top Left", screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 185, 60);
+		msgOne = new MessageButton("Top L", screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
 		msgOne.setToolTipText("Message top left of screen");
 
-		msgTwo = new MessageButton("Top Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
-				screenPanel.getHeight() / 8, 185, 60);
+		msgTwo = new MessageButton("Top R", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+				screenPanel.getHeight() / 8, 215, 80);
 		msgTwo.setToolTipText("Message top right of screen");
 
-		msgThree = new MessageButton("Bottom Left", screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2) - 20, 185,
-				60);
+		msgThree = new MessageButton("Bottom L", screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215,
+				80);
 		msgThree.setToolTipText("Message bottom left of screen");
 
-		msgFour = new MessageButton("Bottom Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
-				(screenPanel.getHeight() / 2) - 20, 185, 60);
+		msgFour = new MessageButton("Bottom R", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+				(screenPanel.getHeight() / 2), 215, 80);
 		msgFour.setToolTipText("Message bottom right of screen");
 
 		msgFive = new MessageButton("Center", (screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85,
-				185, 60);
+				215, 80);
 		msgFive.setToolTipText("Message center of screen");
 
 		messageButtons = new MessageButton[5];
@@ -134,13 +134,13 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 							(double) screenToPanelHRatio * c.getHeight());
 					msgOne.setAlignmentX(250);
 					screenPanel.setBounds(screenRect);
-					msgOne.setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 185, 60);
-					msgTwo.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
-							screenPanel.getHeight() / 8, 185, 60);
-					msgThree.setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2) - 20, 185, 60);
-					msgFour.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 185,
-							(screenPanel.getHeight() / 2) - 20, 185, 60);
-					msgFive.setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 185, 60);
+					msgOne.setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
+					msgTwo.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+							screenPanel.getHeight() / 8, 215, 80);
+					msgThree.setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
+					msgFour.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+							(screenPanel.getHeight() / 2), 215, 80);
+					msgFive.setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 215, 80);
 					c.revalidate();
 					c.repaint();
 				} else {

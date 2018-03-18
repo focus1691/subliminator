@@ -8,10 +8,10 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-public class CirclePanel extends JPanel {
+public class GreenSwitch extends JPanel {
 	private Color activeColour;
 
-	public CirclePanel(Color color) {
+	public GreenSwitch(Color color) {
 		setOpaque(true);
 		setBackground(Color.WHITE);
 		setMaximumSize(new Dimension(26, 26));

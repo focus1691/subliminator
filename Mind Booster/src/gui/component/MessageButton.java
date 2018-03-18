@@ -33,7 +33,7 @@ public class MessageButton extends JPanel {
 	private JPopupMenu menu;
 	private JLabel label;
 	private Color activeColour, activeBackground;
-	private CirclePanel circlePanel;
+	private GreenSwitch circlePanel;
 	private final String categoryName;
 	private ImageIcon image;
 	private double btnToScreenWRatio, btnToScreenHRatio;
@@ -60,7 +60,7 @@ public class MessageButton extends JPanel {
 
 		createMenu();
 
-		font = FontPicker.getFont(FontPicker.latoBlack, 20);
+		font = FontPicker.getFont(FontPicker.latoBlack, 36);
 
 		label = new JLabel(categoryName, JLabel.CENTER);
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -69,7 +69,7 @@ public class MessageButton extends JPanel {
 		label.setFont(font);
 		label.setOpaque(true);
 
-		circlePanel = new CirclePanel(CustomColor.green);
+		circlePanel = new GreenSwitch(CustomColor.green);
 		circlePanel.setActiveColour(active ? CustomColor.green : CustomColor.lightGrey);
 		circlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		circlePanel.addMouseListener(new MouseAdapter() {
@@ -99,7 +99,6 @@ public class MessageButton extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(label, BorderLayout.CENTER);
 		add(circlePanel);
-		setBorder(BorderFactory.createEtchedBorder(Color.decode("#f5f5f5"), Color.decode("#f5f5f5")));
 		setOpaque(true);
 		setBackground(Color.WHITE);
 
