@@ -38,7 +38,7 @@ public class MessageController {
 	public MessageController() {
 		prefs = Preferences.userRoot().node(this.getClass().getName());
 		speed = prefs.getInt("speed", 50);
-		interval = prefs.getInt("interval", 1);
+		interval = prefs.getInt("interval", 7);
 		categoryIndex = prefs.getInt("categoryIndex", 0);
 		messageTense = (prefs.getInt("tense", 0)) == 0 ? MessageTense.FIRST_PERSON : MessageTense.SECOND_PERSON;
 		frame1 = new SubliminalFrame();
