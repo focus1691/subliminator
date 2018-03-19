@@ -9,11 +9,16 @@ public class UserController {
 	private User user;
 	private Database database;
 	private boolean loggedIn = false;
+	private final String tempLoginKey = "MjMGqzdkMSs4K4PNkN454Ufc";
 	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
 	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
 
 	public UserController(Database database) {
 		this.database = database;
+	}
+	
+	public boolean isTempUserSelected(String tempLoginKey) { 
+		return tempLoginKey.equals(this.tempLoginKey) ? true : false;
 	}
 
 	public String login(String email, String pass) {

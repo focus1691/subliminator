@@ -309,13 +309,22 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void loginEventOccurred(LoginEvent event) {
 		
-		String message = userController.login(event.getUser(), event.getPass());
+		String user = event.getUser();
+		String pass = event.getPass();
 		
-		if (userController.isLoggedIn()) {
+		
+		if (userController.isTempUserSelected(user)) {
 			setVisible(true);
 			loginFrame.dispose();
 		} else {
-			loginFrame.setErrorMessage(message);
+			String message = userController.login(user, pass);
+			
+			if (userController.isLoggedIn()) {
+				setVisible(true);
+				loginFrame.dispose();
+			} else {
+				loginFrame.setErrorMessage(message);
+			}
 		}
 	}
 
