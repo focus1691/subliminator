@@ -204,7 +204,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 1;
-		gc.insets = new Insets(20, 0, 0, 0);
+		gc.insets = new Insets(60, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.BOTH;
 		add(screenContainer, gc);

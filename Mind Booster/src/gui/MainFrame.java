@@ -39,6 +39,7 @@ import gui.util.IconFetch;
 import gui.util.MBSystemTray;
 import gui.util.SetScreenLocation;
 import model.Message;
+import model.User;
 import utility.FontPicker;
 import utility.Sorter;
 import validation.ArrayValidator;
@@ -59,6 +60,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private JDesktopPane desktopPane;
 	private JPanel mainPanel;
 	private MBSystemTray hideToSystemTray;
+	private JLabel userLabel;
 	private JLabel errorMsg;
 
 	public MainFrame() {
@@ -66,12 +68,12 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		if (NetworkController.isApplicationRunning() == true) {
 			System.exit(1);
 		} else {
-			
+
 			database = new Database();
-			
+
 			loginFrame = new LoginFrame();
 			loginFrame.setLoginListener(this);
-			
+
 			messageController = new MessageController();
 			userController = new UserController(database);
 
@@ -94,6 +96,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
 			errorMsg.setVisible(false);
 
+			userLabel = new JLabel();
+			userLabel.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
+
 			setJMenuBar(new CreateMenuBar(messageController, messagePanel));
 
 			setupUI();
@@ -101,6 +106,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			this.addComponentListener(new ComponentAdapter() {
 				public void componentResized(ComponentEvent evt) {
 					mainPanel.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 0.915));
+					userLabel.revalidate();
+					revalidate();
 				}
 			});
 			setTitle(appName);
@@ -157,6 +164,19 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridheight = 1;
 		gbc.weightx = 0.8;
 		gbc.weighty = 0.8;
+		gbc.anchor = GridBagConstraints.NORTHEAST;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.insets = new Insets(20, 20, 20, 20);
+		mainPanel.add(userLabel, gbc);
+
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		gbc.weightx = 0.8;
+		gbc.weighty = 0.8;
+		gbc.anchor = GridBagConstraints.LINE_START;
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		mainPanel.add(settingsPanel, gbc);
 
@@ -268,7 +288,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void deleteMessageEventOccurred(MessageEvent e) {
 		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
-		
+
 		if (selectedMsgs == null || selectedMsgs.length == 0) {
 			errorMsg.setText("You need to select a message to delete");
 			errorMsg.setVisible(true);
@@ -308,18 +328,30 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void loginEventOccurred(LoginEvent event) {
-		
-		String user = event.getUser();
+
+		String email = event.getUser();
 		String pass = event.getPass();
-		
-		
-		if (userController.isTempUserSelected(user)) {
+
+		if (userController.isTempUserSelected(email)) {
+			userLabel.setText("UNREGISTERED");
+			userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
 			setVisible(true);
 			loginFrame.dispose();
 		} else {
-			String message = userController.login(user, pass);
-			
+			String message = userController.login(email, pass);
+
 			if (userController.isLoggedIn()) {
+				User user = userController.getUser();
+				userLabel.setText(user.getFirstName() + " " + user.getLastName());
+
+				if (user.hasPremium()) {
+					userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
+					userLabel.setToolTipText("Premium member");
+				} else {
+					userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
+					userLabel.setToolTipText("Basic Account");
+				}
+				
 				setVisible(true);
 				loginFrame.dispose();
 			} else {
@@ -331,6 +363,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void logoutEventOccurred(LoginEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
