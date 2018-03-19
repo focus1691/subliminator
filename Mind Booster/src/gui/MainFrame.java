@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 
 import controller.MessageController;
 import controller.NetworkController;
+import controller.UserController;
+import database.Database;
 import gui.category.CategoryEvent;
 import gui.category.CategoryListener;
 import gui.category.CategoryPanel;
@@ -25,6 +27,9 @@ import gui.controls.dialogs.AddMessage;
 import gui.controls.dialogs.DeleteMessage;
 import gui.controls.dialogs.EditImage;
 import gui.controls.dialogs.EditMessage;
+import gui.login.LoginEvent;
+import gui.login.LoginFrame;
+import gui.login.LoginListener;
 import gui.message.MessagePanel;
 import gui.settings.SettingsEvent;
 import gui.settings.SettingsListener;
@@ -38,12 +43,15 @@ import utility.FontPicker;
 import utility.Sorter;
 import validation.ArrayValidator;
 
-public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
+public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener, LoginListener {
 
 	private static final long serialVersionUID = -4312454251947395385L;
 	public static final String appName = "Mind Booster";
 	public static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
 	private MessageController messageController;
+	private UserController userController;
+	private Database database;
+	private LoginFrame loginFrame;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
 	private SettingsPanel settingsPanel;
@@ -58,7 +66,14 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		if (NetworkController.isApplicationRunning() == true) {
 			System.exit(1);
 		} else {
+			
+			database = new Database();
+			
+			loginFrame = new LoginFrame();
+			loginFrame.setLoginListener(this);
+			
 			messageController = new MessageController();
+			userController = new UserController(database);
 
 			categoryPanel = new CategoryPanel(messageController);
 			categoryPanel.setCategorySelectionListener(this);
@@ -94,7 +109,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setMinimumSize(new Dimension(minW, minH));
 			pack();
 			SetScreenLocation.centerFrame(this);
-			setVisible(true);
+			setVisible(false);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 	}
@@ -289,5 +304,24 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void settingsEventOccurred(SettingsEvent e) {
 		messageController.setSpeed(e.getMessageSpeed());
 		messageController.setInterval(e.getMessageInterval());
+	}
+
+	@Override
+	public void loginEventOccurred(LoginEvent event) {
+		
+		String message = userController.login(event.getUser(), event.getPass());
+		
+		if (userController.isLoggedIn()) {
+			setVisible(true);
+			loginFrame.dispose();
+		} else {
+			loginFrame.setErrorMessage(message);
+		}
+	}
+
+	@Override
+	public void logoutEventOccurred(LoginEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }
