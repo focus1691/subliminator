@@ -9,6 +9,7 @@ public class UserController {
 	private User user;
 	private Database database;
 	private boolean loggedIn = false;
+	private boolean premiumUser = true;
 	private final String tempLoginKey = "MjMGqzdkMSs4K4PNkN454Ufc";
 	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
 	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
@@ -58,6 +59,14 @@ public class UserController {
 
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public boolean isUserPremium() {
+		return premiumUser;
+	}
+
+	public void setUserPremium(boolean premiumUser) {
+		this.premiumUser = premiumUser;
 	}
 
 }

@@ -228,15 +228,16 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 						errorMsg.setVisible(true);
 						controlPanel.showStartButton();
 					} else {
-						hideToSystemTray.hide();
-						messageController.setSpeed(settingsPanel.getSpeed());
-						messageController.setInterval(settingsPanel.getInterval());
-						messageController.setActiveMessages(messagePanel.getSelectedMessages());
-						messageController.startMessageActivity(settingsPanel.getSelectedScreenPositions(),
-								settingsPanel.getMessageButtons());
-						messageController.setMessagesOn(true);
-						errorMsg.setText("");
-						errorMsg.setVisible(false);
+						if (userController.isUserPremium() == false) {
+							if (ArrayValidator.isMoreThanOneTrue(settingsPanel.getSelectedScreenPositions())) {
+								UpdateInfo updateInfo = new UpdateInfo("update");
+								controlPanel.showStartButton();
+							} else {
+								runMessageActivity(settingsPanel.getSelectedScreenPositions());
+							}
+						} else if (userController.isUserPremium() == true) {
+							runMessageActivity(settingsPanel.getSelectedScreenPositions());
+						}
 					}
 				}
 			} else if (messageController.isMessagesOn() == true) {
@@ -247,6 +248,17 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void runMessageActivity(boolean[] screenPositions) throws InterruptedException {
+		hideToSystemTray.hide();
+		messageController.setSpeed(settingsPanel.getSpeed());
+		messageController.setInterval(settingsPanel.getInterval());
+		messageController.setActiveMessages(messagePanel.getSelectedMessages());
+		messageController.startMessageActivity(screenPositions, settingsPanel.getMessageButtons());
+		messageController.setMessagesOn(true);
+		errorMsg.setText("");
+		errorMsg.setVisible(false);
 	}
 
 	@Override
@@ -351,7 +363,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 					userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
 					userLabel.setToolTipText("Basic Account");
 				}
-				
+
 				setVisible(true);
 				loginFrame.dispose();
 			} else {

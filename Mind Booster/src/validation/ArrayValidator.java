@@ -8,5 +8,13 @@ public class ArrayValidator {
 				return false;
 		return true;
 	}
+	
+	public static boolean isMoreThanOneTrue(boolean[] array) {
+		int count = 0;
+		for (boolean b : array)
+			if (b)
+				count++;
+		return count > 1 ? true : false;
+	}
 
 }
