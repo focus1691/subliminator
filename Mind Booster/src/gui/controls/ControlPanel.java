@@ -14,17 +14,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import gui.component.Separator;
 import gui.util.IconFetch;
+import utility.FontPicker;
 
 public class ControlPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1990836352559802232L;
 	private boolean active = false;
 	private JButton startBtn, addBtn, editBtn, deleteBtn, changeBtn;
-	private JSeparator separator, separator2, separator3;
 	private ButtonGroup messageSelectorGroup;
 	private JRadioButton selectBtn, deselectBtn;
 	private MessageListener messageListener;
@@ -46,65 +46,59 @@ public class ControlPanel extends JPanel implements ActionListener {
 		addBtn = new JButton("Add");
 		addBtn.setOpaque(false);
 		addBtn.setPreferredSize(new Dimension(120, 40));
+		addBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
 		addBtn.setForeground(Color.WHITE);
 		addBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/plus.jpg")));
 		addBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		addBtn.setToolTipText("Add a new message");
+		addBtn.setIconTextGap(10);
 		addBtn.addActionListener(this);
 
 		editBtn = new JButton("Edit");
 		editBtn.setOpaque(false);
 		editBtn.setPreferredSize(new Dimension(120, 40));
+		editBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
 		editBtn.setContentAreaFilled(false);
 		editBtn.setBorderPainted(false);
 		editBtn.setForeground(Color.WHITE);
 		editBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/edit.jpg")));
 		editBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		editBtn.setToolTipText("Edit message");
+		editBtn.setIconTextGap(10);
 		editBtn.addActionListener(this);
 
 		deleteBtn = new JButton("Delete");
 		deleteBtn.setOpaque(false);
 		deleteBtn.setPreferredSize(new Dimension(150, 40));
+		deleteBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
 		deleteBtn.setContentAreaFilled(false);
 		deleteBtn.setBorderPainted(false);
 		deleteBtn.setForeground(Color.WHITE);
 		deleteBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/delete.jpg")));
 		deleteBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		deleteBtn.setToolTipText("Delete messages");
+		deleteBtn.setIconTextGap(10);
 		deleteBtn.addActionListener(this);
 
 		changeBtn = new JButton("Change Image");
 		changeBtn.setOpaque(false);
 		changeBtn.setPreferredSize(new Dimension(220, 40));
+		changeBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
 		changeBtn.setContentAreaFilled(false);
 		changeBtn.setBorderPainted(false);
 		changeBtn.setForeground(Color.WHITE);
 		changeBtn.setIcon(new ImageIcon(this.getClass().getResource("/images/change.jpg")));
 		changeBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		changeBtn.setToolTipText("Change messages");
+		changeBtn.setIconTextGap(10);
 		changeBtn.addActionListener(this);
-
-		separator = new JSeparator(SwingConstants.VERTICAL);
-		separator.setPreferredSize(new Dimension(1, 30));
-		separator.setOpaque(true);
-		separator.setBackground(Color.decode("#1060a1"));
-
-		separator2 = new JSeparator(SwingConstants.VERTICAL);
-		separator2.setPreferredSize(new Dimension(1, 30));
-		separator2.setOpaque(true);
-		separator2.setBackground(Color.decode("#1060a1"));
-
-		separator3 = new JSeparator(SwingConstants.VERTICAL);
-		separator3.setPreferredSize(new Dimension(1, 30));
-		separator3.setOpaque(true);
-		separator3.setBackground(Color.decode("#1060a1"));
 
 		deselectBtn = new JRadioButton("Deselect All");
 		deselectBtn.setForeground(Color.WHITE);
 		deselectBtn.setPreferredSize(new Dimension(160, 30));
+		deselectBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
 		deselectBtn.addActionListener(this);
 		deselectBtn.setRolloverEnabled(false);
 		deselectBtn.setBorderPainted(false);
@@ -116,6 +110,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		selectBtn = new JRadioButton("Select All");
 		selectBtn.setForeground(Color.WHITE);
 		selectBtn.setPreferredSize(new Dimension(160, 30));
+		selectBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
 		selectBtn.addActionListener(this);
 		selectBtn.setRolloverEnabled(false);
 		selectBtn.setBorderPainted(false);
@@ -140,12 +135,10 @@ public class ControlPanel extends JPanel implements ActionListener {
 		JPanel lowerPane = new JPanel(new FlowLayout());
 		lowerPane.setBackground(Color.decode("#1975bf"));
 		lowerPane.add(addBtn);
-		lowerPane.add(separator);
+		lowerPane.add(new Separator());
 		lowerPane.add(editBtn);
-		lowerPane.add(separator2);
+		lowerPane.add(new Separator());
 		lowerPane.add(deleteBtn);
-		lowerPane.add(separator3);
-		lowerPane.add(changeBtn);
 
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
@@ -180,9 +173,22 @@ public class ControlPanel extends JPanel implements ActionListener {
 		gc.weightx = 1;
 		gc.weighty = 1;
 		gc.insets = new Insets(0, 15, 0, 0);
-		gc.anchor = GridBagConstraints.LINE_START;
+		gc.anchor = GridBagConstraints.NORTHWEST;
 		gc.fill = GridBagConstraints.NONE;
 		add(lowerPane, gc);
+		
+		gc.gridx = 1;
+		gc.gridy = 1;
+		gc.gridheight = 1;
+		gc.gridwidth = 1;
+		gc.weightx = 1;
+		gc.weighty = 1;
+		gc.insets = new Insets(0, 15, 0, 0);
+		gc.anchor = GridBagConstraints.NORTHEAST;
+		gc.fill = GridBagConstraints.NONE;
+		add(changeBtn, gc);
+		
+
 	}
 
 	public void actionPerformed(ActionEvent e) {

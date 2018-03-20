@@ -100,17 +100,17 @@ public class LoginFrame extends JFrame implements ActionListener {
 		passTxt.setPreferredSize(new Dimension(350, 40));
 		
 		submitBtn = new JButton("Login");
-		submitBtn.setBackground(Color.decode("#226815"));
+		submitBtn.setBackground(Color.decode("#1975bf"));
 		submitBtn.setForeground(Color.BLACK);
-		submitBtn.setOpaque(true);
+		submitBtn.setOpaque(false);
 		submitBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		submitBtn.setPreferredSize(new Dimension(125, 50));
 		submitBtn.addActionListener(this);
 		
 		tempLoginBtn = new JButton("Skip");
-		tempLoginBtn.setBackground(Color.decode("#226815"));
+		tempLoginBtn.setBackground(Color.decode("#1975bf"));
 		tempLoginBtn.setForeground(Color.BLACK);
-		tempLoginBtn.setOpaque(true);
+		tempLoginBtn.setOpaque(false);
 		tempLoginBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		tempLoginBtn.setPreferredSize(new Dimension(125, 50));
 		tempLoginBtn.addActionListener(this);

@@ -279,7 +279,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		addMessage.setVisible(true);
 		messageController.save();
 	}
-
+	
 	@Override
 	public void editMessageEventOccurred(MessageEvent e) {
 
