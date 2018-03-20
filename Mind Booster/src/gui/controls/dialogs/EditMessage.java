@@ -22,7 +22,7 @@ import validation.MessageValidator;
 public class EditMessage extends JInternalFrame {
 
 	private static final long serialVersionUID = 5470112838506529493L;
-	public static final int W = 600, H = 150, X = 150, Y = 150;
+	public static final int W = 600, H = 150;
 	private MessageController controller;
 	private JLabel firstPersonLbl, secondPersonLbl;
 	private JTextField firstPersonMsg, secondPersonMsg;
@@ -31,7 +31,7 @@ public class EditMessage extends JInternalFrame {
 	private JCheckBox text_only_2;
 
 	public EditMessage(final MessageController controller, final MessagePanel messagePanel, final int index) {
-		super("Edit Message", true, true, true, true);
+		super("Edit Message", false, true, false, false);
 		this.controller = controller;
 		initComponents(index);
 		setupUI();
@@ -64,12 +64,9 @@ public class EditMessage extends JInternalFrame {
 				}
 			}
 		});
-		this.getContentPane().setBackground(Color.decode("#1975bf"));
+		getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(W, H);
-		setLocation(X, Y);
 		pack();
-		setResizable(false);
-		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.requestFocus();
 	}

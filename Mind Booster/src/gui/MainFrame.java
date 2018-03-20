@@ -288,7 +288,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			EditMessage editMessage = new EditMessage(messageController, messagePanel,
 					messagePanel.getMessageListSelectionModel().getLastSelection());
 			desktopPane.add(editMessage);
-			editMessage.setLocation(W / 5, (H - 100) / 5);
+			editMessage.setLocation((desktopPane.getWidth() - editMessage.getWidth()) / 2,
+					(desktopPane.getHeight() - editMessage.getHeight()) / 2);
 			editMessage.setVisible(true);
 			errorMsg.setVisible(false);
 			messageController.save();
@@ -309,7 +310,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			Sorter.getInstance().doInsertionSort(selectedMsgs);
 			DeleteMessage deleteMessage = new DeleteMessage(messageController, messagePanel, selectedMsgs);
 			desktopPane.add(deleteMessage);
-			deleteMessage.setLocation(W / 5, (H - 100) / 5);
+			deleteMessage.setLocation((desktopPane.getWidth() - deleteMessage.getWidth()) / 2,
+					(desktopPane.getHeight() - deleteMessage.getHeight()) / 2);
 			deleteMessage.setVisible(true);
 			errorMsg.setVisible(false);
 			messageController.save();
@@ -327,7 +329,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		EditImage editImage = new EditImage(messageController, message, messagePanel,
 				messagePanel.getMessageListSelectionModel().getLastSelection());
 		desktopPane.add(editImage);
-		editImage.setLocation(W / 5, (H - 100) / 5);
+		editImage.setLocation((desktopPane.getWidth() - editImage.getWidth()) / 2,
+				(desktopPane.getHeight() - editImage.getHeight()) / 2);
 		editImage.setVisible(true);
 		errorMsg.setVisible(false);
 		messageController.save();

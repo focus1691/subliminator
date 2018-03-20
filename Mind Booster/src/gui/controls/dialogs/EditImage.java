@@ -33,7 +33,7 @@ import model.Message;
 public class EditImage extends JInternalFrame {
 
 	private static final long serialVersionUID = 8614724076980880135L;
-	public static final int W = 400, H = 350, X = 150, Y = 150;
+	public static final int W = 400, H = 350;
 	private MessageController controller;
 	private JLabel deleteMsg;
 	private JButton deleteBtn;
@@ -50,7 +50,7 @@ public class EditImage extends JInternalFrame {
 	private MessagePanel messagePanel;
 
 	public EditImage(MessageController controller, Message message, MessagePanel messagePanel, int index) {
-		super("Edit Image", true, true, true, true);
+		super("Edit Image", false, true, false, false);
 		this.controller = controller;
 		this.message = message;
 		this.messagePanel = messagePanel;
@@ -58,13 +58,9 @@ public class EditImage extends JInternalFrame {
 		selected_message = index;
 		initComponents();
 		setupUI();
-		this.getContentPane().setBackground(Color.decode("#1975bf"));
+		getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(W, H);
-		setLocation(X, Y);
-		setResizable(false);
-		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.requestFocus();
 	}
 
 	public void initComponents() {
