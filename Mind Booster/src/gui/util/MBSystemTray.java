@@ -43,22 +43,6 @@ public class MBSystemTray {
 
 		frame.addWindowStateListener(new WindowStateListener() {
 			public void windowStateChanged(WindowEvent e) {
-
-				if (e.getNewState() == 7) {
-					try {
-						System.out.println("7");
-						systemTray.add(trayIcon);
-						frame.setVisible(false);
-					} catch (AWTException ex) {
-						System.out.println("unable to add to system tray");
-					}
-				}
-				if (e.getNewState() == JFrame.MAXIMIZED_BOTH) {
-					System.out.println("maximised");
-					systemTray.remove(trayIcon);
-					frame.setVisible(true);
-					System.out.println("Tray icon removed");
-				}
 				if (e.getNewState() == JFrame.NORMAL) {
 					System.out.println("normal");
 					systemTray.remove(trayIcon);

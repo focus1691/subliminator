@@ -197,21 +197,15 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		setContentPane(desktopPane);
 	}
 
-	@Override
-	public void categorySelectionEventOccurred(CategoryEvent e) {
-		messagePanel.getModel().clear();
-		messageController.setCategoryIndex(e.getCategoryIndex());
-		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
-		if (messageController.isMessagesOn() == false) {
-			try {
-				messageController.startMessageActivity(settingsPanel.getSelectedScreenPositions(),
-						settingsPanel.getMessageButtons());
-				messageController.setCategoryIndex(e.getCategoryIndex());
-				messageController.stopMessageActivity();
-			} catch (InterruptedException ie) {
-				ie.printStackTrace();
-			}
-		}
+	private void runMessageActivity(boolean[] screenPositions) throws InterruptedException {
+		hideToSystemTray.hide();
+		messageController.setSpeed(settingsPanel.getSpeed());
+		messageController.setInterval(settingsPanel.getInterval());
+		messageController.setActiveMessages(messagePanel.getSelectedMessages());
+		messageController.startMessageActivity(screenPositions, settingsPanel.getMessageButtons());
+		messageController.setMessagesOn(true);
+		errorMsg.setText("");
+		errorMsg.setVisible(false);
 	}
 
 	@Override
@@ -250,23 +244,29 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		}
 	}
 
-	private void runMessageActivity(boolean[] screenPositions) throws InterruptedException {
-		hideToSystemTray.hide();
-		messageController.setSpeed(settingsPanel.getSpeed());
-		messageController.setInterval(settingsPanel.getInterval());
-		messageController.setActiveMessages(messagePanel.getSelectedMessages());
-		messageController.startMessageActivity(screenPositions, settingsPanel.getMessageButtons());
-		messageController.setMessagesOn(true);
-		errorMsg.setText("");
-		errorMsg.setVisible(false);
-	}
-
 	@Override
 	public void messageSelectionEventOccurred(MessageEvent e) {
 		if (e.isAllMessagesSelected() == true) {
 			messagePanel.getMessageListSelectionModel().setAllMessagesActive();
 		} else {
 			messagePanel.getMessageListSelectionModel().clearSelection();
+		}
+	}
+
+	@Override
+	public void categorySelectionEventOccurred(CategoryEvent e) {
+		messagePanel.getModel().clear();
+		messageController.setCategoryIndex(e.getCategoryIndex());
+		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
+		if (messageController.isMessagesOn() == false) {
+			try {
+				messageController.startMessageActivity(settingsPanel.getSelectedScreenPositions(),
+						settingsPanel.getMessageButtons());
+				messageController.setCategoryIndex(e.getCategoryIndex());
+				messageController.stopMessageActivity();
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
+			}
 		}
 	}
 
