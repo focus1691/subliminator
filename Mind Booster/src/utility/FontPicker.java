@@ -14,7 +14,7 @@ public class FontPicker {
 	public final static String latoBold = "/font/Lato-Bold_0.ttf";
 	public final static String latoRegular = "/font/Lato-Regular_0.ttf";
 
-	public static Font getFont(String dir, int fontSize) {
+	public static Font getFont(String dir, float fontSize) {
 		Font font = null;
 		InputStream is = CategoryPanel.class.getResourceAsStream(dir);
 		try {

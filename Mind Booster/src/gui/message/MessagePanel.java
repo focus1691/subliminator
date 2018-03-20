@@ -45,7 +45,6 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private MessageListSelectionModel messageListSelectionModel;
 	private DefaultListModel<Message> model = new DefaultListModel<>();
 	private JLabel firstPersonLabel, secondPersonLabel;
-	private JLabel firstPersonBtn, secondPersonBtn;
 	private ImageIcon activeIcon, inactiveIcon;
 	private JPopupMenu popupMenu;
 	private JMenuItem addItem, editItem, deleteItem, changeItem;
@@ -62,8 +61,8 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		int[] selectedIndices = messageList.getSelectedIndices();
 		model.clear();
 		messageController.setMessageTense(messageTense);
-		firstPersonBtn.setIcon(inactiveIcon);
-		secondPersonBtn.setIcon(activeIcon);
+		firstPersonLabel.setIcon(inactiveIcon);
+		secondPersonLabel.setIcon(activeIcon);
 		setMessageList(messageController.getMessagesFromTenseCategory(messageTense));
 		messageListSelectionModel.setMgsSelected(selectedIndices);
 	}
@@ -90,27 +89,28 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		header.setLayout(new GridLayout());
 
 		firstPersonLabel = new JLabel("1st Person");
+		firstPersonLabel.setFont(FontPicker.getFont(FontPicker.latoRegular, 18.49f));
+		firstPersonLabel.setToolTipText("Message list in first person");
+		firstPersonLabel.setIcon(IconFetch.getInstance().getIcon("/images/man-active.jpg"));
+		firstPersonLabel.setIconTextGap(20);
 		firstPersonLabel.addMouseListener(this);
+
 		secondPersonLabel = new JLabel("2nd Person");
+		secondPersonLabel.setFont(FontPicker.getFont(FontPicker.latoRegular, 18.49f));
+		secondPersonLabel.setToolTipText("Message list in second person");
+		firstPersonLabel.setIcon(IconFetch.getInstance().getIcon("/images/man-inactive.jpg"));
+		secondPersonLabel.setIconTextGap(20);
 		secondPersonLabel.addMouseListener(this);
 
 		activeIcon = IconFetch.getInstance().getIcon("/images/man-active.jpg");
 		inactiveIcon = IconFetch.getInstance().getIcon("/images/man-inactive.jpg");
 
-		firstPersonBtn = new JLabel(activeIcon);
-		firstPersonBtn.setToolTipText("Message list in first person");
-		firstPersonBtn.addMouseListener(this);
-
-		secondPersonBtn = new JLabel(inactiveIcon);
-		secondPersonBtn.setToolTipText("Message list in second person");
-		secondPersonBtn.addMouseListener(this);
-
 		if (messageController.getMessageTense() == MessageTense.FIRST_PERSON) {
-			firstPersonBtn.setIcon(activeIcon);
-			secondPersonBtn.setIcon(inactiveIcon);
+			firstPersonLabel.setIcon(activeIcon);
+			secondPersonLabel.setIcon(inactiveIcon);
 		} else if (messageController.getMessageTense() == MessageTense.SECOND_PERSON) {
-			firstPersonBtn.setIcon(inactiveIcon);
-			secondPersonBtn.setIcon(activeIcon);
+			firstPersonLabel.setIcon(inactiveIcon);
+			secondPersonLabel.setIcon(activeIcon);
 		}
 
 		scroller = new JScrollPane(messageList);
@@ -130,8 +130,8 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.gridy = 0;
 		gc.gridheight = 1;
 		gc.gridwidth = 4;
-		gc.weightx = 0.5;
-		gc.weighty = 0.05;
+		gc.weightx = 0.01;
+		gc.weighty = 0.1;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.WEST;
 		gc.fill = GridBagConstraints.HORIZONTAL;
@@ -144,18 +144,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.weightx = 0.1;
 		gc.weighty = 0.1;
 		gc.anchor = GridBagConstraints.SOUTHWEST;
-		gc.fill = GridBagConstraints.NONE;
-		gc.insets = new Insets(0, 0, 0, 0);
-		add(firstPersonBtn, gc);
-
-		gc.gridx = 0;
-		gc.gridy = 0;
-		gc.gridheight = 1;
-		gc.gridwidth = 1;
-		gc.weightx = 0.1;
-		gc.weighty = 0.1;
-		gc.anchor = GridBagConstraints.SOUTHWEST;
-		gc.insets = new Insets(0, 30, 0, 0);
+		gc.insets = new Insets(20, 0, 0, 0);
 		add(firstPersonLabel, gc);
 
 		gc.gridx = 1;
@@ -165,17 +154,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.weightx = 0.1;
 		gc.weighty = 0.1;
 		gc.anchor = GridBagConstraints.SOUTHWEST;
-		gc.insets = new Insets(0, 0, 0, 0);
-		add(secondPersonBtn, gc);
-
-		gc.gridx = 1;
-		gc.gridy = 0;
-		gc.gridheight = 1;
-		gc.gridwidth = 1;
-		gc.weightx = 0.1;
-		gc.weighty = 0.1;
-		gc.anchor = GridBagConstraints.SOUTHWEST;
-		gc.insets = new Insets(0, 30, 0, 0);
+		gc.insets = new Insets(20, 0, 0, 0);
 		add(secondPersonLabel, gc);
 
 		gc.gridx = 0;
@@ -250,16 +229,16 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
-		if ((e.getSource() == firstPersonBtn || e.getSource() == firstPersonLabel)
+		if ((e.getSource() == firstPersonLabel)
 				&& messageController.getMessageTense() != MessageTense.FIRST_PERSON) {
 			switchPersonMode(MessageTense.FIRST_PERSON);
-			firstPersonBtn.setIcon(activeIcon);
-			secondPersonBtn.setIcon(inactiveIcon);
-		} else if ((e.getSource() == secondPersonBtn || e.getSource() == secondPersonLabel)
+			firstPersonLabel.setIcon(activeIcon);
+			secondPersonLabel.setIcon(inactiveIcon);
+		} else if ((e.getSource() == secondPersonLabel)
 				&& messageController.getMessageTense() != MessageTense.SECOND_PERSON) {
 			switchPersonMode(MessageTense.SECOND_PERSON);
-			firstPersonBtn.setIcon(inactiveIcon);
-			secondPersonBtn.setIcon(activeIcon);
+			firstPersonLabel.setIcon(inactiveIcon);
+			secondPersonLabel.setIcon(activeIcon);
 		}
 	}
 
