@@ -48,7 +48,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	}
 
 	public void initComponents(int speed, int interval) {
-		screenRect = new Rectangle(0, 0, 650, 480);
+		screenRect = new Rectangle(0, 0, 850, 560);
 
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new BorderLayout());
