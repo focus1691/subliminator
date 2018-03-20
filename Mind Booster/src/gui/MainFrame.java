@@ -105,7 +105,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 			this.addComponentListener(new ComponentAdapter() {
 				public void componentResized(ComponentEvent evt) {
-					mainPanel.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 0.915));
+					mainPanel.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 1.0));
 					userLabel.revalidate();
 					revalidate();
 				}
@@ -194,7 +194,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		desktopPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		desktopPane.add(mainPanel);
 
-		setContentPane(desktopPane);
+		add(desktopPane);
 	}
 
 	private void runMessageActivity(boolean[] screenPositions) throws InterruptedException {
@@ -274,7 +274,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void addMessageEventOccurred(MessageEvent e) {
 		AddMessage addMessage = new AddMessage(messageController, messagePanel);
 		desktopPane.add(addMessage);
-		addMessage.setLocation(W / 5, (H - 100) / 5);
+		addMessage.setLocation((desktopPane.getWidth() - addMessage.getWidth()) / 2,
+				(desktopPane.getHeight() - addMessage.getHeight()) / 2);
 		addMessage.setVisible(true);
 		messageController.save();
 	}

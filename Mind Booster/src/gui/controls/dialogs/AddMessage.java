@@ -23,7 +23,7 @@ import validation.MessageValidator;
 public class AddMessage extends JInternalFrame {
 
 	private static final long serialVersionUID = 1447537632437945694L;
-	public static final int W = 600, H = 250, X = 150, Y = 150;
+	public static final int W = 600, H = 250;
 	private MessageController controller;
 	private JLabel errorMsg;
 	private JLabel firstPersonLabel;
@@ -33,7 +33,7 @@ public class AddMessage extends JInternalFrame {
 	private JRoundRectButton submitBtn;
 
 	public AddMessage(final MessageController controller, final MessagePanel messagePanel) {
-		super("Add Message", true, true, true, true);
+		super("Add Message", false, true, false, false);
 		this.controller = controller;
 		initComponents();
 		setupUI();
@@ -70,13 +70,8 @@ public class AddMessage extends JInternalFrame {
 		});
 		getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(W, H);
-		setLocation(X, Y);
 		pack();
-		setResizable(false);
-		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
-		this.requestFocus();
 	}
 
 	public void initComponents() {
