@@ -23,7 +23,7 @@ import validation.MessageValidator;
 public class AddMessage extends JInternalFrame {
 
 	private static final long serialVersionUID = 1447537632437945694L;
-	public static final int W = 600, H = 250;
+	public static final int W = 900, H = 250;
 	private MessageController controller;
 	private JLabel errorMsg;
 	private JLabel firstPersonLabel;
@@ -104,6 +104,7 @@ public class AddMessage extends JInternalFrame {
 		add(errorMsg, gc);
 
 		gc.gridy++;
+		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(firstPersonLabel, gc);
 
 		gc.gridx++;

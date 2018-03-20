@@ -56,7 +56,7 @@ public class CategoryPanel extends JPanel {
 	private void initComponents() {
 		setCategoryList(controller.getCategories());
 		categoryList = new JList<Category>(model);
-		categoryList.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
+		categoryList.setFont(FontPicker.getFont(FontPicker.latoBold, 18.49f));
 		categoryList.setFixedCellHeight(55);
 		categoryList.setFixedCellWidth(350);
 		categoryList.setCellRenderer(new CategoryListCellRenderer());

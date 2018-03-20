@@ -75,7 +75,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 				messageController.getMessagesFromActiveTenseCategory().size());
 
 		messageList = new JList<Message>(model);
-		messageList.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
+		messageList.setFont(FontPicker.getFont(FontPicker.latoRegular, 19.8f));
 		messageList.setFixedCellHeight(55);
 		messageList.setFixedCellWidth(350);
 		messageList.setSelectionModel(messageListSelectionModel);
@@ -165,7 +165,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.weighty = 0.7;
 		gc.insets = new Insets(30, 0, 10, 0);
 		gc.anchor = GridBagConstraints.WEST;
-		gc.fill = GridBagConstraints.VERTICAL;
+		gc.fill = GridBagConstraints.BOTH;
 		add(scroller, gc);
 
 		setBackground(Color.decode("#efeff0"));

@@ -48,25 +48,25 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	}
 
 	public void initComponents(int speed, int interval) {
-		screenRect = new Rectangle(0, 0, 850, 560);
+		screenRect = new Rectangle(0, 0, 800, 560);
 
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new BorderLayout());
 		screenPanel.setBounds(screenRect);
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
-		msgOne = new MessageButton("Top L", screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
+		msgOne = new MessageButton("Top Left", screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
 		msgOne.setToolTipText("Message top left of screen");
 
-		msgTwo = new MessageButton("Top R", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+		msgTwo = new MessageButton("Top Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 				screenPanel.getHeight() / 8, 215, 80);
 		msgTwo.setToolTipText("Message top right of screen");
 
-		msgThree = new MessageButton("Bottom L", screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215,
+		msgThree = new MessageButton("Bottom Left", screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215,
 				80);
 		msgThree.setToolTipText("Message bottom left of screen");
 
-		msgFour = new MessageButton("Bottom R", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+		msgFour = new MessageButton("Bottom Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 				(screenPanel.getHeight() / 2), 215, 80);
 		msgFour.setToolTipText("Message bottom right of screen");
 
@@ -204,8 +204,8 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 1;
-		gc.insets = new Insets(60, 0, 0, 0);
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.insets = new Insets(60, 50, 0, 0);
+		gc.anchor = GridBagConstraints.CENTER;
 		gc.fill = GridBagConstraints.BOTH;
 		add(screenContainer, gc);
 
@@ -215,7 +215,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(0, 0, 0, 0);
+		gc.insets = new Insets(0, 50, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(speedLbl, gc);
@@ -226,7 +226,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(30, 0, 0, 0);
+		gc.insets = new Insets(30, 50, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(speedSlider, gc);
@@ -237,7 +237,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(120, 0, 0, 0);
+		gc.insets = new Insets(120, 50, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(intervalLbl, gc);
@@ -248,7 +248,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(150, 0, 0, 0);
+		gc.insets = new Insets(150, 50, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(intervalSlider, gc);
