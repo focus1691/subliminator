@@ -29,7 +29,6 @@ import javax.swing.border.EmptyBorder;
 import constants.MessageTense;
 import controller.MessageController;
 import gui.component.BlueCurvedScrollBar;
-import gui.component.RoundButton;
 import gui.controls.MessageEvent;
 import gui.controls.MessageListener;
 import gui.util.IconFetch;
@@ -46,7 +45,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	private MessageListSelectionModel messageListSelectionModel;
 	private DefaultListModel<Message> model = new DefaultListModel<>();
 	private JLabel firstPersonLabel, secondPersonLabel;
-	private JButton firstPersonBtn, secondPersonBtn;
+	private JLabel firstPersonBtn, secondPersonBtn;
 	private ImageIcon activeIcon, inactiveIcon;
 	private JPopupMenu popupMenu;
 	private JMenuItem addItem, editItem, deleteItem, changeItem;
@@ -98,11 +97,11 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		activeIcon = IconFetch.getInstance().getIcon("/images/man-active.jpg");
 		inactiveIcon = IconFetch.getInstance().getIcon("/images/man-inactive.jpg");
 
-		firstPersonBtn = new RoundButton(activeIcon);
+		firstPersonBtn = new JLabel(activeIcon);
 		firstPersonBtn.setToolTipText("Message list in first person");
 		firstPersonBtn.addMouseListener(this);
 
-		secondPersonBtn = new RoundButton(inactiveIcon);
+		secondPersonBtn = new JLabel(inactiveIcon);
 		secondPersonBtn.setToolTipText("Message list in second person");
 		secondPersonBtn.addMouseListener(this);
 
@@ -133,48 +132,50 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.gridwidth = 4;
 		gc.weightx = 0.5;
 		gc.weighty = 0.05;
-		gc.insets = new Insets(30, 40, 0, 0);
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.WEST;
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(header, gc);
 
 		gc.gridx = 0;
-		gc.gridy = 1;
+		gc.gridy = 0;
 		gc.gridheight = 1;
 		gc.gridwidth = 1;
 		gc.weightx = 0.1;
 		gc.weighty = 0.1;
-		gc.anchor = GridBagConstraints.WEST;
-		gc.insets = new Insets(0, 40, 0, 0);
+		gc.anchor = GridBagConstraints.SOUTHWEST;
+		gc.fill = GridBagConstraints.NONE;
+		gc.insets = new Insets(0, 0, 0, 0);
 		add(firstPersonBtn, gc);
 
-		gc.gridx = 1;
-		gc.gridy = 1;
+		gc.gridx = 0;
+		gc.gridy = 0;
 		gc.gridheight = 1;
 		gc.gridwidth = 1;
 		gc.weightx = 0.1;
 		gc.weighty = 0.1;
-		gc.anchor = GridBagConstraints.WEST;
-		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.SOUTHWEST;
+		gc.insets = new Insets(0, 30, 0, 0);
 		add(firstPersonLabel, gc);
 
-		gc.gridx = 2;
-		gc.gridy = 1;
+		gc.gridx = 1;
+		gc.gridy = 0;
 		gc.gridheight = 1;
 		gc.gridwidth = 1;
 		gc.weightx = 0.1;
 		gc.weighty = 0.1;
-		gc.anchor = GridBagConstraints.WEST;
+		gc.anchor = GridBagConstraints.SOUTHWEST;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(secondPersonBtn, gc);
 
-		gc.gridx = 3;
-		gc.gridy = 1;
+		gc.gridx = 1;
+		gc.gridy = 0;
 		gc.gridheight = 1;
 		gc.gridwidth = 1;
 		gc.weightx = 0.1;
 		gc.weighty = 0.1;
-		gc.anchor = GridBagConstraints.WEST;
-		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.SOUTHWEST;
+		gc.insets = new Insets(0, 30, 0, 0);
 		add(secondPersonLabel, gc);
 
 		gc.gridx = 0;
@@ -183,8 +184,8 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 		gc.gridwidth = 4;
 		gc.weightx = 0;
 		gc.weighty = 0.7;
-		gc.insets = new Insets(0, 0, 10, 0);
-		gc.anchor = GridBagConstraints.CENTER;
+		gc.insets = new Insets(30, 0, 10, 0);
+		gc.anchor = GridBagConstraints.WEST;
 		gc.fill = GridBagConstraints.VERTICAL;
 		add(scroller, gc);
 

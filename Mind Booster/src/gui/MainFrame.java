@@ -142,7 +142,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.weightx = 0.4;
+		gbc.weightx = 0.3;
 		gbc.weighty = 0.8;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
@@ -153,7 +153,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.weightx = 0.4;
+		gbc.weightx = 0.1;
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		mainPanel.add(messagePanel, gbc);
@@ -162,8 +162,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.weightx = 0.8;
-		gbc.weighty = 0.8;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(20, 20, 20, 20);
@@ -173,7 +173,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.weightx = 0.8;
+		gbc.weightx = 1;
 		gbc.weighty = 0.8;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
