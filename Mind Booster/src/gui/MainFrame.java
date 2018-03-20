@@ -5,9 +5,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -111,6 +114,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				}
 			});
 			setTitle(appName);
+			setCursor(Toolkit.getDefaultToolkit().createCustomCursor(IconFetch.getInstance().getIcon("/images/pay-per-click.png").getImage(),
+					new Point(0, 0), "custom cursor"));
 			setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
 			setPreferredSize(new Dimension(W, H));
 			setMinimumSize(new Dimension(minW, minH));
@@ -279,7 +284,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		addMessage.setVisible(true);
 		messageController.save();
 	}
-	
+
 	@Override
 	public void editMessageEventOccurred(MessageEvent e) {
 
