@@ -46,7 +46,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		addBtn = new JButton("Add");
 		addBtn.setOpaque(false);
 		addBtn.setPreferredSize(new Dimension(120, 40));
-		addBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
+		addBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
 		addBtn.setForeground(Color.WHITE);
@@ -59,7 +59,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		editBtn = new JButton("Edit");
 		editBtn.setOpaque(false);
 		editBtn.setPreferredSize(new Dimension(120, 40));
-		editBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
+		editBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		editBtn.setContentAreaFilled(false);
 		editBtn.setBorderPainted(false);
 		editBtn.setForeground(Color.WHITE);
@@ -72,7 +72,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		deleteBtn = new JButton("Delete");
 		deleteBtn.setOpaque(false);
 		deleteBtn.setPreferredSize(new Dimension(150, 40));
-		deleteBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
+		deleteBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		deleteBtn.setContentAreaFilled(false);
 		deleteBtn.setBorderPainted(false);
 		deleteBtn.setForeground(Color.WHITE);
@@ -85,7 +85,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		changeBtn = new JButton("Change Image");
 		changeBtn.setOpaque(false);
 		changeBtn.setPreferredSize(new Dimension(220, 40));
-		changeBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
+		changeBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		changeBtn.setContentAreaFilled(false);
 		changeBtn.setBorderPainted(false);
 		changeBtn.setForeground(Color.WHITE);
@@ -176,7 +176,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		gc.anchor = GridBagConstraints.NORTHWEST;
 		gc.fill = GridBagConstraints.NONE;
 		add(lowerPane, gc);
-		
+
 		gc.gridx = 1;
 		gc.gridy = 1;
 		gc.gridheight = 1;
@@ -187,8 +187,6 @@ public class ControlPanel extends JPanel implements ActionListener {
 		gc.anchor = GridBagConstraints.NORTHEAST;
 		gc.fill = GridBagConstraints.NONE;
 		add(changeBtn, gc);
-		
-
 	}
 
 	public void actionPerformed(ActionEvent e) {

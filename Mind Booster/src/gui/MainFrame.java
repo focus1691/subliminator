@@ -10,7 +10,6 @@ import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -44,7 +43,6 @@ import gui.util.SetScreenLocation;
 import model.Message;
 import model.User;
 import utility.FontPicker;
-import utility.Sorter;
 import validation.ArrayValidator;
 
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener, LoginListener {
@@ -114,8 +112,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				}
 			});
 			setTitle(appName);
-			setCursor(Toolkit.getDefaultToolkit().createCustomCursor(IconFetch.getInstance().getIcon("/images/cursor.png").getImage(),
-					new Point(0, 0), "custom cursor"));
+			setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+					IconFetch.getInstance().getIcon("/images/cursor.png").getImage(), new Point(0, 0),
+					"custom cursor"));
 			setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
 			setPreferredSize(new Dimension(W, H));
 			setMinimumSize(new Dimension(minW, minH));
@@ -306,21 +305,14 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void deleteMessageEventOccurred(MessageEvent e) {
-		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
-
-		if (selectedMsgs == null || selectedMsgs.length == 0) {
-			errorMsg.setText("You need to select a message to delete");
-			errorMsg.setVisible(true);
-		} else {
-			Sorter.getInstance().doInsertionSort(selectedMsgs);
-			DeleteMessage deleteMessage = new DeleteMessage(messageController, messagePanel, selectedMsgs);
-			desktopPane.add(deleteMessage);
-			deleteMessage.setLocation((desktopPane.getWidth() - deleteMessage.getWidth()) / 2,
-					(desktopPane.getHeight() - deleteMessage.getHeight()) / 2);
-			deleteMessage.setVisible(true);
-			errorMsg.setVisible(false);
-			messageController.save();
-		}
+		int selectedMsg = messagePanel.getMessageList().getSelectedIndex();
+		DeleteMessage deleteMessage = new DeleteMessage(messageController, messagePanel, selectedMsg);
+		desktopPane.add(deleteMessage);
+		deleteMessage.setLocation((desktopPane.getWidth() - deleteMessage.getWidth()) / 2,
+				(desktopPane.getHeight() - deleteMessage.getHeight()) / 2);
+		deleteMessage.setVisible(true);
+		errorMsg.setVisible(false);
+		messageController.save();
 	}
 
 	@Override

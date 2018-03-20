@@ -1,8 +1,11 @@
 package gui.controls.dialogs;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +19,7 @@ import constants.MessageTense;
 import controller.MessageController;
 import gui.component.JRoundRectButton;
 import gui.message.MessagePanel;
+import gui.util.IconFetch;
 import model.Message;
 import utility.FontPicker;
 import validation.MessageValidator;
@@ -23,13 +27,11 @@ import validation.MessageValidator;
 public class AddMessage extends JInternalFrame {
 
 	private static final long serialVersionUID = 1447537632437945694L;
-	public static final int W = 900, H = 250;
+	public static final int W = 600, H = 190;
 	private MessageController controller;
 	private JLabel errorMsg;
-	private JLabel firstPersonLabel;
-	private JLabel secondPersonLabel;
-	private JTextField firstPersonMsg;
-	private JTextField secondPersonMsg;
+	private JLabel firstPersonLabel, secondPersonLabel;
+	private JTextField firstPersonMsg, secondPersonMsg;
 	private JRoundRectButton submitBtn;
 
 	public AddMessage(final MessageController controller, final MessagePanel messagePanel) {
@@ -69,49 +71,63 @@ public class AddMessage extends JInternalFrame {
 			}
 		});
 		getContentPane().setBackground(Color.decode("#1975bf"));
+		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+				IconFetch.getInstance().getIcon("/images/cursor.png").getImage(), new Point(0, 0), "custom cursor"));
 		setSize(W, H);
+		setPreferredSize(new Dimension(W, H));
 		pack();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		requestFocus();
 	}
 
 	public void initComponents() {
 		setTitle("New Messages : " + controller.getActiveCategoryName());
 
 		firstPersonLabel = new JLabel("1st person message:");
+		firstPersonLabel.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		firstPersonLabel.setForeground(Color.WHITE);
 
 		secondPersonLabel = new JLabel("2nd person message:");
+		secondPersonLabel.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		secondPersonLabel.setForeground(Color.WHITE);
 
-		firstPersonMsg = new JTextField(20);
-		secondPersonMsg = new JTextField(20);
+		firstPersonMsg = new JTextField(30);
+		firstPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
+		secondPersonMsg = new JTextField(30);
+		secondPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 
 		submitBtn = new JRoundRectButton("Add");
+		submitBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		submitBtn.setToolTipText("Add this message to " + controller.getActiveCategoryName());
-		
-		errorMsg = new JLabel();
+
+		errorMsg = new JLabel("Error message");
+		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBlack, 19.18f));
 		errorMsg.setForeground(Color.RED);
 		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
+		errorMsg.setVisible(false);
 	}
 
 	public void setupUI() {
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
-		
+
 		gc.gridx = 0;
 		gc.gridy = 0;
+		gc.gridwidth = 2;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.anchor = GridBagConstraints.CENTER;
 		add(errorMsg, gc);
 
 		gc.gridy++;
-		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.gridwidth = 1;
 		add(firstPersonLabel, gc);
 
 		gc.gridx++;
 		add(firstPersonMsg, gc);
 
-		gc.gridy++;
 		gc.gridx = 0;
+		gc.gridy++;
 		add(secondPersonLabel, gc);
 
 		gc.gridx++;

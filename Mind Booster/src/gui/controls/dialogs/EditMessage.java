@@ -1,13 +1,14 @@
 package gui.controls.dialogs;
 
 import java.awt.Color;
-import java.awt.Font;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -17,33 +18,65 @@ import constants.MessageTense;
 import controller.MessageController;
 import gui.component.JRoundRectButton;
 import gui.message.MessagePanel;
+import gui.util.IconFetch;
+import utility.FontPicker;
 import validation.MessageValidator;
 
 public class EditMessage extends JInternalFrame {
 
 	private static final long serialVersionUID = 5470112838506529493L;
-	public static final int W = 600, H = 150;
+	public static final int W = 600, H = 190;
 	private MessageController controller;
+	private JLabel errorMsg;
 	private JLabel firstPersonLbl, secondPersonLbl;
 	private JTextField firstPersonMsg, secondPersonMsg;
 	private JRoundRectButton submitBtn;
-	private JCheckBox text_only_1;
-	private JCheckBox text_only_2;
 
 	public EditMessage(final MessageController controller, final MessagePanel messagePanel, final int index) {
 		super("Edit Message", false, true, false, false);
 		this.controller = controller;
-		initComponents(index);
+		initComponents(index, messagePanel);
 		setupUI();
+		
+		getContentPane().setBackground(Color.decode("#1975bf"));
+		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+				IconFetch.getInstance().getIcon("/images/cursor.png").getImage(), new Point(0, 0), "custom cursor"));
+		setSize(W, H);
+		setPreferredSize(new Dimension(W, H));
+		pack();
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		requestFocus();
+	}
 
+	public void initComponents(final int index, final MessagePanel messagePanel) {
+		firstPersonLbl = new JLabel("1st Person");
+		firstPersonLbl.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
+		firstPersonLbl.setForeground(Color.WHITE);
+
+		secondPersonLbl = new JLabel("2nd Person");
+		secondPersonLbl.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
+		secondPersonLbl.setForeground(Color.WHITE);
+
+		firstPersonMsg = new JTextField(30);
+		firstPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
+		firstPersonMsg.setToolTipText("First Person Message");
+		firstPersonMsg.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
+				.get(index).getMessage());
+		
+		secondPersonMsg = new JTextField(30);
+		secondPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
+		secondPersonMsg.setToolTipText("Second Person Message");
+		secondPersonMsg.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
+						.get(index).getMessage());
+
+		submitBtn = new JRoundRectButton("Change");
+		submitBtn.setToolTipText("Edit this message");
 		submitBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String msg1 = firstPersonMsg.getText();
 				String msg2 = secondPersonMsg.getText();
-				boolean is_text_only1 = text_only_1.isSelected();
-				boolean is_text_only2 = text_only_2.isSelected();
 
 				if (MessageValidator.isMoreThanThreeChars(msg1) && MessageValidator.isMoreThanThreeChars(msg2)) {
 
@@ -53,10 +86,10 @@ public class EditMessage extends JInternalFrame {
 							.get(index).setMessage(msg2);
 
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
-							.get(index).setIsTextOnly(is_text_only1);
+							.get(index).setIsTextOnly(false);
 					;
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
-							.get(index).setIsTextOnly(is_text_only2);
+							.get(index).setIsTextOnly(false);
 
 					messagePanel.getModel().clear();
 					messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
@@ -64,67 +97,32 @@ public class EditMessage extends JInternalFrame {
 				}
 			}
 		});
-		getContentPane().setBackground(Color.decode("#1975bf"));
-		setSize(W, H);
-		pack();
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.requestFocus();
-	}
 
-	public void initComponents(int index) {
-		setTitle("Edit Message");
-
-		firstPersonLbl = new JLabel("1st Person");
-		firstPersonLbl.setForeground(Color.WHITE);
-
-		secondPersonLbl = new JLabel("2nd Person");
-		secondPersonLbl.setForeground(Color.WHITE);
-
-		firstPersonMsg = new JTextField(30);
-		firstPersonMsg.setToolTipText("First Person Message");
-
-		secondPersonMsg = new JTextField(30);
-		secondPersonMsg.setToolTipText("Second Person Message");
-
-		firstPersonMsg
-				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
-						.get(index).getMessage());
-		secondPersonMsg
-				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
-						.get(index).getMessage());
-
-		submitBtn = new JRoundRectButton("Change");
-		submitBtn.setToolTipText("Edit this message");
-
-		text_only_1 = new JCheckBox("Text Ony?");
-		text_only_1.setForeground(Color.WHITE);
-		text_only_1.setSelected(
-				controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON).get(index)
-						.getIsTextOnly());
-
-		text_only_2 = new JCheckBox("Text Ony?");
-		text_only_2.setForeground(Color.WHITE);
-		text_only_2.setSelected(
-				controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON).get(index)
-						.getIsTextOnly());
+		errorMsg = new JLabel("Error message");
+		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBlack, 19.18f));
+		errorMsg.setForeground(Color.RED);
+		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
+		errorMsg.setVisible(false);
 
 	}
 
 	public void setupUI() {
-
-		// Fonts
-		firstPersonLbl.setFont(new Font("Courier New", Font.BOLD, 20));
-		secondPersonLbl.setFont(new Font("Courier New", Font.BOLD, 20));
-
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
 		setLayout(gbl);
-		
+
 		gc.gridx = 0;
 		gc.gridy = 0;
+		gc.gridwidth = 2;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.anchor = GridBagConstraints.CENTER;
+		add(errorMsg, gc);
+
+		gc.gridy++;
+		gc.gridwidth = 1;
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(firstPersonLbl, gc);
-		
+
 		gc.gridx++;
 		add(firstPersonMsg, gc);
 
@@ -137,6 +135,7 @@ public class EditMessage extends JInternalFrame {
 
 		gc.gridy++;
 		gc.gridx = 1;
+		gc.fill = GridBagConstraints.NONE;
 		gc.anchor = GridBagConstraints.CENTER;
 		add(submitBtn, gc);
 	}
