@@ -1,5 +1,8 @@
 package gui.util;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,6 +17,7 @@ import javax.swing.JRadioButtonMenuItem;
 import controller.MessageController;
 import gui.message.MessagePanel;
 import gui.subliminal.SubliminalFrame;
+import utility.FontPicker;
 
 public class CreateMenuBar extends JMenuBar {
 
@@ -27,8 +31,13 @@ public class CreateMenuBar extends JMenuBar {
 		this.messagePanel = messagePanel;
 
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.setBorder(BorderFactory.createRaisedBevelBorder());
+		fileMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		fileMenu.setForeground(Color.WHITE);
+		fileMenu.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 5));
 		JMenu settingsMenu = new JMenu("Settings");
+		settingsMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		settingsMenu.setForeground(Color.WHITE);
+		settingsMenu.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 5));
 
 		// Exit
 		fileMenu.add(exitItem());
@@ -89,7 +98,6 @@ public class CreateMenuBar extends JMenuBar {
 		JMenuItem fileMenu = new JMenuItem(new AbstractAction("Exit") {
 
 			private static final long serialVersionUID = -6305470444317273153L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -126,4 +134,13 @@ public class CreateMenuBar extends JMenuBar {
 		});
 		return messageSizeItem;
 	}
+	
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.decode("#1975bf"));
+        g2d.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
+
+    }
 }
