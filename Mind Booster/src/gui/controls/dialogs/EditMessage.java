@@ -37,7 +37,7 @@ public class EditMessage extends JInternalFrame {
 		this.controller = controller;
 		initComponents(index, messagePanel);
 		setupUI();
-		
+
 		getContentPane().setBackground(Color.decode("#1975bf"));
 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
 				IconFetch.getInstance().getIcon("/images/cursor.png").getImage(), new Point(0, 0), "custom cursor"));
@@ -60,13 +60,15 @@ public class EditMessage extends JInternalFrame {
 		firstPersonMsg = new JTextField(30);
 		firstPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		firstPersonMsg.setToolTipText("First Person Message");
-		firstPersonMsg.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
-				.get(index).getMessage());
-		
+		firstPersonMsg
+				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
+						.get(index).getMessage());
+
 		secondPersonMsg = new JTextField(30);
 		secondPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		secondPersonMsg.setToolTipText("Second Person Message");
-		secondPersonMsg.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
+		secondPersonMsg
+				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
 						.get(index).getMessage());
 
 		submitBtn = new JRoundRectButton("Change");
@@ -101,9 +103,7 @@ public class EditMessage extends JInternalFrame {
 		errorMsg = new JLabel("Error message");
 		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBlack, 19.18f));
 		errorMsg.setForeground(Color.RED);
-		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
 		errorMsg.setVisible(false);
-
 	}
 
 	public void setupUI() {

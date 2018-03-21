@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -43,6 +44,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	private SettingsListener settingsListener;
 
 	public SettingsPanel(int speed, int interval) {
+		UIManager.put("Slider.paintValue", true);
 		initComponents(speed, interval);
 		setupUI();
 	}

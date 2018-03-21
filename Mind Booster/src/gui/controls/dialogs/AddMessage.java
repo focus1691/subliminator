@@ -103,7 +103,6 @@ public class AddMessage extends JInternalFrame {
 		errorMsg = new JLabel("Error message");
 		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBlack, 19.18f));
 		errorMsg.setForeground(Color.RED);
-		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
 		errorMsg.setVisible(false);
 	}
 
