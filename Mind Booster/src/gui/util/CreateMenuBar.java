@@ -98,6 +98,7 @@ public class CreateMenuBar extends JMenuBar {
 		JMenuItem fileMenu = new JMenuItem(new AbstractAction("Exit") {
 
 			private static final long serialVersionUID = -6305470444317273153L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -121,26 +122,12 @@ public class CreateMenuBar extends JMenuBar {
 		return messageResetItem;
 	}
 
-	private JMenuItem messageSizeItem() {
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setColor(Color.decode("#1975bf"));
+		g2d.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
 
-		JMenuItem messageSizeItem = new JMenuItem(new AbstractAction("    Message Size") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-		});
-		return messageSizeItem;
 	}
-	
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.decode("#1975bf"));
-        g2d.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
-
-    }
 }

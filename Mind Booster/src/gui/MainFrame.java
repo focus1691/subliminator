@@ -108,7 +108,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				public void componentResized(ComponentEvent evt) {
 					mainPanel.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 1.0));
 					userLabel.revalidate();
+					userLabel.repaint();
 					revalidate();
+					repaint();
 				}
 			});
 			setTitle(appName);
@@ -128,6 +130,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private void setupUI() {
 		mainPanel = new JPanel(new GridBagLayout());
 		mainPanel.setVisible(true);
+		mainPanel.setBackground(Color.decode("#efeff0"));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -170,7 +173,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weighty = 1;
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(20, 20, 20, 20);
+		gbc.insets = new Insets(0, 20, 0, 20);
 		mainPanel.add(userLabel, gbc);
 
 		gbc.gridx = 2;
@@ -181,7 +184,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weighty = 0.8;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.insets = new Insets(20, 0, 0, 0);
 		mainPanel.add(settingsPanel, gbc);
 
 		gbc.anchor = GridBagConstraints.SOUTH;
@@ -197,7 +200,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		desktopPane = new JDesktopPane();
 		desktopPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		desktopPane.add(mainPanel);
-
 		add(desktopPane);
 	}
 
