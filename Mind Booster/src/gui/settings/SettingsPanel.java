@@ -103,11 +103,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		intervalLbl = new JLabel("Interval (s):");
 		intervalLbl.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
 
-		speedSlider = new JSlider(0, 1000);
+		speedSlider = new JSlider(50, 1000);
 		speedSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
 		speedSlider.setToolTipText("Message speed");
 		speedSlider.setMinorTickSpacing(1000);
-		speedSlider.setMajorTickSpacing(250);
+		speedSlider.setMajorTickSpacing(190);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
 		speedSlider.setPreferredSize(new Dimension(375, 75));
