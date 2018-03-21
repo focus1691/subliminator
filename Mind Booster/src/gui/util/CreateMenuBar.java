@@ -33,11 +33,11 @@ public class CreateMenuBar extends JMenuBar {
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		fileMenu.setForeground(Color.WHITE);
-		fileMenu.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 5));
+		fileMenu.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 5));
 		JMenu settingsMenu = new JMenu("Settings");
 		settingsMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		settingsMenu.setForeground(Color.WHITE);
-		settingsMenu.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 5));
+		settingsMenu.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 5));
 
 		// Exit
 		fileMenu.add(exitItem());

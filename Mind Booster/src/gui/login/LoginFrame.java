@@ -41,11 +41,11 @@ public class LoginFrame extends JFrame implements ActionListener {
 		setupUI();
 		
 		setTitle("Login");
-		getContentPane().setBackground(Color.decode("#96ffc7"));
+		getContentPane().setBackground(Color.decode("#efeff0"));
 		setPreferredSize(new Dimension(W, H));
 		setMinimumSize(new Dimension(minW, minH));
 		centerFrame(this);
-		setResizable(false);
+		setResizable(true);
 		pack();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,7 +79,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		
 		loginReminderLbl = new JLabel("Please enter your Username and Password");
 		loginReminderLbl.setFont(FontPicker.getFont(FontPicker.latoRegular, 16));
-		loginReminderLbl.setForeground(Color.GRAY);
+		loginReminderLbl.setForeground(Color.BLACK);
 		
 		errorLbl = new JLabel();
 		errorLbl.setForeground(Color.RED);
@@ -101,7 +101,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		
 		submitBtn = new JButton("Login");
 		submitBtn.setBackground(Color.decode("#1975bf"));
-		submitBtn.setForeground(Color.BLACK);
+		submitBtn.setForeground(Color.WHITE);
 		submitBtn.setOpaque(false);
 		submitBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		submitBtn.setPreferredSize(new Dimension(125, 50));
@@ -109,7 +109,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		
 		tempLoginBtn = new JButton("Skip");
 		tempLoginBtn.setBackground(Color.decode("#1975bf"));
-		tempLoginBtn.setForeground(Color.BLACK);
+		tempLoginBtn.setForeground(Color.WHITE);
 		tempLoginBtn.setOpaque(false);
 		tempLoginBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		tempLoginBtn.setPreferredSize(new Dimension(125, 50));
