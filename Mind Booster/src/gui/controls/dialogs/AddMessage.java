@@ -56,7 +56,7 @@ public class AddMessage extends JInternalFrame {
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
 							.add(new Message(msg2, "/Images/7.jpg", is_text_only2));
 
-					messagePanel.getModel().clear();
+					messagePanel.removeMessages();
 					messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 
 					submitBtn.setEnabled(false);

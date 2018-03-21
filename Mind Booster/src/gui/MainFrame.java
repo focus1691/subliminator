@@ -261,11 +261,10 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void categorySelectionEventOccurred(CategoryEvent e) {
-		messagePanel.getModel().clear();
+		messagePanel.removeMessages();
 		messageController.setCategoryIndex(e.getCategoryIndex());
 		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
 		controlPanel.resetSelection();
-
 	}
 
 	@Override

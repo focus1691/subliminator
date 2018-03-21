@@ -115,7 +115,7 @@ public class CreateMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				controller.loadInBuiltCategories();
 				controller.save();
-				messagePanel.getModel().clear();
+				messagePanel.removeMessages();
 				messagePanel.setMessageList(controller.getActiveMessages());
 			}
 		});

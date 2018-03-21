@@ -93,7 +93,7 @@ public class EditMessage extends JInternalFrame {
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
 							.get(index).setIsTextOnly(false);
 
-					messagePanel.getModel().clear();
+					messagePanel.removeMessages();
 					messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 					dispose();
 				}

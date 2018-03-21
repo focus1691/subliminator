@@ -284,13 +284,9 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 			model.addElement(messages.get(i));
 		}
 	}
-
-	public DefaultListModel<Message> getModel() {
-		return model;
-	}
-
-	public void setModel(DefaultListModel<Message> model) {
-		this.model = model;
+	
+	public void removeMessages() {
+		model.clear();
 	}
 
 	public MessageListSelectionModel getMessageListSelectionModel() {

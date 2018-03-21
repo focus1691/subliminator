@@ -69,7 +69,7 @@ public class DeleteMessage extends JInternalFrame {
 				deleteMessages(selectedMsg);
 				deleteBtn.setEnabled(false);
 
-				messagePanel.getModel().clear();
+				messagePanel.removeMessages();
 				messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 			}
 		});

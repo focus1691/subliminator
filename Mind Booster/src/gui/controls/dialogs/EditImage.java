@@ -107,7 +107,7 @@ public class EditImage extends JInternalFrame {
 						controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
 								.get(selected_message).setPath(new_image);
 
-						messagePanel.getModel().clear();
+						messagePanel.removeMessages();
 						messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
 						dispose();
 
