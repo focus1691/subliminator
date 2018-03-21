@@ -235,6 +235,10 @@ public class ControlPanel extends JPanel implements ActionListener {
 			}
 		}
 	}
+	
+	public void resetSelection() {
+		messageSelectorGroup.clearSelection();
+	}
 
 	public void showStopButton() {
 		startBtn.setIcon(IconFetch.getInstance().getIcon("/images/stop.jpg"));

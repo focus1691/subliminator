@@ -264,16 +264,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		messagePanel.getModel().clear();
 		messageController.setCategoryIndex(e.getCategoryIndex());
 		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
-		if (messageController.isMessagesOn() == false) {
-			try {
-				messageController.startMessageActivity(settingsPanel.getSelectedScreenPositions(),
-						settingsPanel.getMessageButtons());
-				messageController.setCategoryIndex(e.getCategoryIndex());
-				messageController.stopMessageActivity();
-			} catch (InterruptedException ie) {
-				ie.printStackTrace();
-			}
-		}
+		controlPanel.resetSelection();
+
 	}
 
 	@Override

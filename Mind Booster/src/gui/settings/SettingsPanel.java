@@ -107,7 +107,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		speedSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
 		speedSlider.setToolTipText("Message speed");
 		speedSlider.setMinorTickSpacing(1000);
-		speedSlider.setMajorTickSpacing(100);
+		speedSlider.setMajorTickSpacing(250);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
 		speedSlider.setPreferredSize(new Dimension(375, 75));
@@ -206,7 +206,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 1;
-		gc.insets = new Insets(60, 50, 0, 0);
+		gc.insets = new Insets(40, 50, 0, 0);
 		gc.anchor = GridBagConstraints.CENTER;
 		gc.fill = GridBagConstraints.BOTH;
 		add(screenContainer, gc);
@@ -217,7 +217,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(0, 50, 0, 0);
+		gc.insets = new Insets(15, 40, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(speedLbl, gc);
@@ -228,7 +228,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(30, 50, 0, 0);
+		gc.insets = new Insets(30, 40, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(speedSlider, gc);
@@ -239,7 +239,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(120, 50, 0, 0);
+		gc.insets = new Insets(140, 40, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(intervalLbl, gc);
@@ -250,7 +250,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		gc.gridheight = 1;
 		gc.weightx = 1;
 		gc.weighty = 0.1;
-		gc.insets = new Insets(150, 50, 0, 0);
+		gc.insets = new Insets(150, 40, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.fill = GridBagConstraints.NONE;
 		add(intervalSlider, gc);
