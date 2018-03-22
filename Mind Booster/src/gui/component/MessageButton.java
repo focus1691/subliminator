@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.prefs.Preferences;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -114,7 +115,10 @@ public class MessageButton extends JPanel {
 		this.menu = new JPopupMenu();
 
 		bgOff = new JRadioButtonMenuItem("Background Off");
-		bgOff.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		bgOff.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		bgOff.setForeground(Color.WHITE);
+		bgOff.setBackground(Color.decode("#1975bf"));
+		bgOff.setOpaque(true);
 		bgOff.setSelected(prefs.getBoolean(categoryName + "bgOff", true));
 		bgOff.addActionListener(new ActionListener() {
 			@Override
@@ -125,7 +129,10 @@ public class MessageButton extends JPanel {
 		});
 
 		bgOn = new JRadioButtonMenuItem("Background On");
-		bgOn.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		bgOn.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		bgOn.setForeground(Color.WHITE);
+		bgOn.setBackground(Color.decode("#1975bf"));
+		bgOn.setOpaque(true);
 		bgOn.setSelected(prefs.getBoolean(categoryName + "bgOn", true));
 		bgOn.addActionListener(new ActionListener() {
 			@Override
@@ -140,7 +147,10 @@ public class MessageButton extends JPanel {
 		bg.add(bgOn);
 
 		JMenuItem foregroundPickerItem = new JMenuItem("Choose Colour");
-		foregroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		foregroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		foregroundPickerItem.setForeground(Color.WHITE);
+		foregroundPickerItem.setBackground(Color.decode("#1975bf"));
+		foregroundPickerItem.setOpaque(true);
 		foregroundPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -154,7 +164,10 @@ public class MessageButton extends JPanel {
 		});
 
 		JMenuItem backgroundPickerItem = new JMenuItem("Choose Background");
-		backgroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		backgroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		backgroundPickerItem.setForeground(Color.WHITE);
+		backgroundPickerItem.setBackground(Color.decode("#1975bf"));
+		backgroundPickerItem.setOpaque(true);
 		backgroundPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -173,7 +186,10 @@ public class MessageButton extends JPanel {
 		});
 
 		JMenuItem fontPickerItem = new JMenuItem("Choose Font");
-		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoBlack, 20));
+		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		fontPickerItem.setForeground(Color.WHITE);
+		fontPickerItem.setBackground(Color.decode("#1975bf"));
+		fontPickerItem.setOpaque(true);
 		fontPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -194,6 +210,8 @@ public class MessageButton extends JPanel {
 		menu.add(bgOn);
 		menu.add(backgroundPickerItem);
 		menu.add(fontPickerItem);
+		
+		menu.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 	}
 
 	@Override
