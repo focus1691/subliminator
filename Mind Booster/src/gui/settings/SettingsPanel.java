@@ -64,11 +64,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 				screenPanel.getHeight() / 8, 215, 80);
 		msgTwo.setToolTipText("Message top right of screen");
 
-		msgThree = new MessageButton("Bottom Left", screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215,
+		msgThree = new MessageButton("Bot Left", screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215,
 				80);
 		msgThree.setToolTipText("Message bottom left of screen");
 
-		msgFour = new MessageButton("Bottom Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+		msgFour = new MessageButton("Bot Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 				(screenPanel.getHeight() / 2), 215, 80);
 		msgFour.setToolTipText("Message bottom right of screen");
 
