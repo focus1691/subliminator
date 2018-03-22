@@ -36,7 +36,6 @@ public class CreateMenuBar extends JMenuBar {
 		fileMenu.setForeground(Color.WHITE);
 		fileMenu.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 5));
 		fileMenu.getPopupMenu().setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		System.out.println(fileMenu.getInsets());
 		JMenu settingsMenu = new JMenu("Settings");
 		settingsMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		settingsMenu.setForeground(Color.WHITE);
