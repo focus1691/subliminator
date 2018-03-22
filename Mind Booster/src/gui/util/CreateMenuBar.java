@@ -13,6 +13,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.UIManager;
 
 import controller.MessageController;
 import gui.message.MessagePanel;
@@ -45,14 +46,24 @@ public class CreateMenuBar extends JMenuBar {
 		// Factory Reset
 		settingsMenu.add(factoryResetItem());
 
-		settingsMenu.addSeparator();
-
 		// Message Size
 		ButtonGroup bg = new ButtonGroup();
 		JRadioButtonMenuItem small = new JRadioButtonMenuItem("    Small");
+		small.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		small.setForeground(Color.WHITE);
+		small.setBackground(Color.decode("#1975bf"));
+		small.setOpaque(true);
 		JRadioButtonMenuItem medium = new JRadioButtonMenuItem("    Medium");
+		medium.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		medium.setForeground(Color.WHITE);
+		medium.setBackground(Color.decode("#1975bf"));
+		medium.setOpaque(true);
 		JRadioButtonMenuItem large = new JRadioButtonMenuItem("    Large");
-		small.setSelected(true);
+		large.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		large.setForeground(Color.WHITE);
+		large.setBackground(Color.decode("#1975bf"));
+		large.setOpaque(true);
+		large.setSelected(true);
 
 		bg.add(small);
 		bg.add(medium);
@@ -92,6 +103,8 @@ public class CreateMenuBar extends JMenuBar {
 		// Add items to menu bar
 		add(fileMenu);
 		add(settingsMenu);
+		
+		setOpaque(true);
 	}
 
 	private JMenuItem exitItem() {
@@ -104,6 +117,10 @@ public class CreateMenuBar extends JMenuBar {
 				System.exit(0);
 			}
 		});
+		fileMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		fileMenu.setForeground(Color.WHITE);
+		fileMenu.setBackground(Color.decode("#1975bf"));
+		fileMenu.setOpaque(true);
 		return fileMenu;
 	}
 
@@ -119,6 +136,10 @@ public class CreateMenuBar extends JMenuBar {
 				messagePanel.setMessageList(controller.getActiveMessages());
 			}
 		});
+		messageResetItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		messageResetItem.setForeground(Color.WHITE);
+		messageResetItem.setBackground(Color.decode("#1975bf"));
+		messageResetItem.setOpaque(true);
 		return messageResetItem;
 	}
 
