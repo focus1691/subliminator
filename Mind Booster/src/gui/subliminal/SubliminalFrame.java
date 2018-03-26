@@ -43,7 +43,9 @@ public class SubliminalFrame extends JDialog {
 		subliminalMessage.setColor(color == null ? new Color(0, 0, 0) : color);
 		subliminalMessage.setActiveBackground(activeBackground);
 		subliminalMessage.setBackgroundSelected(isBackgroundSelected);
+		System.out.println(message.getImagePath());
 		ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
+		System.out.println(icon);
 		if (icon != null) {
 			Image img = IconFetch.getInstance().getScaledImage(icon.getImage(), width, height);
 			subliminalMessage.setImage(img);

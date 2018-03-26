@@ -28,7 +28,7 @@ public class DeleteMessage extends JInternalFrame {
 	private JRoundRectButton deleteBtn;
 
 	public DeleteMessage(final MessageController controller, final MessagePanel messagePanel, final int selectedMsg) {
-		super("Delete Message", false, true, false, false);
+		super("Delete Messages", false, true, false, false);
 		this.controller = controller;
 		initComponents(controller, messagePanel, selectedMsg);
 		setupUI();
@@ -53,6 +53,7 @@ public class DeleteMessage extends JInternalFrame {
 		firstPersonMsg
 				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
 						.get(selectedMsg).getMessage());
+		firstPersonMsg.setEditable(false);
 
 		secondPersonMsg = new JTextField(30);
 		secondPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
@@ -60,6 +61,7 @@ public class DeleteMessage extends JInternalFrame {
 		secondPersonMsg
 				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
 						.get(selectedMsg).getMessage());
+		secondPersonMsg.setEditable(false);
 
 		deleteBtn = new JRoundRectButton("Delete");
 		deleteBtn.setToolTipText("Delete the messages below");

@@ -1,6 +1,5 @@
 package gui.controls.dialogs;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -20,8 +19,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 import constants.MessageTense;
@@ -37,27 +34,25 @@ public class EditImage extends JInternalFrame {
 	private static final long serialVersionUID = 8614724076980880135L;
 	public static final int W = 400, H = 350;
 	private MessageController controller;
-	private JLabel deleteMsg;
+	private JLabel oldImg;
 	private JButton deleteBtn;
-	private JLabel oldImg, newImg;
-	private JTextArea messagesToDelete;
-	private JButton delete_image;
 	private JButton browseBtn;
-	private JButton ok_button;
+	private JButton okBtn;
 	private String imgPath;
 	private String selectedImage_path;
 	private String selectedImage_name;
 	private Message message;
-	private int selected_message;
+	private int messageIndex;
 	private MessagePanel messagePanel;
 
-	public EditImage(MessageController controller, Message message, MessagePanel messagePanel, int index) {
+	public EditImage(MessageController controller, Message message, MessagePanel messagePanel, int messageIndex) {
 		super("Edit Image", false, true, false, false);
+
 		this.controller = controller;
 		this.message = message;
 		this.messagePanel = messagePanel;
 		this.imgPath = message.getImagePath();
-		selected_message = index;
+		this.messageIndex = messageIndex;
 		initComponents();
 		setupUI();
 		getContentPane().setBackground(Color.decode("#1975bf"));
@@ -75,17 +70,8 @@ public class EditImage extends JInternalFrame {
 				image = getScaledImage(new ImageIcon(imgPath).getImage(), 250, 200);
 			oldImg.setIcon(new ImageIcon(image));
 		}
-
-		deleteMsg = new JLabel("Delete Messages?");
-		deleteBtn = new JRoundRectButton("Yes");
-		deleteBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
-
 		browseBtn = new JRoundRectButton("Browse");
 		browseBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
-		
-		delete_image = new JRoundRectButton("Delete");
-		delete_image.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
-		
 		browseBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -99,34 +85,46 @@ public class EditImage extends JInternalFrame {
 			}
 		});
 
-		ok_button = new JRoundRectButton("OK");
-		ok_button.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
-		ok_button.addActionListener(new ActionListener() {
+		deleteBtn = new JRoundRectButton("Delete");
+		deleteBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
+		deleteBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+
+		okBtn = new JRoundRectButton("OK");
+		okBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
+		okBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				if (!selectedImage_path.isEmpty()) {
+				if (selectedImage_path != null && !selectedImage_path.isEmpty()) {
 					try {
-						Files.copy(new File(selectedImage_path).toPath(), new File(System.getProperty("user.dir")
-								+ "/src/com/psychotechnology/images/" + selectedImage_name).toPath());
-						String new_image = System.getProperty("user.dir") + "/src/com/psychotechnology/images/"
-								+ selectedImage_name;
+						Files.copy(new File(selectedImage_path).toPath(), new File( (System.getProperty("user.dir")
+								+ "/target/classes/images/" + selectedImage_name)) .toPath());
+						String new_image = (System.getProperty("user.dir") + "/target/classes/images/"
+								+ selectedImage_name);
 						message.setPath(new_image);
 						controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
-								.get(selected_message).setPath(new_image);
+								.get(messageIndex).setPath(new_image);
 
 						messagePanel.removeMessages();
 						messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
+						controller.save();
 						dispose();
 
 					} catch (Exception err) {
+						err.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Error: " + err.getMessage());
 					}
+				} else {
+					dispose();
 				}
 			}
 		});
 		setTitle("Edit image of: " + message.getMessage());
-		messagesToDelete = new JTextArea();
 	}
 
 	private Image getScaledImage(Image srcImg, int w, int h) {
@@ -167,11 +165,11 @@ public class EditImage extends JInternalFrame {
 		gc.anchor = GridBagConstraints.CENTER;
 		gc.fill = GridBagConstraints.NONE;
 		add(browseBtn, gc);
-		
+
 		gc.gridx++;
-		add(ok_button, gc);
-		
+		add(okBtn, gc);
+
 		gc.gridx++;
-		add(delete_image, gc);
+		add(deleteBtn, gc);
 	}
 }
