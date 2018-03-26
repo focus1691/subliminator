@@ -47,7 +47,6 @@ public class EditImage extends JInternalFrame {
 
 	public EditImage(MessageController controller, Message message, MessagePanel messagePanel, int messageIndex) {
 		super("Edit Image", false, true, false, false);
-
 		this.controller = controller;
 		this.message = message;
 		this.messagePanel = messagePanel;
@@ -104,8 +103,7 @@ public class EditImage extends JInternalFrame {
 					try {
 						Files.copy(new File(selectedImage_path).toPath(), new File( (System.getProperty("user.dir")
 								+ "/target/classes/images/" + selectedImage_name)) .toPath());
-						String new_image = (System.getProperty("user.dir") + "/target/classes/images/"
-								+ selectedImage_name);
+						String new_image = "/images/" + selectedImage_name;
 						message.setPath(new_image);
 						controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
 								.get(messageIndex).setPath(new_image);
