@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -32,15 +33,11 @@ import utility.FontPicker;
 public class EditImage extends JInternalFrame {
 
 	private static final long serialVersionUID = 8614724076980880135L;
-	public static final int W = 400, H = 350;
+	public static final int W = 400, H = 375;
 	private MessageController controller;
-	private JLabel oldImg;
-	private JButton deleteBtn;
-	private JButton browseBtn;
-	private JButton okBtn;
-	private String imgPath;
-	private String selectedImage_path;
-	private String selectedImage_name;
+	private JLabel displayImg;
+	private JButton deleteBtn, browseBtn, okBtn;
+	private String oldImgPath, selectedImgPath, selectedImageName;
 	private Message message;
 	private int messageIndex;
 	private MessagePanel messagePanel;
@@ -50,7 +47,7 @@ public class EditImage extends JInternalFrame {
 		this.controller = controller;
 		this.message = message;
 		this.messagePanel = messagePanel;
-		this.imgPath = message.getImagePath();
+		this.oldImgPath = message.getImagePath();
 		this.messageIndex = messageIndex;
 		initComponents();
 		setupUI();
@@ -58,28 +55,33 @@ public class EditImage extends JInternalFrame {
 		setSize(W, H);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
-
+	
 	public void initComponents() {
-		oldImg = new JLabel();
-		if (!imgPath.isEmpty()) {
+		displayImg = new JLabel();
+		displayImg.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0),
+				BorderFactory.createEtchedBorder()));
+		if (!oldImgPath.isEmpty()) {
 			Image image = null;
-			if (IconFetch.getInstance().getIcon(imgPath) != null)
-				image = getScaledImage(IconFetch.getInstance().getIcon(imgPath).getImage(), 250, 200);
-			else
-				image = getScaledImage(new ImageIcon(imgPath).getImage(), 250, 200);
-			oldImg.setIcon(new ImageIcon(image));
+			if (IconFetch.getInstance().getIcon(oldImgPath) != null) {
+				image = getScaledImage(IconFetch.getInstance().getIcon(oldImgPath).getImage(), 250, 275);
+			} else {
+				image = getScaledImage(new ImageIcon(oldImgPath).getImage(), 250, 275);
+			}
+			displayImg.setIcon(new ImageIcon(image));
 		}
 		browseBtn = new JRoundRectButton("Browse");
 		browseBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		browseBtn.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser(".");
 				int result = chooser.showOpenDialog(EditImage.this);
 				if (result == JFileChooser.APPROVE_OPTION) {
-					selectedImage_path = chooser.getSelectedFile().getAbsolutePath();
-					selectedImage_name = chooser.getSelectedFile().getName();
+					selectedImgPath = chooser.getSelectedFile().getAbsolutePath();
+					selectedImageName = chooser.getSelectedFile().getName();
+					Image image = getScaledImage(new ImageIcon(selectedImgPath).getImage(), 250, 285);
+					displayImg.setIcon(new ImageIcon(image));
 				}
 			}
 		});
@@ -99,11 +101,12 @@ public class EditImage extends JInternalFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				if (selectedImage_path != null && !selectedImage_path.isEmpty()) {
+				if (selectedImgPath != null && !selectedImgPath.isEmpty()) {
 					try {
-						Files.copy(new File(selectedImage_path).toPath(), new File( (System.getProperty("user.dir")
-								+ "/target/classes/images/" + selectedImage_name)) .toPath());
-						String new_image = "/images/" + selectedImage_name;
+						Files.copy(new File(selectedImgPath).toPath(), new File(
+								(System.getProperty("user.dir") + "/target/classes/images/" + selectedImageName))
+										.toPath());
+						String new_image = "/images/" + selectedImageName;
 						message.setPath(new_image);
 						controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
 								.get(messageIndex).setPath(new_image);
@@ -130,7 +133,7 @@ public class EditImage extends JInternalFrame {
 		Graphics2D g2 = resizedImg.createGraphics();
 
 		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g2.drawImage(srcImg, 0, 0, w, h, null);
+		g2.drawImage(srcImg, 0, 0, 250, 275, null);
 		g2.dispose();
 
 		return resizedImg;
@@ -151,7 +154,7 @@ public class EditImage extends JInternalFrame {
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.fill = GridBagConstraints.VERTICAL;
 		gc.anchor = GridBagConstraints.CENTER;
-		add(oldImg, gc);
+		add(displayImg, gc);
 
 		gc.gridx = 0;
 		gc.gridy = 1;
