@@ -28,10 +28,10 @@ import gui.component.ProfileDropdownLabel;
 import gui.controls.ControlPanel;
 import gui.controls.MessageEvent;
 import gui.controls.MessageListener;
-import gui.controls.dialogs.AddMessage;
-import gui.controls.dialogs.DeleteMessage;
-import gui.controls.dialogs.EditImage;
-import gui.controls.dialogs.EditMessage;
+import gui.dialogs.AddMessage;
+import gui.dialogs.DeleteMessage;
+import gui.dialogs.EditImage;
+import gui.dialogs.EditMessage;
 import gui.login.LoginEvent;
 import gui.login.LoginFrame;
 import gui.login.LoginListener;
@@ -53,7 +53,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	private static final long serialVersionUID = -4312454251947395385L;
 	public static final String appName = "Mind Booster";
-	public static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
+	private static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
 	private MessageController messageController;
 	private UserController userController;
 	private Database database;

@@ -1,4 +1,4 @@
-package gui.controls.dialogs;
+package gui.dialogs;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

@@ -21,7 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import gui.component.MessageButton;
+import gui.component.MessageSelectionButton;
 import gui.component.PictureLabel;
 import gui.util.IconFetch;
 import utility.FontPicker;
@@ -33,8 +33,8 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	private JPanel screenPanel;
 	public static ImageIcon screen, picture;
 	public static JPanel picturePanel;
-	private MessageButton[] messageButtons;
-	private MessageButton msgOne, msgTwo, msgThree, msgFour, msgFive;
+	private MessageSelectionButton[] messageButtons;
+	private MessageSelectionButton msgOne, msgTwo, msgThree, msgFour, msgFive;
 	public static PictureLabel pictureLabel;
 	private Rectangle screenRect;
 	private Rectangle containerRect;
@@ -57,25 +57,29 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		screenPanel.setBounds(screenRect);
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
-		msgOne = new MessageButton("Top Left", screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
+		msgOne = new MessageSelectionButton("Top Left");
+		msgOne.setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
 		msgOne.setToolTipText("Message top left of screen");
 
-		msgTwo = new MessageButton("Top Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
-				screenPanel.getHeight() / 8, 215, 80);
+		msgTwo = new MessageSelectionButton("Top Right");
+		msgTwo.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215, screenPanel.getHeight() / 8, 215,
+				80);
 		msgTwo.setToolTipText("Message top right of screen");
 
-		msgThree = new MessageButton("Bot Left", screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
+		msgThree = new MessageSelectionButton("Bot Left");
+		msgThree.setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
 		msgThree.setToolTipText("Message bottom left of screen");
 
-		msgFour = new MessageButton("Bot Right", screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
-				(screenPanel.getHeight() / 2), 215, 80);
+		msgFour = new MessageSelectionButton("Bot Right");
+		msgFour.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215, (screenPanel.getHeight() / 2),
+				215, 80);
 		msgFour.setToolTipText("Message bottom right of screen");
 
-		msgFive = new MessageButton("Center", (screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85,
-				215, 80);
+		msgFive = new MessageSelectionButton("Center");
+		msgFive.setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 215, 80);
 		msgFive.setToolTipText("Message center of screen");
 
-		messageButtons = new MessageButton[5];
+		messageButtons = new MessageSelectionButton[5];
 		messageButtons[0] = msgOne;
 		messageButtons[1] = msgTwo;
 		messageButtons[2] = msgThree;
@@ -84,11 +88,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 		screenContainer = new JLayeredPane();
 		screenContainer.add(screenPanel, new Integer(0), 0);
-		screenContainer.add(msgOne, new Integer(1), 0);
-		screenContainer.add(msgTwo, new Integer(1), 0);
-		screenContainer.add(msgThree, new Integer(1), 0);
-		screenContainer.add(msgFour, new Integer(1), 0);
-		screenContainer.add(msgFive, new Integer(1), 0);
+		screenContainer.add(messageButtons[0], new Integer(1), 0);
+		screenContainer.add(messageButtons[1], new Integer(1), 0);
+		screenContainer.add(messageButtons[2], new Integer(1), 0);
+		screenContainer.add(messageButtons[3], new Integer(1), 0);
+		screenContainer.add(messageButtons[4], new Integer(1), 0);
 
 		picturePanel = new JPanel();
 		picture = new ImageIcon();
@@ -133,15 +137,16 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 				if (containerRect != null) {
 					screenRect.setRect(0, 0, (double) screenToPanelWRatio * c.getWidth(),
 							(double) screenToPanelHRatio * c.getHeight());
-					msgOne.setAlignmentX(250);
+					messageButtons[0].setAlignmentX(250);
 					screenPanel.setBounds(screenRect);
-					msgOne.setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
-					msgTwo.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+					messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
+					messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 							screenPanel.getHeight() / 8, 215, 80);
-					msgThree.setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
-					msgFour.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+					messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
+					messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 							(screenPanel.getHeight() / 2), 215, 80);
-					msgFive.setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 215, 80);
+					messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85,
+							215, 80);
 					c.revalidate();
 					c.repaint();
 				} else {
@@ -194,7 +199,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	}
 
 	public void setupUI() {
-
+		
 		setLayout(new GridBagLayout());
 		setBackground(Color.decode("#efeff0"));
 		GridBagConstraints gc = new GridBagConstraints();
@@ -285,11 +290,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		this.settingsListener = settingsListener;
 	}
 
-	public MessageButton[] getMessageButtons() {
+	public MessageSelectionButton[] getMessageButtons() {
 		return messageButtons;
 	}
 
-	public void setMessageButtons(MessageButton[] messageButtons) {
+	public void setMessageButtons(MessageSelectionButton[] messageButtons) {
 		this.messageButtons = messageButtons;
 	}
 

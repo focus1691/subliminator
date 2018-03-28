@@ -8,10 +8,10 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-public class GreenSwitch extends JPanel {
+public class MessageSwitch extends JPanel {
 	private Color activeColour;
 
-	public GreenSwitch(Color color) {
+	public MessageSwitch(Color color) {
 		setOpaque(true);
 		setBackground(Color.WHITE);
 		setMaximumSize(new Dimension(26, 26));

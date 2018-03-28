@@ -15,7 +15,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -25,32 +24,22 @@ import constants.CustomColor;
 import gui.util.JFontChooser;
 import utility.FontPicker;
 
-public class MessageButton extends JPanel {
+public class MessageSelectionButton extends JPanel {
 
 	private static final long serialVersionUID = -890456094498670386L;
+	private final String categoryName;
 	private Preferences prefs;
 	private JPopupMenu menu;
-	private JLabel label;
-	private Color activeColour, activeBackground;
-	private GreenSwitch circlePanel;
-	private final String categoryName;
+	private MessagePreview messagePreview;
+	private MessageSwitch messageSwitch;
 	private ImageIcon image;
-	private double btnToScreenWRatio, btnToScreenHRatio;
 	private boolean active = false;
 	private JRadioButtonMenuItem bgOff, bgOn;
+	private Color activeColour, activeBackground;
 	private Font font;
 
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public MessageButton(final String categoryName, int x, int y, int w, int h) {
+	public MessageSelectionButton(final String categoryName) {
 		this.categoryName = categoryName;
-		setBounds(x, y, w, h);
 
 		prefs = Preferences.userRoot().node(this.getClass().getName());
 		active = prefs.getBoolean(categoryName + "active", false);
@@ -61,27 +50,26 @@ public class MessageButton extends JPanel {
 
 		font = FontPicker.getFont(FontPicker.latoBlack, 36);
 
-		label = new JLabel(categoryName, JLabel.CENTER);
-		label.setAlignmentX(Component.CENTER_ALIGNMENT);
-		label.setForeground(activeColour);
-		label.setBackground(activeBackground);
-		label.setFont(font);
-		label.setOpaque(true);
+		messagePreview = new MessagePreview(categoryName);
+		messagePreview.setForeground(activeColour);
+		messagePreview.setBackground(activeBackground);
+		messagePreview.setFont(font);
 
-		circlePanel = new GreenSwitch(CustomColor.green);
-		circlePanel.setActiveColour(active ? CustomColor.green : CustomColor.lightGrey);
-		circlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		circlePanel.addMouseListener(new MouseAdapter() {
+		messageSwitch = new MessageSwitch(CustomColor.green);
+		
+		messageSwitch.setActiveColour(active ? CustomColor.green : CustomColor.lightGrey);
+		messageSwitch.setAlignmentX(Component.CENTER_ALIGNMENT);
+		messageSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (isActive()) {
-					circlePanel.setActiveColour(CustomColor.lightGrey);
-					circlePanel.repaint();
+					messageSwitch.setActiveColour(CustomColor.lightGrey);
+					messageSwitch.repaint();
 					setActive(false);
 					prefs.putBoolean(categoryName + "active", false);
 				} else {
-					circlePanel.setActiveColour(CustomColor.green);
-					circlePanel.repaint();
+					messageSwitch.setActiveColour(CustomColor.green);
+					messageSwitch.repaint();
 					setActive(true);
 					prefs.putBoolean(categoryName + "active", true);
 				}
@@ -96,16 +84,16 @@ public class MessageButton extends JPanel {
 		});
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(label, BorderLayout.CENTER);
-		add(circlePanel);
+		add(messagePreview, BorderLayout.CENTER);
+		add(messageSwitch);
 		setOpaque(true);
 		setBackground(Color.WHITE);
 
 		if (isActive()) {
-			circlePanel.setActiveColour(CustomColor.green);
+			messageSwitch.setActiveColour(CustomColor.green);
 			setActive(true);
 		} else {
-			circlePanel.setActiveColour(CustomColor.lightGrey);
+			messageSwitch.setActiveColour(CustomColor.lightGrey);
 			setActive(false);
 		}
 	}
@@ -156,8 +144,8 @@ public class MessageButton extends JPanel {
 				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
 				if (newColor != null) {
 					prefs.putInt(categoryName + "colorforeground", newColor.getRGB());
-					label.setForeground(newColor);
-					label.repaint();
+					messagePreview.setForeground(newColor);
+					messagePreview.repaint();
 				}
 			}
 		});
@@ -170,8 +158,8 @@ public class MessageButton extends JPanel {
 					Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
 					if (newColor != null) {
 						prefs.putInt(categoryName + "colorbackground", newColor.getRGB());
-						label.setBackground(newColor);
-						label.repaint();
+						messagePreview.setBackground(newColor);
+						messagePreview.repaint();
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Background selector is turned off. Turn it on to change it.",
@@ -195,7 +183,7 @@ public class MessageButton extends JPanel {
 				int result = fontChooser.showDialog(null);
 				if (result == JFontChooser.OK_OPTION) {
 					setFont(fontChooser.getSelectedFont());
-					label.setFont(font);
+					messagePreview.setFont(font);
 				}
 			}
 		});
@@ -209,6 +197,14 @@ public class MessageButton extends JPanel {
 		menu.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public Font getFont() {
 		return font;
@@ -219,7 +215,7 @@ public class MessageButton extends JPanel {
 	}
 
 	public Color getActiveColour() {
-		return label.getForeground();
+		return messagePreview.getForeground();
 	}
 
 	public void setActiveColour(Color activeColour) {
@@ -231,27 +227,11 @@ public class MessageButton extends JPanel {
 	}
 
 	public Color getActiveBackground() {
-		return label.getBackground();
+		return messagePreview.getBackground();
 	}
 
 	public void setActiveBackground(Color activeBackground) {
 		this.activeBackground = activeBackground;
-	}
-
-	public double getBtnToScreenWRatio() {
-		return btnToScreenWRatio;
-	}
-
-	public void setBtnToScreenWRatio(double btnToScreenWRatio) {
-		this.btnToScreenWRatio = btnToScreenWRatio;
-	}
-
-	public double getBtnToScreenHRatio() {
-		return btnToScreenHRatio;
-	}
-
-	public void setBtnToScreenHRatio(double btnToScreenHRatio) {
-		this.btnToScreenHRatio = btnToScreenHRatio;
 	}
 
 	public String getCategoryName() {
