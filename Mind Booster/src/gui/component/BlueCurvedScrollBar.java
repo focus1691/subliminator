@@ -42,7 +42,7 @@ public class BlueCurvedScrollBar extends BasicScrollBarUI {
 
 	@Override
 	protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
-		 c.setBackground(Color.decode("#f5f5f5"));
+		c.setBackground(Color.decode("#f5f5f5"));
 	}
 
 	@Override

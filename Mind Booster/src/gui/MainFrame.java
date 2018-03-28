@@ -24,6 +24,7 @@ import database.Database;
 import gui.category.CategoryEvent;
 import gui.category.CategoryListener;
 import gui.category.CategoryPanel;
+import gui.component.ProfileDropdownLabel;
 import gui.controls.ControlPanel;
 import gui.controls.MessageEvent;
 import gui.controls.MessageListener;
@@ -64,9 +65,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private JDesktopPane desktopPane;
 	private JPanel mainPanel;
 	private MBSystemTray hideToSystemTray;
-	private JLabel userLabel;
+	private ProfileDropdownLabel profileDropdownLabel;
 	private JLabel errorMsg;
-	private UserMenu userMenu;
+	private UserProfileMenu userProfileMenu;
 
 	public MainFrame() {
 
@@ -101,16 +102,15 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
 			errorMsg.setVisible(false);
 
-			userMenu = new UserMenu();
-			userMenu.setLoginListener(this);
-
-			userLabel = new JLabel();
-			userLabel.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
-			userLabel.addMouseListener(new MouseAdapter() {
+			profileDropdownLabel = new ProfileDropdownLabel();
+			profileDropdownLabel.addMouseListener(new MouseAdapter() {
 				public void mousePressed(MouseEvent e) {
-					userMenu.show(e.getComponent(), e.getX(), e.getY());
+					userProfileMenu.show(e.getComponent(), e.getX(), e.getY());
 				}
 			});
+
+			userProfileMenu = new UserProfileMenu(userController, profileDropdownLabel);
+			userProfileMenu.setLoginListener(this);
 
 			setJMenuBar(new CreateMenuBar(messageController, messagePanel));
 
@@ -119,8 +119,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			this.addComponentListener(new ComponentAdapter() {
 				public void componentResized(ComponentEvent evt) {
 					mainPanel.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 1.0));
-					userLabel.revalidate();
-					userLabel.repaint();
+					profileDropdownLabel.revalidate();
+					profileDropdownLabel.repaint();
 					revalidate();
 					repaint();
 				}
@@ -186,7 +186,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(0, 20, 0, 20);
-		mainPanel.add(userLabel, gbc);
+		mainPanel.add(profileDropdownLabel, gbc);
 
 		gbc.gridx = 2;
 		gbc.gridy = 0;
@@ -351,9 +351,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		String pass = event.getPass();
 
 		if (userController.isTempUserSelected(email)) {
-			userMenu.createMenuItemsForTempUser();
-			userLabel.setText("UNREGISTERED");
-			userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
+			userProfileMenu.createMenuItemsForTempUser();
+			profileDropdownLabel.setText("UNREGISTERED");
+			profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
 			setVisible(true);
 			loginFrame.dispose();
 		} else {
@@ -361,18 +361,17 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 			if (userController.isLoggedIn()) {
 				User user = userController.getUser();
-				userLabel.setText(user.getFirstName() + " " + user.getLastName());
+				profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
 
 				if (user.hasPremium()) {
-					userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
-					userLabel.setToolTipText("Premium member");
-					userMenu.createMenuItemsForUserLoggedIn(true);
+					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
+					profileDropdownLabel.setToolTipText("Premium member");
+					userProfileMenu.createMenuItemsForUserLoggedIn();
 				} else {
-					userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
-					userLabel.setToolTipText("Basic Account");
-					userMenu.createMenuItemsForUserLoggedIn(false);
+					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
+					profileDropdownLabel.setToolTipText("Basic Account");
+					userProfileMenu.createMenuItemsForUserLoggedIn();
 				}
-
 				setVisible(true);
 				loginFrame.dispose();
 			} else {
@@ -384,12 +383,13 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void logoutEventOccurred(LogoutEvent event) {
 		dispose();
-		
+
 		userController.setLoggedIn(false);
-		
-		userMenu.removeAll();
-		
+
+		userProfileMenu.removeAll();
+
 		loginFrame = new LoginFrame();
+		loginFrame.setUserAndPassFields(userController.getUser().getEmail(), userController.getUser().getPassword());
 		loginFrame.setLoginListener(this);
 	}
 }

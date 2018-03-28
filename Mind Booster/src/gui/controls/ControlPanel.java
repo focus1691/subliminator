@@ -235,7 +235,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
+
 	public void resetSelection() {
 		messageSelectorGroup.clearSelection();
 	}

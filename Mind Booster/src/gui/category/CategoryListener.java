@@ -15,7 +15,8 @@ public interface CategoryListener extends EventListener {
 	 * a possible button click on 'Logout' inside either the admin or user
 	 * panel.
 	 * 
-	 * @param e		the event of a button click on 'Logout'
+	 * @param e
+	 *            the event of a button click on 'Logout'
 	 */
 	public void categorySelectionEventOccurred(CategoryEvent e);
 }

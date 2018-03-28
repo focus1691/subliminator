@@ -17,8 +17,8 @@ public class UserController {
 	public UserController(Database database) {
 		this.database = database;
 	}
-	
-	public boolean isTempUserSelected(String tempLoginKey) { 
+
+	public boolean isTempUserSelected(String tempLoginKey) {
 		return tempLoginKey.equals(this.tempLoginKey) ? true : false;
 	}
 
@@ -33,18 +33,19 @@ public class UserController {
 		}
 
 		user = database.fetchUser(email);
-		
+
 		if (user == null) {
 			return "User not found";
 		}
-		
+
 		if (BCrypt.checkpw(pass, user.getPassword())) {
+			user.setPassword(pass);
 			setLoggedIn(true);
 			return "";
 		}
 		return "Incorrect credentials";
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -52,7 +53,7 @@ public class UserController {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}

@@ -16,7 +16,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -114,7 +113,7 @@ public class MessageButton extends JPanel {
 	private void createMenu() {
 		this.menu = new JPopupMenu();
 
-		bgOff = new JRadioButtonMenuItem("Background Off");
+		bgOff = new RadioItem("Background Off");
 		bgOff.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		bgOff.setForeground(Color.WHITE);
 		bgOff.setBackground(Color.decode("#1975bf"));
@@ -128,7 +127,7 @@ public class MessageButton extends JPanel {
 			}
 		});
 
-		bgOn = new JRadioButtonMenuItem("Background On");
+		bgOn = new RadioItem("Background On");
 		bgOn.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		bgOn.setForeground(Color.WHITE);
 		bgOn.setBackground(Color.decode("#1975bf"));
@@ -146,7 +145,7 @@ public class MessageButton extends JPanel {
 		bg.add(bgOff);
 		bg.add(bgOn);
 
-		JMenuItem foregroundPickerItem = new JMenuItem("Choose Colour");
+		MenuItem foregroundPickerItem = new MenuItem("Choose Colour");
 		foregroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		foregroundPickerItem.setForeground(Color.WHITE);
 		foregroundPickerItem.setBackground(Color.decode("#1975bf"));
@@ -163,11 +162,7 @@ public class MessageButton extends JPanel {
 			}
 		});
 
-		JMenuItem backgroundPickerItem = new JMenuItem("Choose Background");
-		backgroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		backgroundPickerItem.setForeground(Color.WHITE);
-		backgroundPickerItem.setBackground(Color.decode("#1975bf"));
-		backgroundPickerItem.setOpaque(true);
+		MenuItem backgroundPickerItem = new MenuItem("Choose Background");
 		backgroundPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -185,7 +180,7 @@ public class MessageButton extends JPanel {
 			}
 		});
 
-		JMenuItem fontPickerItem = new JMenuItem("Choose Font");
+		MenuItem fontPickerItem = new MenuItem("Choose Font");
 		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
 		fontPickerItem.setForeground(Color.WHITE);
 		fontPickerItem.setBackground(Color.decode("#1975bf"));
@@ -210,7 +205,7 @@ public class MessageButton extends JPanel {
 		menu.add(bgOn);
 		menu.add(backgroundPickerItem);
 		menu.add(fontPickerItem);
-		
+
 		menu.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 	}
 

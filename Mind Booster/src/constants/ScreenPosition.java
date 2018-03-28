@@ -1,9 +1,5 @@
 package constants;
 
 public enum ScreenPosition {
-	TOPLEFT,
-	TOPRIGHT,
-	CENTER,
-	BOTLEFT,
-	BOTRIGHT
+	TOPLEFT, TOPRIGHT, CENTER, BOTLEFT, BOTRIGHT
 }

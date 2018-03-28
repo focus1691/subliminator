@@ -46,7 +46,7 @@ public class SubliminalMessage extends JPanel {
 
 		int x = getX() + (getWidth() - metrics.stringWidth(message)) / 2;
 		int y;
-		
+
 		g.clearRect(0, 0, getWidth(), getHeight());
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -56,9 +56,9 @@ public class SubliminalMessage extends JPanel {
 
 		g2d.fillRect(x, 40 - metrics.getAscent(), (int) rect.getWidth(), (int) rect.getHeight());
 		g2d.setColor(color);
-		
+
 		if (!message.equals("")) {
-		
+
 			g2d.drawString(message, x, 40);
 			repaint();
 		}

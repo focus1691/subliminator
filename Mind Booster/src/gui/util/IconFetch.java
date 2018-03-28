@@ -24,7 +24,7 @@ public class IconFetch {
 		}
 		return null;
 	}
-	
+
 	public Image getScaledImage(Image srcImg, int w, int h) {
 		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = resizedImg.createGraphics();

@@ -14,7 +14,7 @@ import constants.CustomColor;
 import model.Category;
 
 public class CategoryListCellRenderer extends DefaultListCellRenderer {
-	
+
 	private static final long serialVersionUID = 6638393449640171111L;
 	Border faintGreyBorder = BorderFactory.createMatteBorder(2, 0, 2, 0, Color.decode("#ecf1f5"));
 
@@ -28,10 +28,10 @@ public class CategoryListCellRenderer extends DefaultListCellRenderer {
 		Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected,
 				cellHasFocus);
-		
+
 		Category category = (Category) value;
 		listCellRendererComponent.setText("  " + category.getCategoryName());
-		
+
 		listCellRendererComponent.setBorder(compoundBorder);
 		if (isSelected) {
 			c.setBackground(CustomColor.brightBlue);

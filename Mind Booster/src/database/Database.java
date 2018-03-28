@@ -14,7 +14,7 @@ public class Database {
 	private static String url = "jdbc:mysql://160.153.128.45/PsychoTechnology?verifyServerCertificate=false&useSSL=true&?zeroDateTimeBehavior=convertToNull";
 	private static final String user = "mindbooster";
 	private static final String password = "QqZqXrk5YAX3JuBGjCmT";
-	
+
 	public boolean connect() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -28,7 +28,7 @@ public class Database {
 		}
 		return true;
 	}
-	
+
 	public synchronized void disconnect() {
 		if (con != null) {
 			try {
@@ -40,7 +40,7 @@ public class Database {
 			}
 		}
 	}
-	
+
 	public User fetchUser(String email) {
 		String sql = "SELECT * FROM Users WHERE email = ?";
 		User user = null;
@@ -66,7 +66,7 @@ public class Database {
 				disconnect();
 			}
 		}
-		return user;	
+		return user;
 	}
 
 }

@@ -35,7 +35,7 @@ public class MessageListSelectionModel extends DefaultListSelectionModel {
 	public int getActiveMessages() {
 		return activeMessages;
 	}
-	
+
 	public void setActiveMessages(int activeMessages) {
 		this.activeMessages = activeMessages;
 	}
@@ -43,11 +43,11 @@ public class MessageListSelectionModel extends DefaultListSelectionModel {
 	public int getLastSelection() {
 		return super.getLeadSelectionIndex();
 	}
-	
+
 	public void setMgsSelected(int[] selectedIndices) {
-		
+
 		int i;
-		
+
 		for (i = 0; i < selectedIndices.length; i++) {
 			setSelectionInterval(selectedIndices[i], selectedIndices[i]);
 		}

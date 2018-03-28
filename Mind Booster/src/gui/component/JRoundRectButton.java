@@ -21,7 +21,7 @@ public class JRoundRectButton extends JButton {
 		setBackground(Color.WHITE);
 		setFocusPainted(false);
 	}
-	
+
 	protected void paintComponent(Graphics g) {
 		final int arcSize = getSize().height;
 		g.setColor(Color.WHITE);
@@ -33,6 +33,5 @@ public class JRoundRectButton extends JButton {
 		g.fillRoundRect(0, 0, getSize().width, getSize().height, arcSize, arcSize);
 		super.paintComponent(g);
 	}
-
 
 }

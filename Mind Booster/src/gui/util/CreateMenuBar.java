@@ -40,7 +40,7 @@ public class CreateMenuBar extends JMenuBar {
 		settingsMenu.setForeground(Color.WHITE);
 		settingsMenu.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 5));
 		settingsMenu.getPopupMenu().setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		
+
 		// Exit
 		fileMenu.add(exitItem());
 
@@ -104,7 +104,7 @@ public class CreateMenuBar extends JMenuBar {
 		// Add items to menu bar
 		add(fileMenu);
 		add(settingsMenu);
-		
+
 		setOpaque(true);
 	}
 

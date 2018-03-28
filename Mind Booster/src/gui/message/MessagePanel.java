@@ -228,8 +228,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
-		if ((e.getSource() == firstPersonLabel)
-				&& messageController.getMessageTense() != MessageTense.FIRST_PERSON) {
+		if ((e.getSource() == firstPersonLabel) && messageController.getMessageTense() != MessageTense.FIRST_PERSON) {
 			switchPersonMode(MessageTense.FIRST_PERSON);
 			firstPersonLabel.setIcon(activeIcon);
 			secondPersonLabel.setIcon(inactiveIcon);
@@ -284,7 +283,7 @@ public class MessagePanel extends JPanel implements ActionListener, MouseListene
 			model.addElement(messages.get(i));
 		}
 	}
-	
+
 	public void removeMessages() {
 		model.clear();
 	}

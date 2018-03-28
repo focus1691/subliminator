@@ -57,7 +57,7 @@ public class User {
 	public void setAccountActive(boolean accountActive) {
 		this.accountActive = accountActive;
 	}
-	
+
 	public boolean hasPremium() {
 		return hasPremium;
 	}

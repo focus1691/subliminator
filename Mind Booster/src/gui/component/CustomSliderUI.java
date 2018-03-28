@@ -34,27 +34,27 @@ public class CustomSliderUI extends BasicSliderUI {
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Rectangle clip = g.getClipBounds();
-        
-        if ( slider.getPaintTrack() && clip.intersects( trackRect ) ) {
-            paintTrack( g );
-        }
-        if ( slider.getPaintTicks() && clip.intersects( tickRect ) ) {
-            paintTicks( g );
-        }
-        if ( slider.getPaintLabels() && clip.intersects( labelRect ) ) {
-            paintLabels( g );
-        }
-        if ( slider.hasFocus() && clip.intersects( focusRect ) ) {
-            paintFocus( g );      
-        }
-        if ( clip.intersects( thumbRect ) ) {
-            Color savedColor = slider.getBackground();
-            slider.setBackground(Color.WHITE);
-            paintThumb( g );
-            slider.setBackground(savedColor);
-        }
-        super.paint(g, c);
+		Rectangle clip = g.getClipBounds();
+
+		if (slider.getPaintTrack() && clip.intersects(trackRect)) {
+			paintTrack(g);
+		}
+		if (slider.getPaintTicks() && clip.intersects(tickRect)) {
+			paintTicks(g);
+		}
+		if (slider.getPaintLabels() && clip.intersects(labelRect)) {
+			paintLabels(g);
+		}
+		if (slider.hasFocus() && clip.intersects(focusRect)) {
+			paintFocus(g);
+		}
+		if (clip.intersects(thumbRect)) {
+			Color savedColor = slider.getBackground();
+			slider.setBackground(Color.WHITE);
+			paintThumb(g);
+			slider.setBackground(savedColor);
+		}
+		super.paint(g, c);
 	}
 
 	@Override

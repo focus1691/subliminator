@@ -55,7 +55,7 @@ public class EditImage extends JInternalFrame {
 		setSize(W, H);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
-	
+
 	public void initComponents() {
 		displayImg = new JLabel();
 		displayImg.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0),
@@ -72,7 +72,7 @@ public class EditImage extends JInternalFrame {
 		browseBtn = new JRoundRectButton("Browse");
 		browseBtn.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		browseBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser(".");
@@ -91,7 +91,7 @@ public class EditImage extends JInternalFrame {
 		deleteBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 

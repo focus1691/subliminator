@@ -8,7 +8,7 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 2743373611391306854L;
 	private String categoryName;
 	private ArrayList<ArrayList<Message>> messages = new ArrayList<ArrayList<Message>>();
-	
+
 	public Category(String categoryName, ArrayList<ArrayList<Message>> messages) {
 		this.setCategoryName(categoryName);
 		this.messages = messages;

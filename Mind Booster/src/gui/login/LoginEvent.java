@@ -3,7 +3,7 @@ package gui.login;
 import java.util.EventObject;
 
 public class LoginEvent extends EventObject {
-	
+
 	private static final long serialVersionUID = 5401740695242917276L;
 	private String user;
 	private String pass;
