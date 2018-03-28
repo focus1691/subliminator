@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -32,6 +34,7 @@ import gui.controls.dialogs.EditMessage;
 import gui.login.LoginEvent;
 import gui.login.LoginFrame;
 import gui.login.LoginListener;
+import gui.login.LogoutEvent;
 import gui.message.MessagePanel;
 import gui.settings.SettingsEvent;
 import gui.settings.SettingsListener;
@@ -63,6 +66,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private MBSystemTray hideToSystemTray;
 	private JLabel userLabel;
 	private JLabel errorMsg;
+	private UserMenu userMenu;
 
 	public MainFrame() {
 
@@ -97,8 +101,16 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			errorMsg.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
 			errorMsg.setVisible(false);
 
+			userMenu = new UserMenu();
+			userMenu.setLoginListener(this);
+
 			userLabel = new JLabel();
 			userLabel.setFont(FontPicker.getFont(FontPicker.latoBold, 18));
+			userLabel.addMouseListener(new MouseAdapter() {
+				public void mousePressed(MouseEvent e) {
+					userMenu.show(e.getComponent(), e.getX(), e.getY());
+				}
+			});
 
 			setJMenuBar(new CreateMenuBar(messageController, messagePanel));
 
@@ -339,6 +351,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		String pass = event.getPass();
 
 		if (userController.isTempUserSelected(email)) {
+			userMenu.createMenuItemsForTempUser();
 			userLabel.setText("UNREGISTERED");
 			userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
 			setVisible(true);
@@ -353,9 +366,11 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				if (user.hasPremium()) {
 					userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
 					userLabel.setToolTipText("Premium member");
+					userMenu.createMenuItemsForUserLoggedIn(true);
 				} else {
 					userLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
 					userLabel.setToolTipText("Basic Account");
+					userMenu.createMenuItemsForUserLoggedIn(false);
 				}
 
 				setVisible(true);
@@ -367,8 +382,14 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	}
 
 	@Override
-	public void logoutEventOccurred(LoginEvent event) {
-		// TODO Auto-generated method stub
-
+	public void logoutEventOccurred(LogoutEvent event) {
+		dispose();
+		
+		userController.setLoggedIn(false);
+		
+		userMenu.removeAll();
+		
+		loginFrame = new LoginFrame();
+		loginFrame.setLoginListener(this);
 	}
 }
