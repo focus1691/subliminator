@@ -10,14 +10,12 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -29,22 +27,23 @@ import utility.FontPicker;
 public class SettingsPanel extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = -798661649041437371L;
+	public static boolean limitedMessages;
+	public static final int maxMessages = 5;
+	public static int numMessagesSelected = 0;
 	private JLayeredPane screenContainer;
 	private JPanel screenPanel;
-	public static ImageIcon screen, picture;
-	public static JPanel picturePanel;
-	private MessageSelectionButton[] messageButtons;
-	private MessageSelectionButton msgOne, msgTwo, msgThree, msgFour, msgFive;
-	public static PictureLabel pictureLabel;
-	private Rectangle screenRect;
-	private Rectangle containerRect;
+	private Rectangle screenRect, containerRect;
 	private double screenToPanelWRatio, screenToPanelHRatio;
+	public static PictureLabel pictureLabel;
+	private ImageIcon picturePreview;
+	private JPanel picturePanel;
+	private MessageSelectionButton[] messageButtons;
 	private JSlider speedSlider, intervalSlider;
 	private JLabel speedLbl, intervalLbl;
 	private SettingsListener settingsListener;
 
 	public SettingsPanel(int speed, int interval) {
-		UIManager.put("Slider.paintValue", true);
+
 		initComponents(speed, interval);
 		setupUI();
 	}
@@ -57,34 +56,28 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		screenPanel.setBounds(screenRect);
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
-		msgOne = new MessageSelectionButton("Top Left");
-		msgOne.setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
-		msgOne.setToolTipText("Message top left of screen");
-
-		msgTwo = new MessageSelectionButton("Top Right");
-		msgTwo.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215, screenPanel.getHeight() / 8, 215,
-				80);
-		msgTwo.setToolTipText("Message top right of screen");
-
-		msgThree = new MessageSelectionButton("Bot Left");
-		msgThree.setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
-		msgThree.setToolTipText("Message bottom left of screen");
-
-		msgFour = new MessageSelectionButton("Bot Right");
-		msgFour.setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215, (screenPanel.getHeight() / 2),
-				215, 80);
-		msgFour.setToolTipText("Message bottom right of screen");
-
-		msgFive = new MessageSelectionButton("Center");
-		msgFive.setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 215, 80);
-		msgFive.setToolTipText("Message center of screen");
-
 		messageButtons = new MessageSelectionButton[5];
-		messageButtons[0] = msgOne;
-		messageButtons[1] = msgTwo;
-		messageButtons[2] = msgThree;
-		messageButtons[3] = msgFour;
-		messageButtons[4] = msgFive;
+		messageButtons[0] = new MessageSelectionButton("Top Left");
+		messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
+		messageButtons[0].setToolTipText("Message top left of screen");
+
+		messageButtons[1] = new MessageSelectionButton("Top Right");
+		messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+				screenPanel.getHeight() / 8, 215, 80);
+		messageButtons[1].setToolTipText("Message top right of screen");
+
+		messageButtons[2] = new MessageSelectionButton("Bot Left");
+		messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
+		messageButtons[2].setToolTipText("Message bottom left of screen");
+
+		messageButtons[3] = new MessageSelectionButton("Bot Right");
+		messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
+				(screenPanel.getHeight() / 2), 215, 80);
+		messageButtons[3].setToolTipText("Message bottom right of screen");
+
+		messageButtons[4] = new MessageSelectionButton("Center");
+		messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 215, 80);
+		messageButtons[4].setToolTipText("Message center of screen");
 
 		screenContainer = new JLayeredPane();
 		screenContainer.add(screenPanel, new Integer(0), 0);
@@ -95,8 +88,8 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		screenContainer.add(messageButtons[4], new Integer(1), 0);
 
 		picturePanel = new JPanel();
-		picture = new ImageIcon();
-		pictureLabel = new PictureLabel(picture);
+		picturePreview = new ImageIcon();
+		pictureLabel = new PictureLabel(picturePreview);
 
 		picturePanel.setLayout(new BorderLayout());
 		picturePanel.add(pictureLabel, BorderLayout.CENTER);
@@ -199,7 +192,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	}
 
 	public void setupUI() {
-		
+
 		setLayout(new GridBagLayout());
 		setBackground(Color.decode("#efeff0"));
 		GridBagConstraints gc = new GridBagConstraints();
@@ -300,25 +293,46 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 	public boolean[] getSelectedScreenPositions() {
 
-		boolean msgLocationsSelected[] = new boolean[5];
-		Arrays.fill(msgLocationsSelected, false);
+		boolean msgLocationsSelected[] = new boolean[maxMessages];
 
-		if (msgOne.isActive()) {
-			msgLocationsSelected[0] = true;
-		}
-		if (msgTwo.isActive()) {
-			msgLocationsSelected[1] = true;
-		}
-		if (msgThree.isActive()) {
-			msgLocationsSelected[2] = true;
-		}
-		if (msgFour.isActive()) {
-			msgLocationsSelected[3] = true;
-		}
-		if (msgFive.isActive()) {
-			msgLocationsSelected[4] = true;
+		for (int i = 0; i < maxMessages; i++) {
+			if (messageButtons[i].isActive()) {
+				msgLocationsSelected[i] = true;
+			} else {
+				msgLocationsSelected[i] = false;
+			}
 		}
 		return msgLocationsSelected;
+	}
+
+	public void checkForActiveMessages() {
+		for (int i = 0; i < maxMessages; i++) {
+			if (messageButtons[i].isActive()) {
+				numMessagesSelected++;
+			}
+		}
+	}
+
+	public boolean isMoreThanOneMsgSelected() {
+		int count = 0;
+		for (int i = 0; i < maxMessages; i++) {
+			if (messageButtons[i].isActive()) {
+				if (++count > 1) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public void deactivateActiveMessages() {
+		for (int i = 0; i < maxMessages; i++) {
+
+			if (messageButtons[i].isActive()) {
+				messageButtons[i].switchMessageOff();
+				SettingsPanel.numMessagesSelected--;
+			}
+		}
 	}
 
 	public int getSpeed() {

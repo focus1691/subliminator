@@ -52,7 +52,7 @@ import validation.ArrayValidator;
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener, LoginListener {
 
 	private static final long serialVersionUID = -4312454251947395385L;
-	public static final String appName = "Mind Booster";
+	public static final String appName = "Subliminator";
 	private static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
 	private MessageController messageController;
 	private UserController userController;
@@ -351,9 +351,15 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		String pass = event.getPass();
 
 		if (userController.isTempUserSelected(email)) {
+			
+			settingsPanel.checkForActiveMessages();
+			settingsPanel.deactivateActiveMessages();
+			
 			userProfileMenu.createMenuItemsForTempUser();
+			
 			profileDropdownLabel.setText("UNREGISTERED");
 			profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
+			
 			setVisible(true);
 			loginFrame.dispose();
 		} else {
@@ -362,12 +368,19 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			if (userController.isLoggedIn()) {
 				User user = userController.getUser();
 				profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
-
+				
+				settingsPanel.checkForActiveMessages();
+				
 				if (user.hasPremium()) {
 					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
 					profileDropdownLabel.setToolTipText("Premium member");
 					userProfileMenu.createMenuItemsForUserLoggedIn();
 				} else {
+					// Remove upgrade
+					if (settingsPanel.isMoreThanOneMsgSelected() == true) {
+						settingsPanel.deactivateActiveMessages();
+					}
+					
 					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
 					profileDropdownLabel.setToolTipText("Basic Account");
 					userProfileMenu.createMenuItemsForUserLoggedIn();

@@ -21,6 +21,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import constants.CustomColor;
+import controller.UserController;
+import gui.settings.SettingsPanel;
 import gui.util.JFontChooser;
 import utility.FontPicker;
 
@@ -56,22 +58,38 @@ public class MessageSelectionButton extends JPanel {
 		messagePreview.setFont(font);
 
 		messageSwitch = new MessageSwitch(CustomColor.green);
-		
+
 		messageSwitch.setActiveColour(active ? CustomColor.green : CustomColor.lightGrey);
 		messageSwitch.setAlignmentX(Component.CENTER_ALIGNMENT);
 		messageSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (isActive()) {
-					messageSwitch.setActiveColour(CustomColor.lightGrey);
-					messageSwitch.repaint();
-					setActive(false);
-					prefs.putBoolean(categoryName + "active", false);
-				} else {
-					messageSwitch.setActiveColour(CustomColor.green);
-					messageSwitch.repaint();
-					setActive(true);
-					prefs.putBoolean(categoryName + "active", true);
+				if (UserController.userPremium == false) {
+
+					if (SettingsPanel.numMessagesSelected == 1) {
+						if (isActive()) {
+							switchMessageOff();
+							SettingsPanel.numMessagesSelected--;
+						} else {
+							JOptionPane.showMessageDialog(null, "You need to upgrade to premium");
+						}
+					} else if (SettingsPanel.numMessagesSelected == 0) {
+						if (isActive()) {
+							switchMessageOff();
+							SettingsPanel.numMessagesSelected--;
+						} else {
+							switchMessageOn();
+							SettingsPanel.numMessagesSelected++;
+						}
+					}
+				} else if (UserController.userPremium == true) {
+					if (isActive()) {
+						switchMessageOff();
+						SettingsPanel.numMessagesSelected--;
+					} else {
+						switchMessageOn();
+						SettingsPanel.numMessagesSelected++;
+					}
 				}
 			}
 		});
@@ -82,7 +100,6 @@ public class MessageSelectionButton extends JPanel {
 				menu.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
-
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(messagePreview, BorderLayout.CENTER);
 		add(messageSwitch);
@@ -96,6 +113,20 @@ public class MessageSelectionButton extends JPanel {
 			messageSwitch.setActiveColour(CustomColor.lightGrey);
 			setActive(false);
 		}
+	}
+
+	public void switchMessageOff() {
+		setActive(false);
+		prefs.putBoolean(categoryName + "active", false);
+		messageSwitch.setActiveColour(CustomColor.lightGrey);
+		messageSwitch.repaint();
+	}
+
+	public void switchMessageOn() {
+		setActive(true);
+		prefs.putBoolean(categoryName + "active", true);
+		messageSwitch.setActiveColour(CustomColor.green);
+		messageSwitch.repaint();
 	}
 
 	private void createMenu() {

@@ -9,6 +9,7 @@ public class UserController {
 	private User user;
 	private Database database;
 	private boolean loggedIn = false;
+	public static boolean userPremium;
 	private final String tempLoginKey = "MjMGqzdkMSs4K4PNkN454Ufc";
 	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
 	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
