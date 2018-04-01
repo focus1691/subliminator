@@ -50,7 +50,6 @@ public class MessageListCellRenderer extends DefaultListCellRenderer {
 
 			if (list.getLeadSelectionIndex() == index) {
 				setBackground(Color.decode("#e9dddd"));
-				System.out.println(message.getImagePath());
 			} else {
 				setBackground(Color.decode("#f5f5f5"));
 			}

@@ -3,18 +3,23 @@ package gui.util;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.SwingUtilities;
 
 import controller.MessageController;
+import gui.controls.ControlPanel;
 import gui.message.MessagePanel;
 import gui.subliminal.SubliminalFrame;
 import utility.FontPicker;
@@ -22,12 +27,14 @@ import utility.FontPicker;
 public class CreateMenuBar extends JMenuBar {
 
 	private static final long serialVersionUID = 2825424567069068134L;
-	private MessageController controller;
+	private MessageController messageController;
 	private MessagePanel messagePanel;
+	private ControlPanel controlPanel;
 
-	public CreateMenuBar(MessageController controller, MessagePanel messagePanel) {
+	public CreateMenuBar(MessageController messageController, ControlPanel controlPanel, MessagePanel messagePanel) {
 
-		this.controller = controller;
+		this.messageController = messageController;
+		this.controlPanel = controlPanel;
 		this.messagePanel = messagePanel;
 
 		JMenu fileMenu = new JMenu("File");
@@ -109,6 +116,7 @@ public class CreateMenuBar extends JMenuBar {
 	}
 
 	private JMenuItem exitItem() {
+		
 		JMenuItem fileMenu = new JMenuItem(new AbstractAction("Exit") {
 
 			private static final long serialVersionUID = -6305470444317273153L;
@@ -131,10 +139,41 @@ public class CreateMenuBar extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.loadInBuiltCategories();
-				controller.save();
-				messagePanel.removeMessages();
-				messagePanel.setMessageList(controller.getActiveMessages());
+
+				final JButton ok = new JButton("ok");
+				final JButton cancel = new JButton("cancel");
+				int optionType = JOptionPane.CANCEL_OPTION;
+				int messageType = JOptionPane.WARNING_MESSAGE;
+				String warningMessage = "This option will remove all custom messages you have created and restore everything to its original state";
+				String title = "Reset Messages";
+				Object[] selValues = { ok, cancel };
+
+				ok.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ae) {
+						System.out.println("Cancel");
+						messageController.loadInBuiltCategories();
+						messageController.save();
+						messagePanel.removeMessages();
+						messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
+						controlPanel.resetSelection();
+						Window w = SwingUtilities.getWindowAncestor(ok);
+						if (w != null) {
+							w.dispose();
+						}
+					}
+				});
+
+				cancel.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ae) {
+						Window w = SwingUtilities.getWindowAncestor(cancel);
+						if (w != null) {
+							w.dispose();
+						}
+					}
+				});
+
+				JOptionPane.showOptionDialog(null, warningMessage, title, optionType, messageType, null, selValues,
+						selValues[0]);
 			}
 		});
 		messageResetItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));

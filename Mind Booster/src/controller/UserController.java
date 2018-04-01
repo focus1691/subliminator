@@ -33,17 +33,11 @@ public class UserController {
 		}
 
 		user = database.fetchUser(email);
-		
-		System.out.println(user.getId());
-
-		if (database.isUserPremium(user.getId())) {
-			user.setUserPremium(true);
-		} else {
-			user.setUserPremium(false);
-		}
 
 		if (user == null) {
 			return "User not found";
+		} else {
+			user.setUserPremium(database.isUserPremium(user.getId()));
 		}
 
 		if (BCrypt.checkpw(pass, user.getPassword())) {

@@ -89,7 +89,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			messagePanel = new MessagePanel(messageController);
 			messagePanel.setMessageStartListener(this);
 
-			settingsPanel = new SettingsPanel(userController, messageController.getSpeed(), messageController.getInterval());
+			settingsPanel = new SettingsPanel(userController, messageController.getSpeed(),
+					messageController.getInterval());
 			settingsPanel.setSettingsListener(this);
 
 			controlPanel = new ControlPanel();
@@ -112,7 +113,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			userProfileMenu = new UserProfileMenu(userController, profileDropdownLabel);
 			userProfileMenu.setLoginListener(this);
 
-			setJMenuBar(new CreateMenuBar(messageController, messagePanel));
+			setJMenuBar(new CreateMenuBar(messageController, controlPanel, messagePanel));
 
 			setupUI();
 
@@ -322,20 +323,20 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	@Override
 	public void editImageEventOccurred(MessageEvent e) {
-		int[] selectedMsgs = messagePanel.getMessageList().getSelectedIndices();
 		if (messagePanel.getMessageListSelectionModel().getLastSelection() < 0) {
 			errorMsg.setText("You need to select a message to edit");
 			errorMsg.setVisible(true);
+		} else {
+			Message message = (Message) messagePanel.getMessageList().getSelectedValue();
+			EditImage editImage = new EditImage(messageController, message, messagePanel,
+					messagePanel.getMessageListSelectionModel().getLastSelection());
+			desktopPane.add(editImage);
+			editImage.setLocation((desktopPane.getWidth() - editImage.getWidth()) / 2,
+					(desktopPane.getHeight() - editImage.getHeight()) / 2);
+			editImage.setVisible(true);
+			errorMsg.setVisible(false);
+			messageController.save();
 		}
-		Message message = (Message) messagePanel.getMessageList().getSelectedValue();
-		EditImage editImage = new EditImage(messageController, message, messagePanel,
-				messagePanel.getMessageListSelectionModel().getLastSelection());
-		desktopPane.add(editImage);
-		editImage.setLocation((desktopPane.getWidth() - editImage.getWidth()) / 2,
-				(desktopPane.getHeight() - editImage.getHeight()) / 2);
-		editImage.setVisible(true);
-		errorMsg.setVisible(false);
-		messageController.save();
 	}
 
 	@Override
@@ -351,17 +352,17 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		String pass = event.getPass();
 
 		if (userController.isTempUserSelected(email)) {
-			
+
 			userController.setUserPremium(false);
-			
+
 			settingsPanel.checkForActiveMessages();
 			settingsPanel.deactivateActiveMessages();
-			
+
 			userProfileMenu.createMenuItemsForTempUser();
-			
+
 			profileDropdownLabel.setText("UNREGISTERED");
 			profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
-			
+
 			setVisible(true);
 			loginFrame.dispose();
 		} else {
@@ -370,11 +371,11 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			if (userController.isLoggedIn()) {
 				User user = userController.getUser();
 				profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
-				
+
 				settingsPanel.checkForActiveMessages();
-				
+
 				if (user.isUserPremium() == true) {
-					
+
 					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
 					profileDropdownLabel.setToolTipText("Premium member");
 					userProfileMenu.createMenuItemsForUserLoggedIn();
@@ -383,7 +384,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 					if (settingsPanel.isMoreThanOneMsgSelected() == true) {
 						settingsPanel.deactivateActiveMessages();
 					}
-					
+
 					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
 					profileDropdownLabel.setToolTipText("Basic Account");
 					userProfileMenu.createMenuItemsForUserLoggedIn();

@@ -88,8 +88,6 @@ public class Database {
 
 				if (results.next()) {
 					isUserPremium = results.getBoolean("premium");
-				} else {
-					System.out.println("No results is premium");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
