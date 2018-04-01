@@ -22,6 +22,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import constants.CustomColor;
 import controller.UserController;
+import gui.PremiumPromptDialog;
 import gui.settings.SettingsPanel;
 import gui.util.JFontChooser;
 import utility.FontPicker;
@@ -71,7 +72,7 @@ public class MessageSelectionButton extends JPanel {
 							switchMessageOff();
 							SettingsPanel.numMessagesSelected--;
 						} else {
-							JOptionPane.showMessageDialog(null, "You need to upgrade to premium");
+							new PremiumPromptDialog();
 						}
 					} else if (SettingsPanel.numMessagesSelected == 0) {
 						if (isActive()) {

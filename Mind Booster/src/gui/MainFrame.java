@@ -352,6 +352,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 		if (userController.isTempUserSelected(email)) {
 			
+			userController.setUserPremium(false);
+			
 			settingsPanel.checkForActiveMessages();
 			settingsPanel.deactivateActiveMessages();
 			

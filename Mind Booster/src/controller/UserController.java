@@ -16,6 +16,7 @@ public class UserController {
 
 	public UserController(Database database) {
 		this.database = database;
+		user = new User();
 	}
 
 	public boolean isTempUserSelected(String tempLoginKey) {
