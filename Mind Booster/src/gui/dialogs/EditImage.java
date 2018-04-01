@@ -51,6 +51,7 @@ public class EditImage extends JInternalFrame {
 		this.messageIndex = messageIndex;
 		initComponents();
 		setupUI();
+		setTitle("Edit image of: " + message.getMessage());
 		getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(W, H);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -125,7 +126,6 @@ public class EditImage extends JInternalFrame {
 				}
 			}
 		});
-		setTitle("Edit image of: " + message.getMessage());
 	}
 
 	private Image getScaledImage(Image srcImg, int w, int h) {
@@ -152,7 +152,7 @@ public class EditImage extends JInternalFrame {
 		gc.weightx = 1;
 		gc.weighty = 1;
 		gc.insets = new Insets(0, 0, 0, 0);
-		gc.fill = GridBagConstraints.VERTICAL;
+		gc.fill = GridBagConstraints.NONE;
 		gc.anchor = GridBagConstraints.CENTER;
 		add(displayImg, gc);
 
