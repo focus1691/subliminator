@@ -21,6 +21,7 @@ public class PremiumPromptDialog extends JDialog {
 		setMinimumSize(new Dimension(700, 500));
 		pack();
 		SetScreenLocation.centerFrame(this);
+		setModal(true);
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}

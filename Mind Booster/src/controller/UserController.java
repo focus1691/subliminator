@@ -9,7 +9,6 @@ public class UserController {
 	private User user;
 	private Database database;
 	private boolean loggedIn = false;
-	public static boolean userPremium;
 	private final String tempLoginKey = "MjMGqzdkMSs4K4PNkN454Ufc";
 	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
 	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
@@ -34,6 +33,14 @@ public class UserController {
 		}
 
 		user = database.fetchUser(email);
+		
+		System.out.println(user.getId());
+
+		if (database.isUserPremium(user.getId())) {
+			user.setUserPremium(true);
+		} else {
+			user.setUserPremium(false);
+		}
 
 		if (user == null) {
 			return "User not found";
@@ -64,10 +71,10 @@ public class UserController {
 	}
 
 	public boolean isUserPremium() {
-		return user.hasPremium();
+		return user.isUserPremium();
 	}
 
 	public void setUserPremium(boolean premiumUser) {
-		user.setHasPremium(premiumUser);
+		this.user.setUserPremium(premiumUser);
 	}
 }

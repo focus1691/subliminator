@@ -19,6 +19,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import controller.UserController;
 import gui.component.MessageSelectionButton;
 import gui.component.PictureLabel;
 import gui.util.IconFetch;
@@ -42,13 +43,13 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	private JLabel speedLbl, intervalLbl;
 	private SettingsListener settingsListener;
 
-	public SettingsPanel(int speed, int interval) {
+	public SettingsPanel(UserController userController, int speed, int interval) {
 
-		initComponents(speed, interval);
+		initComponents(userController, speed, interval);
 		setupUI();
 	}
 
-	public void initComponents(int speed, int interval) {
+	public void initComponents(UserController userController, int speed, int interval) {
 		screenRect = new Rectangle(0, 0, 800, 560);
 
 		screenPanel = new JPanel();
@@ -57,25 +58,25 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
 		messageButtons = new MessageSelectionButton[5];
-		messageButtons[0] = new MessageSelectionButton("Top Left");
+		messageButtons[0] = new MessageSelectionButton(userController, "Top Left");
 		messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
 		messageButtons[0].setToolTipText("Message top left of screen");
 
-		messageButtons[1] = new MessageSelectionButton("Top Right");
+		messageButtons[1] = new MessageSelectionButton(userController, "Top Right");
 		messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 				screenPanel.getHeight() / 8, 215, 80);
 		messageButtons[1].setToolTipText("Message top right of screen");
 
-		messageButtons[2] = new MessageSelectionButton("Bot Left");
+		messageButtons[2] = new MessageSelectionButton(userController, "Bot Left");
 		messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
 		messageButtons[2].setToolTipText("Message bottom left of screen");
 
-		messageButtons[3] = new MessageSelectionButton("Bot Right");
+		messageButtons[3] = new MessageSelectionButton(userController, "Bot Right");
 		messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 				(screenPanel.getHeight() / 2), 215, 80);
 		messageButtons[3].setToolTipText("Message bottom right of screen");
 
-		messageButtons[4] = new MessageSelectionButton("Center");
+		messageButtons[4] = new MessageSelectionButton(userController, "Center");
 		messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 215, 80);
 		messageButtons[4].setToolTipText("Message center of screen");
 

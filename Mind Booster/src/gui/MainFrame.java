@@ -89,7 +89,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			messagePanel = new MessagePanel(messageController);
 			messagePanel.setMessageStartListener(this);
 
-			settingsPanel = new SettingsPanel(messageController.getSpeed(), messageController.getInterval());
+			settingsPanel = new SettingsPanel(userController, messageController.getSpeed(), messageController.getInterval());
 			settingsPanel.setSettingsListener(this);
 
 			controlPanel = new ControlPanel();
@@ -373,7 +373,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				
 				settingsPanel.checkForActiveMessages();
 				
-				if (user.hasPremium()) {
+				if (user.isUserPremium() == true) {
+					
 					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
 					profileDropdownLabel.setToolTipText("Premium member");
 					userProfileMenu.createMenuItemsForUserLoggedIn();

@@ -8,7 +8,7 @@ public class User {
 	private String email;
 	private String password;
 	private boolean accountActive;
-	private boolean hasPremium;
+	private boolean isUserPremium;
 
 	public int getId() {
 		return id;
@@ -45,24 +45,24 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	public boolean isAccountActive() {
 		return accountActive;
 	}
-
+	
 	public void setAccountActive(boolean accountActive) {
 		this.accountActive = accountActive;
 	}
-
-	public boolean hasPremium() {
-		return hasPremium;
+	
+	public boolean isUserPremium() {
+		return isUserPremium;
 	}
-
-	public void setHasPremium(boolean hasPremium) {
-		this.hasPremium = hasPremium;
+	
+	public void setUserPremium(boolean isUserPremium) {
+		this.isUserPremium = isUserPremium;
 	}
 }

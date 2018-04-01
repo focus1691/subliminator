@@ -11,9 +11,14 @@ import model.User;
 public class Database {
 
 	private static Connection con;
-	private static String url = "jdbc:mysql://160.153.128.45/PsychoTechnology?verifyServerCertificate=false&useSSL=true&?zeroDateTimeBehavior=convertToNull";
-	private static final String user = "mindbooster";
-	private static final String password = "QqZqXrk5YAX3JuBGjCmT";
+	// private static String url =
+	// "jdbc:mysql://160.153.128.45/PsychoTechnology?verifyServerCertificate=false&useSSL=true&?zeroDateTimeBehavior=convertToNull";
+	// private static final String user = "mindbooster";
+	// private static final String password = "QqZqXrk5YAX3JuBGjCmT";
+
+	private static String url = "jdbc:mysql://localhost/PsychoTechnology";
+	private static final String user = "root";
+	private static final String password = "";
 
 	public boolean connect() {
 		try {
@@ -54,6 +59,7 @@ public class Database {
 				if (results.next()) {
 
 					user = new User();
+					user.setId(results.getInt("id"));
 					user.setFirstName(results.getString("firstName"));
 					user.setLastName(results.getString("lastName"));
 					user.setEmail(results.getString("email"));
@@ -67,6 +73,31 @@ public class Database {
 			}
 		}
 		return user;
+	}
+
+	public boolean isUserPremium(int userId) {
+		String sql = "SELECT premium FROM Subliminator WHERE userId = ?";
+		boolean isUserPremium = false;
+
+		if (connect() == true) {
+			try {
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setInt(1, userId);
+
+				ResultSet results = ps.executeQuery();
+
+				if (results.next()) {
+					isUserPremium = results.getBoolean("premium");
+				} else {
+					System.out.println("No results is premium");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
+		}
+		return isUserPremium;
 	}
 
 }

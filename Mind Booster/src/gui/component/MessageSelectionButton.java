@@ -41,7 +41,7 @@ public class MessageSelectionButton extends JPanel {
 	private Color activeColour, activeBackground;
 	private Font font;
 
-	public MessageSelectionButton(final String categoryName) {
+	public MessageSelectionButton(final UserController userController, final String categoryName) {
 		this.categoryName = categoryName;
 
 		prefs = Preferences.userRoot().node(this.getClass().getName());
@@ -65,7 +65,7 @@ public class MessageSelectionButton extends JPanel {
 		messageSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (UserController.userPremium == false) {
+				if (userController.isUserPremium() == false) {
 
 					if (SettingsPanel.numMessagesSelected == 1) {
 						if (isActive()) {
@@ -83,7 +83,7 @@ public class MessageSelectionButton extends JPanel {
 							SettingsPanel.numMessagesSelected++;
 						}
 					}
-				} else if (UserController.userPremium == true) {
+				} else if (userController.isUserPremium() == true) {
 					if (isActive()) {
 						switchMessageOff();
 						SettingsPanel.numMessagesSelected--;
