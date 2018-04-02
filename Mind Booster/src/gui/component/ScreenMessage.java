@@ -21,13 +21,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import constants.CustomColor;
-import controller.UserController;
 import gui.premium.PremiumReminderDialog;
 import gui.settings.SettingsPanel;
 import gui.util.JFontChooser;
 import utility.FontPicker;
 
-public class MessageSelectionButton extends JPanel {
+public class ScreenMessage extends JPanel {
 
 	private static final long serialVersionUID = -890456094498670386L;
 	private final String categoryName;
@@ -41,9 +40,19 @@ public class MessageSelectionButton extends JPanel {
 	private Color activeColour, activeBackground;
 	private Font font;
 
-	public MessageSelectionButton(final UserController userController, final String categoryName) {
+	public ScreenMessage(final String categoryName) {
 		this.categoryName = categoryName;
 
+		initComponents();
+
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(messagePreview, BorderLayout.CENTER);
+		add(messageSwitch);
+		setOpaque(true);
+		setBackground(Color.WHITE);
+	}
+
+	private void initComponents() {
 		prefs = Preferences.userRoot().node(this.getClass().getName());
 		active = prefs.getBoolean(categoryName + "active", false);
 		activeColour = new Color(prefs.getInt(categoryName + "colorforeground", 000000));
@@ -59,20 +68,20 @@ public class MessageSelectionButton extends JPanel {
 		messagePreview.setFont(font);
 
 		messageSwitch = new MessageSwitch(CustomColor.green);
-
 		messageSwitch.setActiveColour(active ? CustomColor.green : CustomColor.lightGrey);
 		messageSwitch.setAlignmentX(Component.CENTER_ALIGNMENT);
 		messageSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (userController.isUserPremium() == false) {
+				if (SettingsPanel.isUserPremium == false) {
 
 					if (SettingsPanel.numMessagesSelected == 1) {
 						if (isActive()) {
 							switchMessageOff();
 							SettingsPanel.numMessagesSelected--;
 						} else {
-							new PremiumReminderDialog();
+							PremiumReminderDialog premiumReminderDialog = new PremiumReminderDialog();
+							premiumReminderDialog.setVisible(true);
 						}
 					} else if (SettingsPanel.numMessagesSelected == 0) {
 						if (isActive()) {
@@ -83,7 +92,7 @@ public class MessageSelectionButton extends JPanel {
 							SettingsPanel.numMessagesSelected++;
 						}
 					}
-				} else if (userController.isUserPremium() == true) {
+				} else if (SettingsPanel.isUserPremium == true) {
 					if (isActive()) {
 						switchMessageOff();
 						SettingsPanel.numMessagesSelected--;
@@ -101,11 +110,6 @@ public class MessageSelectionButton extends JPanel {
 				menu.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(messagePreview, BorderLayout.CENTER);
-		add(messageSwitch);
-		setOpaque(true);
-		setBackground(Color.WHITE);
 
 		if (isActive()) {
 			messageSwitch.setActiveColour(CustomColor.green);

@@ -44,10 +44,8 @@ public class MBSystemTray {
 		frame.addWindowStateListener(new WindowStateListener() {
 			public void windowStateChanged(WindowEvent e) {
 				if (e.getNewState() == JFrame.NORMAL) {
-					System.out.println("normal");
 					systemTray.remove(trayIcon);
 					frame.setVisible(true);
-					System.out.println("Tray icon removed");
 				}
 			}
 		});
@@ -58,7 +56,7 @@ public class MBSystemTray {
 			systemTray.add(trayIcon);
 			frame.setVisible(false);
 		} catch (AWTException e) {
-			System.out.println("unable to add to tray");
+			System.err.println("unable to add to tray");
 		}
 	}
 }

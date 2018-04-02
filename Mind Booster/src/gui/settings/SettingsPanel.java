@@ -19,15 +19,15 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import controller.UserController;
-import gui.component.MessageSelectionButton;
 import gui.component.PictureLabel;
+import gui.component.ScreenMessage;
 import gui.util.IconFetch;
 import utility.FontPicker;
 
 public class SettingsPanel extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = -798661649041437371L;
+	public static boolean isUserPremium = false;
 	public static boolean limitedMessages;
 	public static final int maxMessages = 5;
 	public static int numMessagesSelected = 0;
@@ -38,18 +38,17 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	public static PictureLabel pictureLabel;
 	private ImageIcon picturePreview;
 	private JPanel picturePanel;
-	private MessageSelectionButton[] messageButtons;
+	private ScreenMessage[] messageButtons;
 	private JSlider speedSlider, intervalSlider;
 	private JLabel speedLbl, intervalLbl;
 	private SettingsListener settingsListener;
 
-	public SettingsPanel(UserController userController, int speed, int interval) {
-
-		initComponents(userController, speed, interval);
+	public SettingsPanel(int speed, int interval) {
+		initComponents(speed, interval);
 		setupUI();
 	}
 
-	public void initComponents(UserController userController, int speed, int interval) {
+	public void initComponents(int speed, int interval) {
 		screenRect = new Rectangle(0, 0, 800, 560);
 
 		screenPanel = new JPanel();
@@ -57,26 +56,26 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		screenPanel.setBounds(screenRect);
 		screenPanel.add(new PictureLabel(IconFetch.getInstance().getIcon("/images/screen.png")), BorderLayout.CENTER);
 
-		messageButtons = new MessageSelectionButton[5];
-		messageButtons[0] = new MessageSelectionButton(userController, "Top Left");
+		messageButtons = new ScreenMessage[5];
+		messageButtons[0] = new ScreenMessage("Top Left");
 		messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
 		messageButtons[0].setToolTipText("Message top left of screen");
 
-		messageButtons[1] = new MessageSelectionButton(userController, "Top Right");
+		messageButtons[1] = new ScreenMessage("Top Right");
 		messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 				screenPanel.getHeight() / 8, 215, 80);
 		messageButtons[1].setToolTipText("Message top right of screen");
 
-		messageButtons[2] = new MessageSelectionButton(userController, "Bot Left");
+		messageButtons[2] = new ScreenMessage("Bot Left");
 		messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
 		messageButtons[2].setToolTipText("Message bottom left of screen");
 
-		messageButtons[3] = new MessageSelectionButton(userController, "Bot Right");
+		messageButtons[3] = new ScreenMessage("Bot Right");
 		messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
 				(screenPanel.getHeight() / 2), 215, 80);
 		messageButtons[3].setToolTipText("Message bottom right of screen");
 
-		messageButtons[4] = new MessageSelectionButton(userController, "Center");
+		messageButtons[4] = new ScreenMessage("Center");
 		messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 215, 80);
 		messageButtons[4].setToolTipText("Message center of screen");
 
@@ -284,11 +283,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		this.settingsListener = settingsListener;
 	}
 
-	public MessageSelectionButton[] getMessageButtons() {
+	public ScreenMessage[] getMessageButtons() {
 		return messageButtons;
 	}
 
-	public void setMessageButtons(MessageSelectionButton[] messageButtons) {
+	public void setMessageButtons(ScreenMessage[] messageButtons) {
 		this.messageButtons = messageButtons;
 	}
 
@@ -335,7 +334,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 			}
 		}
 	}
-
+	
 	public int getSpeed() {
 		return speedSlider.getValue();
 	}

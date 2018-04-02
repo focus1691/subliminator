@@ -14,7 +14,7 @@ import java.util.prefs.Preferences;
 
 import constants.MessageTense;
 import data.InBuiltCategory;
-import gui.component.MessageSelectionButton;
+import gui.component.ScreenMessage;
 import gui.subliminal.SubliminalFrame;
 import gui.subliminal.SubliminalTask;
 import gui.util.SetScreenLocation;
@@ -108,7 +108,7 @@ public class MessageController {
 		}
 	}
 
-	public synchronized void startMessageActivity(boolean msgLocationsSelected[], MessageSelectionButton[] messageButtons)
+	public synchronized void startMessageActivity(boolean msgLocationsSelected[], ScreenMessage[] messageButtons)
 			throws InterruptedException {
 		if (scheduledExecutorService.isShutdown()) {
 			scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -174,7 +174,7 @@ public class MessageController {
 		scheduledExecutorService.shutdown();
 		System.gc();
 	}
-
+	
 	public boolean isMessagesOn() {
 		return this.messagesOn;
 	}

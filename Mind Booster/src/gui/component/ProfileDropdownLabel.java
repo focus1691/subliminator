@@ -23,7 +23,7 @@ public class ProfileDropdownLabel extends JLabel {
 	}
 
 	public void setToPremium() {
-		setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
+		setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
 		setToolTipText("Basic Account");
 	}
 }

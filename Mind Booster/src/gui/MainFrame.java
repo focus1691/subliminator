@@ -59,7 +59,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private static final long serialVersionUID = -4312454251947395385L;
 	public static final String appName = "Subliminator";
 	private static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
-	private static final int premiumStartDelay = 0, premiumPopupDelay = 6;
+	private static final int premiumStartDelay = 0, premiumPopupDelay = 60 * 15;
 	private MessageController messageController;
 	private UserController userController;
 	private Database database;
@@ -95,7 +95,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			messagePanel = new MessagePanel(messageController);
 			messagePanel.setMessageStartListener(this);
 
-			settingsPanel = new SettingsPanel(userController, messageController.getSpeed(),
+			settingsPanel = new SettingsPanel(messageController.getSpeed(),
 					messageController.getInterval());
 			settingsPanel.setSettingsListener(this);
 
@@ -146,8 +146,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 		userProfileMenu = new UserProfileMenu(userController, profileDropdownLabel, settingsPanel);
 		userProfileMenu.setLoginListener(this);
-
-		premiumTaskExecutor = Executors.newSingleThreadScheduledExecutor();
 	}
 
 	private void setupUI() {
@@ -369,7 +367,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 			settingsPanel.checkForActiveMessages();
 			settingsPanel.deactivateActiveMessages();
-
+			
 			startPremiumTaskReminder();
 
 			userProfileMenu.createMenuItemsForTempUser();
@@ -392,6 +390,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				settingsPanel.checkForActiveMessages();
 
 				if (user.isUserPremium() == true) {
+					SettingsPanel.isUserPremium = true;
 
 					stopPremiumTaskReminder();
 
@@ -424,6 +423,10 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		userController.setLoggedIn(false);
 
 		userProfileMenu.removeAll();
+		
+		SettingsPanel.isUserPremium = false;
+
+		stopPremiumTaskReminder();
 
 		loginFrame = new LoginFrame();
 		loginFrame.setUserAndPassFields(userController.getUser().getEmail(), userController.getUser().getPassword());
@@ -431,13 +434,16 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	}
 
 	private void startPremiumTaskReminder() {
+		premiumTaskExecutor = Executors.newSingleThreadScheduledExecutor();
 		premiumTaskExecutor.scheduleWithFixedDelay(new PremiumReminderTask(), premiumStartDelay, premiumPopupDelay,
 				TimeUnit.SECONDS);
 	}
 
 	private void stopPremiumTaskReminder() {
-		if (premiumTaskExecutor.isShutdown() == false) {
-			premiumTaskExecutor.shutdown();
+		if (premiumTaskExecutor != null) {
+			if (premiumTaskExecutor.isShutdown() == false) {
+				premiumTaskExecutor.shutdown();
+			}
 		}
 	}
 }
