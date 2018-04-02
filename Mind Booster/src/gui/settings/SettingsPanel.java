@@ -314,11 +314,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		}
 	}
 
-	public boolean isMoreThanTwoMsgsSelected() {
+	public boolean isMoreThanOneMsgSelected() {
 		int count = 0;
 		for (int i = 0; i < maxMessages; i++) {
 			if (messageButtons[i].isActive()) {
-				if (++count > 2) {
+				if (++count > 1) {
 					return true;
 				}
 			}

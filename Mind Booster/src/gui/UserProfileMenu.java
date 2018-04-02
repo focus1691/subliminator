@@ -111,7 +111,7 @@ public class UserProfileMenu extends JPopupMenu implements ActionListener, Login
 					profileDropdownLabel.setToPremium();
 					createMenuItemsForPremiumUser();
 				} else if (userController.isUserPremium() == false) {
-					if (settingsPanelReference.isMoreThanTwoMsgsSelected() == true) {
+					if (settingsPanelReference.isMoreThanOneMsgSelected() == true) {
 						settingsPanelReference.deactivateActiveMessages();
 					}
 					profileDropdownLabel.setToBasic();

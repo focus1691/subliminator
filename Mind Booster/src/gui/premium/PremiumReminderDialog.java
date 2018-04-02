@@ -1,4 +1,4 @@
-package gui;
+package gui.premium;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -6,12 +6,15 @@ import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 
+import gui.MainFrame;
 import gui.util.IconFetch;
 import gui.util.SetScreenLocation;
 
-public class PremiumPromptDialog extends JDialog {
+public class PremiumReminderDialog extends JDialog {
 	
-	public PremiumPromptDialog() {
+	private static final long serialVersionUID = -5370326689494297072L;
+
+	public PremiumReminderDialog() {
 		setTitle(MainFrame.appName);
 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
 				IconFetch.getInstance().getIcon("/images/cursor.png").getImage(), new Point(0, 0),
@@ -22,7 +25,7 @@ public class PremiumPromptDialog extends JDialog {
 		pack();
 		SetScreenLocation.centerFrame(this);
 		setModal(true);
-		setVisible(true);
+		setVisible(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
 

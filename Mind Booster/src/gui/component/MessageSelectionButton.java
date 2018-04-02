@@ -22,7 +22,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import constants.CustomColor;
 import controller.UserController;
-import gui.PremiumPromptDialog;
+import gui.premium.PremiumReminderDialog;
 import gui.settings.SettingsPanel;
 import gui.util.JFontChooser;
 import utility.FontPicker;
@@ -72,7 +72,7 @@ public class MessageSelectionButton extends JPanel {
 							switchMessageOff();
 							SettingsPanel.numMessagesSelected--;
 						} else {
-							new PremiumPromptDialog();
+							new PremiumReminderDialog();
 						}
 					} else if (SettingsPanel.numMessagesSelected == 0) {
 						if (isActive()) {
