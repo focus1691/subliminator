@@ -110,7 +110,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 				}
 			});
 
-			userProfileMenu = new UserProfileMenu(userController, profileDropdownLabel);
+			userProfileMenu = new UserProfileMenu(userController, profileDropdownLabel, settingsPanel);
 			userProfileMenu.setLoginListener(this);
 
 			setJMenuBar(new CreateMenuBar(messageController, controlPanel, messagePanel));
@@ -360,39 +360,33 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 			userProfileMenu.createMenuItemsForTempUser();
 
-			profileDropdownLabel.setText("UNREGISTERED");
-			profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
+			profileDropdownLabel.setToUnregistered();
 
 			setVisible(true);
 			loginFrame.dispose();
 		} else {
-			String message = userController.login(email, pass);
+			String errorMessage = userController.login(email, pass);
 
-			if (userController.isLoggedIn()) {
+			if (userController.isLoggedIn() == false) {
+				loginFrame.setErrorMessage(errorMessage);
+			} else if (userController.isLoggedIn() == true) {
 				User user = userController.getUser();
 				profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
 
 				settingsPanel.checkForActiveMessages();
 
 				if (user.isUserPremium() == true) {
-
-					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-gold.png"));
-					profileDropdownLabel.setToolTipText("Premium member");
-					userProfileMenu.createMenuItemsForUserLoggedIn();
-				} else {
-					// Remove upgrade
-					if (settingsPanel.isMoreThanOneMsgSelected() == true) {
+					profileDropdownLabel.setToPremium();
+					userProfileMenu.createMenuItemsForPremiumUser();
+				} else if (user.isUserPremium() == false) {
+					profileDropdownLabel.setToBasic();
+					userProfileMenu.createMenuItemsForBasicUser();
+					if (settingsPanel.isMoreThanTwoMsgsSelected() == true) {
 						settingsPanel.deactivateActiveMessages();
 					}
-
-					profileDropdownLabel.setIcon(IconFetch.getInstance().getIcon("/images/star-black.png"));
-					profileDropdownLabel.setToolTipText("Basic Account");
-					userProfileMenu.createMenuItemsForUserLoggedIn();
 				}
 				setVisible(true);
 				loginFrame.dispose();
-			} else {
-				loginFrame.setErrorMessage(message);
 			}
 		}
 	}

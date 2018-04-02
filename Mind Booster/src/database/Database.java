@@ -74,7 +74,7 @@ public class Database {
 		}
 		return user;
 	}
-
+	
 	public boolean isUserPremium(int userId) {
 		String sql = "SELECT premium FROM Subliminator WHERE userId = ?";
 		boolean isUserPremium = false;
@@ -97,5 +97,4 @@ public class Database {
 		}
 		return isUserPremium;
 	}
-
 }

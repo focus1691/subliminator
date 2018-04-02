@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -23,6 +22,7 @@ import javax.swing.JTextField;
 import gui.component.LoginButton;
 import gui.component.RegisterButton;
 import gui.util.IconFetch;
+import gui.util.SetScreenLocation;
 import utility.FontPicker;
 
 public class LoginFrame extends JFrame implements ActionListener {
@@ -47,11 +47,11 @@ public class LoginFrame extends JFrame implements ActionListener {
 		getContentPane().setBackground(Color.decode("#A9E2F3"));
 		setPreferredSize(new Dimension(W, H));
 		setMinimumSize(new Dimension(minW, minH));
-		centerFrame(this);
+		SetScreenLocation.centerFrame(this);
 		setResizable(true);
 		pack();
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	private void initComponents() {
@@ -262,17 +262,6 @@ public class LoginFrame extends JFrame implements ActionListener {
 		gc.anchor = GridBagConstraints.NORTHWEST;
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(registerBtn, gc);
-	}
-
-	/**
-	 * A general-purpose method to vertically and horizontally center a window.
-	 * http://stackoverflow.com/questions/144892/how-to-center-a-window-in-java
-	 */
-	public void centerFrame(JFrame frame) {
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (int) ((dimension.getWidth() - getWidth()) / 2);
-		int y = (int) ((dimension.getHeight() - getHeight()) / 2);
-		setLocation(x, y);
 	}
 
 	@Override

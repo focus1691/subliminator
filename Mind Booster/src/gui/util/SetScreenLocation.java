@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import gui.login.LoginFrame;
+
 public class SetScreenLocation {
 
 	public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -24,6 +26,12 @@ public class SetScreenLocation {
 		int x = (int) ((screenSize.getWidth() - dialog.getWidth()) / 2);
 		int y = (int) ((screenSize.getHeight() - dialog.getHeight()) / 2);
 		dialog.setLocation(x, y);
+	}
+	
+	public static void centerFrame(LoginFrame loginFrame) {
+		int x = (int) ((screenSize.getWidth() - loginFrame.getWidth()) / 2);
+		int y = (int) ((screenSize.getHeight() - loginFrame.getHeight()) / 2);
+		loginFrame.setLocation(x, y);
 	}
 
 	public static void center(JDialog message) {
