@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.MessageController;
@@ -79,7 +80,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public MainFrame() {
 
 		if (NetworkController.isApplicationRunning() == true) {
-			System.exit(1);
+			JOptionPane.showMessageDialog(null, "More than one instance of this program is not supported",
+					"Two instances", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		} else {
 			database = new Database();
 
@@ -95,8 +98,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			messagePanel = new MessagePanel(messageController);
 			messagePanel.setMessageStartListener(this);
 
-			settingsPanel = new SettingsPanel(messageController.getSpeed(),
-					messageController.getInterval());
+			settingsPanel = new SettingsPanel(messageController.getSpeed(), messageController.getInterval());
 			settingsPanel.setSettingsListener(this);
 
 			controlPanel = new ControlPanel();
@@ -358,60 +360,65 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void loginEventOccurred(LoginEvent event) {
 
-		String email = event.getUser();
-		String pass = event.getPass();
-
-		if (userController.isTempUserSelected(email)) {
-
-			userController.setUserPremium(false);
-
-			settingsPanel.checkForActiveMessages();
-			settingsPanel.deactivateActiveMessages();
-			
-			startPremiumTaskReminder();
-
-			userProfileMenu.createMenuItemsForTempUser();
-
-			profileDropdownLabel.setToUnregistered();
-
-			setVisible(true);
-			loginFrame.dispose();
+		if (database.connect() == false) {
+			loginFrame.setErrorMessage("Unable to connect to the internet");
 		} else {
-			String errorMessage = userController.login(email, pass);
 
-			if (userController.isLoggedIn() == false) {
+			String email = event.getUser();
+			String pass = event.getPass();
 
-				loginFrame.setErrorMessage(errorMessage);
+			if (userController.isTempUserSelected(email)) {
 
-			} else if (userController.isLoggedIn() == true) {
-				User user = userController.getUser();
-				profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
+				userController.setUserPremium(false);
 
 				settingsPanel.checkForActiveMessages();
+				settingsPanel.deactivateActiveMessages();
 
-				if (user.isUserPremium() == true) {
-					SettingsPanel.isUserPremium = true;
+				startPremiumTaskReminder();
 
-					stopPremiumTaskReminder();
+				userProfileMenu.createMenuItemsForTempUser();
 
-					userProfileMenu.createMenuItemsForPremiumUser();
+				profileDropdownLabel.setToUnregistered();
 
-					profileDropdownLabel.setToPremium();
-
-				} else if (user.isUserPremium() == false) {
-
-					profileDropdownLabel.setToBasic();
-
-					startPremiumTaskReminder();
-
-					userProfileMenu.createMenuItemsForBasicUser();
-
-					if (settingsPanel.isMoreThanOneMsgSelected() == true) {
-						settingsPanel.deactivateActiveMessages();
-					}
-				}
 				setVisible(true);
 				loginFrame.dispose();
+			} else {
+				String errorMessage = userController.login(email, pass);
+
+				if (userController.isLoggedIn() == false) {
+
+					loginFrame.setErrorMessage(errorMessage);
+
+				} else if (userController.isLoggedIn() == true) {
+					User user = userController.getUser();
+					profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
+
+					settingsPanel.checkForActiveMessages();
+
+					if (user.isUserPremium() == true) {
+						SettingsPanel.isUserPremium = true;
+
+						stopPremiumTaskReminder();
+
+						userProfileMenu.createMenuItemsForPremiumUser();
+
+						profileDropdownLabel.setToPremium();
+
+					} else if (user.isUserPremium() == false) {
+
+						profileDropdownLabel.setToBasic();
+
+						startPremiumTaskReminder();
+
+						userProfileMenu.createMenuItemsForBasicUser();
+
+						if (settingsPanel.isMoreThanOneMsgSelected() == true) {
+							settingsPanel.deactivateActiveMessages();
+						}
+					}
+					setVisible(true);
+					loginFrame.dispose();
+				}
 			}
 		}
 	}
@@ -423,7 +430,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		userController.setLoggedIn(false);
 
 		userProfileMenu.removeAll();
-		
+
 		SettingsPanel.isUserPremium = false;
 
 		stopPremiumTaskReminder();
