@@ -58,18 +58,18 @@ public class CreateMenuBar extends JMenuBar {
 		ButtonGroup bg = new ButtonGroup();
 		JRadioButtonMenuItem small = new JRadioButtonMenuItem("    Small");
 		small.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		small.setForeground(Color.WHITE);
-		small.setBackground(Color.decode("#1975bf"));
+		small.setForeground(Color.BLACK);
+		small.setBackground(Color.decode("#dbdbdb"));
 		small.setOpaque(true);
 		JRadioButtonMenuItem medium = new JRadioButtonMenuItem("    Medium");
 		medium.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		medium.setForeground(Color.WHITE);
-		medium.setBackground(Color.decode("#1975bf"));
+		medium.setForeground(Color.BLACK);
+		medium.setBackground(Color.decode("#dbdbdb"));
 		medium.setOpaque(true);
 		JRadioButtonMenuItem large = new JRadioButtonMenuItem("    Large");
 		large.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		large.setForeground(Color.WHITE);
-		large.setBackground(Color.decode("#1975bf"));
+		large.setForeground(Color.BLACK);
+		large.setBackground(Color.decode("#dbdbdb"));
 		large.setOpaque(true);
 		large.setSelected(true);
 
@@ -127,8 +127,8 @@ public class CreateMenuBar extends JMenuBar {
 			}
 		});
 		fileMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		fileMenu.setForeground(Color.WHITE);
-		fileMenu.setBackground(Color.decode("#1975bf"));
+		fileMenu.setForeground(Color.BLACK);
+		fileMenu.setBackground(Color.decode("#dbdbdb"));
 		fileMenu.setOpaque(true);
 		return fileMenu;
 	}
@@ -177,8 +177,8 @@ public class CreateMenuBar extends JMenuBar {
 			}
 		});
 		messageResetItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		messageResetItem.setForeground(Color.WHITE);
-		messageResetItem.setBackground(Color.decode("#1975bf"));
+		messageResetItem.setForeground(Color.BLACK);
+		messageResetItem.setBackground(Color.decode("#dbdbdb"));
 		messageResetItem.setOpaque(true);
 		return messageResetItem;
 	}

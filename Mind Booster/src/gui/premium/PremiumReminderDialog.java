@@ -26,7 +26,6 @@ public class PremiumReminderDialog extends JDialog {
 		SetScreenLocation.centerFrame(this);
 		setModal(true);
 		setVisible(false);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
 
 }

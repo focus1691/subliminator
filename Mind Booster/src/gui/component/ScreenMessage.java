@@ -139,8 +139,8 @@ public class ScreenMessage extends JPanel {
 
 		bgOff = new RadioItem("Background Off");
 		bgOff.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		bgOff.setForeground(Color.WHITE);
-		bgOff.setBackground(Color.decode("#1975bf"));
+		bgOff.setForeground(Color.BLACK);
+		bgOff.setBackground(Color.decode("#dbdbdb"));
 		bgOff.setOpaque(true);
 		bgOff.setSelected(prefs.getBoolean(categoryName + "bgOff", true));
 		bgOff.addActionListener(new ActionListener() {
@@ -153,8 +153,8 @@ public class ScreenMessage extends JPanel {
 
 		bgOn = new RadioItem("Background On");
 		bgOn.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		bgOn.setForeground(Color.WHITE);
-		bgOn.setBackground(Color.decode("#1975bf"));
+		bgOn.setForeground(Color.BLACK);
+		bgOn.setBackground(Color.decode("#dbdbdb"));
 		bgOn.setOpaque(true);
 		bgOn.setSelected(prefs.getBoolean(categoryName + "bgOn", true));
 		bgOn.addActionListener(new ActionListener() {
@@ -171,8 +171,8 @@ public class ScreenMessage extends JPanel {
 
 		MenuItem foregroundPickerItem = new MenuItem("Choose Colour");
 		foregroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		foregroundPickerItem.setForeground(Color.WHITE);
-		foregroundPickerItem.setBackground(Color.decode("#1975bf"));
+		foregroundPickerItem.setForeground(Color.BLACK);
+		foregroundPickerItem.setBackground(Color.decode("#dbdbdb"));
 		foregroundPickerItem.setOpaque(true);
 		foregroundPickerItem.addActionListener(new ActionListener() {
 			@Override
@@ -187,6 +187,10 @@ public class ScreenMessage extends JPanel {
 		});
 
 		MenuItem backgroundPickerItem = new MenuItem("Choose Background");
+		backgroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		backgroundPickerItem.setForeground(Color.BLACK);
+		backgroundPickerItem.setBackground(Color.decode("#dbdbdb"));
+		backgroundPickerItem.setOpaque(true);
 		backgroundPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -206,8 +210,8 @@ public class ScreenMessage extends JPanel {
 
 		MenuItem fontPickerItem = new MenuItem("Choose Font");
 		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		fontPickerItem.setForeground(Color.WHITE);
-		fontPickerItem.setBackground(Color.decode("#1975bf"));
+		fontPickerItem.setForeground(Color.BLACK);
+		fontPickerItem.setBackground(Color.decode("#dbdbdb"));
 		fontPickerItem.setOpaque(true);
 		fontPickerItem.addActionListener(new ActionListener() {
 			@Override
