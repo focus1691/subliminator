@@ -6,18 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import gui.MainFrame;
 import model.User;
 
 public class Database {
 
 	private static Connection con;
-	 private static String url = "jdbc:mysql://160.153.128.45/PsychoTechnology?verifyServerCertificate=false&useSSL=true&?zeroDateTimeBehavior=convertToNull";
-	 private static final String user = "mindbooster";
-	 private static final String password = "QqZqXrk5YAX3JuBGjCmT";
+//	 private static String url = "jdbc:mysql://160.153.128.45/PsychoTechnology?verifyServerCertificate=false&useSSL=true&?zeroDateTimeBehavior=convertToNull";
+//	 private static final String user = "mindbooster";
+//	 private static final String password = "QqZqXrk5YAX3JuBGjCmT";
 
-//	private static String url = "jdbc:mysql://localhost/PsychoTechnology";
-//	private static final String user = "root";
-//	private static final String password = "";
+	private static String url = "jdbc:mysql://localhost/PsychoTechnology";
+	private static final String user = "root";
+	private static final String password = "";
 
 	public boolean connect() {
 		try {
@@ -75,13 +76,14 @@ public class Database {
 	}
 	
 	public boolean isUserPremium(int userId) {
-		String sql = "SELECT premium FROM Subliminator WHERE userId = ?";
+		String sql = "SELECT premium FROM UserApps WHERE userId = ? AND appName = ?";
 		boolean isUserPremium = false;
 
 		if (connect() == true) {
 			try {
 				PreparedStatement ps = con.prepareStatement(sql);
 				ps.setInt(1, userId);
+				ps.setString(2, MainFrame.appName);
 
 				ResultSet results = ps.executeQuery();
 

@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -82,6 +83,7 @@ public class ScreenMessage extends JPanel {
 						} else {
 							PremiumReminderDialog premiumReminderDialog = new PremiumReminderDialog();
 							premiumReminderDialog.setVisible(true);
+							premiumReminderDialog.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 						}
 					} else if (SettingsPanel.numMessagesSelected == 0) {
 						if (isActive()) {

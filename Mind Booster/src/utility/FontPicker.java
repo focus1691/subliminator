@@ -13,6 +13,7 @@ public class FontPicker {
 	public final static String latoBlack = "/font/Lato-Black_0.ttf";
 	public final static String latoBold = "/font/Lato-Bold_0.ttf";
 	public final static String latoRegular = "/font/Lato-Regular_0.ttf";
+	public final static String robotoRegular = "/font/Roboto-Regular.ttf";
 
 	public static Font getFont(String dir, float fontSize) {
 		Font font = null;

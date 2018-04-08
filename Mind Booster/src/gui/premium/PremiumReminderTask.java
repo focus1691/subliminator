@@ -3,9 +3,10 @@ package gui.premium;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class PremiumReminderTask implements Runnable {
+public class PremiumReminderTask extends Thread {
 
 	private PremiumReminderDialog premiumReminderDialog;
+	private final int delay = 6;
 
 	public PremiumReminderTask() {
 		premiumReminderDialog = new PremiumReminderDialog();
@@ -18,6 +19,15 @@ public class PremiumReminderTask implements Runnable {
 	}
 	@Override
 	public void run() {
+		premiumReminderDialog.setVisible(true);
+		try {
+			sleep(delay);
+		} catch (InterruptedException e) {
+			System.err.println("Premium reminder sleep failed");
+		}
+	}
+	
+	public void showPopup() {
 		premiumReminderDialog.setVisible(true);
 	}
 }

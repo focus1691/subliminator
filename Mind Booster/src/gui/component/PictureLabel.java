@@ -12,6 +12,8 @@ public class PictureLabel extends JLabel {
 
 	public PictureLabel(ImageIcon icon) {
 		super();
+		setIcon(icon);
+		setOpaque(false);
 		this.imageIcon = icon;
 	}
 

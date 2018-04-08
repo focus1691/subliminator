@@ -11,11 +11,12 @@ public class RegisterButton extends JButton {
 
 	public RegisterButton(String name) {
 		super(name);
-		setBackground(Color.decode("#00FF00"));
-		setForeground(Color.BLACK);
+		setBackground(Color.decode("#023b6a"));
+		setForeground(Color.WHITE);
 		setOpaque(false);
-		setFont(FontPicker.getFont(FontPicker.latoBold, 28));
-		setPreferredSize(new Dimension(125, 50));
+		setBorderPainted(false);
+		setFocusPainted(false);
+		setFont(FontPicker.getFont(FontPicker.robotoRegular, 38.03f));
+		setPreferredSize(new Dimension(125, 30));
 	}
-
 }

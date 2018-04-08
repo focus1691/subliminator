@@ -1,6 +1,10 @@
 package controller;
 
+import javax.swing.JDialog;
+
 import database.Database;
+import gui.premium.PremiumCheckerTask;
+import gui.premium.PremiumReminderDialog;
 import model.User;
 import validation.BCrypt;
 
@@ -10,12 +14,12 @@ public class UserController {
 	private Database database;
 	private boolean loggedIn = false;
 	private final String tempLoginKey = "MjMGqzdkMSs4K4PNkN454Ufc";
-	private final static String versionURL = "http://localhost:1337/PsychoTechnology/version.html";
-	private final static String historyURL = "http://localhost:1337/PsychoTechnology/history.html";
+	private PremiumCheckerTask premiumCheckerTask;
 
 	public UserController(Database database) {
 		this.database = database;
 		user = new User();
+		premiumCheckerTask = new PremiumCheckerTask(this);
 	}
 
 	public boolean isTempUserSelected(String tempLoginKey) {
@@ -68,7 +72,29 @@ public class UserController {
 		return user.isUserPremium();
 	}
 
+	public boolean fetchPremiumStatus() {
+		return database.isUserPremium(user.getId());
+	}
+
 	public void setUserPremium(boolean premiumUser) {
 		this.user.setUserPremium(premiumUser);
+	}
+
+	public void runPremiumPrompter() {
+		if (!premiumCheckerTask.isAlive()) {
+			premiumCheckerTask.start();
+			premiumCheckerTask.runPremiumReminder();
+		}
+	}
+
+	public void stopPremiumPrompter() {
+		if (!premiumCheckerTask.isInterrupted()) {
+			premiumCheckerTask.interrupt();
+			premiumCheckerTask.stopPremiumReminder();
+		}
+	}
+	
+	public void showPremiumPopup() {
+		premiumCheckerTask.showPopup();
 	}
 }

@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,6 +16,7 @@ import gui.login.LoginListener;
 import gui.login.LogoutEvent;
 import gui.settings.SettingsPanel;
 import model.User;
+import utility.FontPicker;
 
 public class UserProfileMenu extends JPopupMenu implements ActionListener, LoginListener {
 
@@ -38,7 +40,10 @@ public class UserProfileMenu extends JPopupMenu implements ActionListener, Login
 
 	public void createMenuItemsForBasicUser() {
 		premiumItem = new MenuItem("Get Premium");
+		styleMenuItem(premiumItem);
+
 		logoutItem = new MenuItem("Logout");
+		styleMenuItem(logoutItem);
 		logoutItem.addActionListener(this);
 
 		if (userController.isUserPremium() == false) {
@@ -49,7 +54,9 @@ public class UserProfileMenu extends JPopupMenu implements ActionListener, Login
 
 	public void createMenuItemsForPremiumUser() {
 		premiumItem = new MenuItem("Get Premium");
+		styleMenuItem(premiumItem);
 		logoutItem = new MenuItem("Logout");
+		styleMenuItem(logoutItem);
 		logoutItem.addActionListener(this);
 
 		if (userController.isUserPremium() == false) {
@@ -60,8 +67,10 @@ public class UserProfileMenu extends JPopupMenu implements ActionListener, Login
 
 	public void createMenuItemsForTempUser() {
 		loginItem = new MenuItem("Login");
+		styleMenuItem(loginItem);
 		loginItem.addActionListener(this);
 		premiumItem = new MenuItem("Premium");
+		styleMenuItem(premiumItem);
 
 		add(loginItem);
 		add(premiumItem);
@@ -70,6 +79,13 @@ public class UserProfileMenu extends JPopupMenu implements ActionListener, Login
 	public void removeMenuItems() {
 		remove(loginItem);
 		remove(premiumItem);
+	}
+	
+	private void styleMenuItem(MenuItem item) {
+		item.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
+		item.setForeground(Color.BLACK);
+		item.setBackground(Color.decode("#dbdbdb"));
+		item.setOpaque(true);
 	}
 
 	@Override
