@@ -64,7 +64,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private SettingsPanel settingsPanel;
 	private ControlPanel controlPanel;
 	private JDesktopPane desktopPane;
-	private JPanel mainPanel;
+	private JPanel container;
 	private MBSystemTray hideToSystemTray;
 	private ProfileDropdownLabel profileDropdownLabel;
 	private JLabel errorMsg;
@@ -102,7 +102,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 			this.addComponentListener(new ComponentAdapter() {
 				public void componentResized(ComponentEvent evt) {
-					mainPanel.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 1.0));
+					container.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 1.0));
 					profileDropdownLabel.revalidate();
 					profileDropdownLabel.repaint();
 					revalidate();
@@ -144,9 +144,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	}
 
 	private void setupUI() {
-		mainPanel = new JPanel(new GridBagLayout());
-		mainPanel.setVisible(true);
-		mainPanel.setBackground(Color.decode("#efeff0"));
+		container = new JPanel(new GridBagLayout());
+		container.setVisible(true);
+		container.setBackground(Color.decode("#efeff0"));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -159,7 +159,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		mainPanel.add(errorMsg, gbc);
+		container.add(errorMsg, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -170,7 +170,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		mainPanel.add(categoryPanel, gbc);
+		container.add(categoryPanel, gbc);
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -179,7 +179,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.8;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		mainPanel.add(messagePanel, gbc);
+		container.add(messagePanel, gbc);
 
 		gbc.gridx = 2;
 		gbc.gridy = 0;
@@ -190,7 +190,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(0, 20, 0, 20);
-		mainPanel.add(profileDropdownLabel, gbc);
+		container.add(profileDropdownLabel, gbc);
 
 		gbc.gridx = 2;
 		gbc.gridy = 0;
@@ -201,7 +201,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(20, 0, 0, 0);
-		mainPanel.add(settingsPanel, gbc);
+		container.add(settingsPanel, gbc);
 
 		gbc.anchor = GridBagConstraints.SOUTH;
 		gbc.gridx = 0;
@@ -211,11 +211,11 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.weightx = 1;
 		gbc.weighty = 0.2;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		mainPanel.add(controlPanel, gbc);
+		container.add(controlPanel, gbc);
 
 		desktopPane = new JDesktopPane();
 		desktopPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
-		desktopPane.add(mainPanel);
+		desktopPane.add(container);
 		add(desktopPane);
 	}
 

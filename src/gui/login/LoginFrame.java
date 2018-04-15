@@ -46,7 +46,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		setupUI();
 		
 		setTitle("Login");
-//		getContentPane().setBackground(Color.decode("#A9E2F3"));
+		setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
 		setContentPane(loginPanel);
 		loginPanel.setBackground(Color.decode("#1975be"));
 		setPreferredSize(new Dimension(W, H));
