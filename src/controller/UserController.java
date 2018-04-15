@@ -1,10 +1,7 @@
 package controller;
 
-import javax.swing.JDialog;
-
 import database.Database;
 import gui.premium.PremiumCheckerTask;
-import gui.premium.PremiumReminderDialog;
 import model.User;
 import validation.BCrypt;
 

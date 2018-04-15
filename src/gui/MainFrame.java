@@ -38,7 +38,6 @@ import gui.login.LoginFrame;
 import gui.login.LoginListener;
 import gui.login.LogoutEvent;
 import gui.message.MessagePanel;
-import gui.premium.PremiumReminderDialog;
 import gui.settings.SettingsEvent;
 import gui.settings.SettingsListener;
 import gui.settings.SettingsPanel;

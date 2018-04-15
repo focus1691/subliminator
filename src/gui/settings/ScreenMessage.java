@@ -1,4 +1,4 @@
-package gui.component;
+package gui.settings;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,14 +16,15 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
 
 import constants.CustomColor;
+import gui.component.BlueGreyMenuItem;
+import gui.component.BlueGreyRadioItem;
+import gui.component.MessagePreview;
+import gui.component.MessageSwitch;
 import gui.premium.PremiumReminderDialog;
-import gui.settings.SettingsPanel;
 import gui.util.JFontChooser;
 import utility.FontPicker;
 
@@ -37,7 +38,7 @@ public class ScreenMessage extends JPanel {
 	private MessageSwitch messageSwitch;
 	private ImageIcon image;
 	private boolean active = false;
-	private JRadioButtonMenuItem bgOff, bgOn;
+	private BlueGreyRadioItem messageBgOff, messageBgOn;
 	private Color activeColour, activeBackground;
 	private Font font;
 
@@ -139,13 +140,9 @@ public class ScreenMessage extends JPanel {
 	private void createMenu() {
 		this.menu = new JPopupMenu();
 
-		bgOff = new RadioItem("Background Off");
-		bgOff.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		bgOff.setForeground(Color.BLACK);
-		bgOff.setBackground(Color.decode("#dbdbdb"));
-		bgOff.setOpaque(true);
-		bgOff.setSelected(prefs.getBoolean(categoryName + "bgOff", true));
-		bgOff.addActionListener(new ActionListener() {
+		messageBgOff = new BlueGreyRadioItem("Background Off");
+		messageBgOff.setSelected(prefs.getBoolean(categoryName + "bgOff", true));
+		messageBgOff.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				prefs.putBoolean(categoryName + "bgOn", false);
@@ -153,30 +150,29 @@ public class ScreenMessage extends JPanel {
 			}
 		});
 
-		bgOn = new RadioItem("Background On");
-		bgOn.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		bgOn.setForeground(Color.BLACK);
-		bgOn.setBackground(Color.decode("#dbdbdb"));
-		bgOn.setOpaque(true);
-		bgOn.setSelected(prefs.getBoolean(categoryName + "bgOn", true));
-		bgOn.addActionListener(new ActionListener() {
+		messageBgOn = new BlueGreyRadioItem("Background On");
+		messageBgOn.setSelected(prefs.getBoolean(categoryName + "bgOn", true));
+		messageBgOn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				prefs.putBoolean(categoryName + "bgOn", true);
 				prefs.putBoolean(categoryName + "bgOff", false);
+				
+				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
+				if (newColor != null) {
+					prefs.putInt(categoryName + "colorbackground", newColor.getRGB());
+					messagePreview.setBackground(newColor);
+					messagePreview.repaint();
+				}
 			}
 		});
 
 		ButtonGroup bg = new ButtonGroup();
-		bg.add(bgOff);
-		bg.add(bgOn);
+		bg.add(messageBgOff);
+		bg.add(messageBgOn);
 
-		MenuItem foregroundPickerItem = new MenuItem("Choose Colour");
-		foregroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		foregroundPickerItem.setForeground(Color.BLACK);
-		foregroundPickerItem.setBackground(Color.decode("#dbdbdb"));
-		foregroundPickerItem.setOpaque(true);
-		foregroundPickerItem.addActionListener(new ActionListener() {
+		BlueGreyMenuItem messageColorPickerItem = new BlueGreyMenuItem("Message Colour");
+		messageColorPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
@@ -187,34 +183,8 @@ public class ScreenMessage extends JPanel {
 				}
 			}
 		});
-
-		MenuItem backgroundPickerItem = new MenuItem("Choose Background");
-		backgroundPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		backgroundPickerItem.setForeground(Color.BLACK);
-		backgroundPickerItem.setBackground(Color.decode("#dbdbdb"));
-		backgroundPickerItem.setOpaque(true);
-		backgroundPickerItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (bgOn.isSelected()) {
-					Color newColor = JColorChooser.showDialog(null, "Pick Color", getBackground());
-					if (newColor != null) {
-						prefs.putInt(categoryName + "colorbackground", newColor.getRGB());
-						messagePreview.setBackground(newColor);
-						messagePreview.repaint();
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Background selector is turned off. Turn it on to change it.",
-							"Message Background", JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		});
-
-		MenuItem fontPickerItem = new MenuItem("Choose Font");
-		fontPickerItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		fontPickerItem.setForeground(Color.BLACK);
-		fontPickerItem.setBackground(Color.decode("#dbdbdb"));
-		fontPickerItem.setOpaque(true);
+		
+		BlueGreyMenuItem fontPickerItem = new BlueGreyMenuItem("Font");
 		fontPickerItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -230,10 +200,9 @@ public class ScreenMessage extends JPanel {
 			}
 		});
 
-		menu.add(foregroundPickerItem);
-		menu.add(bgOff);
-		menu.add(bgOn);
-		menu.add(backgroundPickerItem);
+		menu.add(messageColorPickerItem);
+		menu.add(messageBgOn);
+		menu.add(messageBgOff);
 		menu.add(fontPickerItem);
 
 		menu.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -265,7 +234,7 @@ public class ScreenMessage extends JPanel {
 	}
 
 	public boolean isBackgroundSelected() {
-		return bgOff.isSelected() ? false : true;
+		return messageBgOff.isSelected() ? false : true;
 	}
 
 	public Color getActiveBackground() {

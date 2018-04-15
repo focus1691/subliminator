@@ -20,7 +20,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import gui.component.PictureLabel;
-import gui.component.ScreenMessage;
 import gui.util.IconFetch;
 import utility.FontPicker;
 
