@@ -15,11 +15,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
 
 import controller.MessageController;
 import gui.component.BlueGreyMenuItem;
+import gui.component.BlueGreyRadioButtonMenuItem;
 import gui.controls.ControlPanel;
 import gui.message.MessagePanel;
 import gui.subliminal.SubliminalFrame;
@@ -57,21 +57,9 @@ public class CreateMenuBar extends JMenuBar {
 
 		// Message Size
 		ButtonGroup bg = new ButtonGroup();
-		JRadioButtonMenuItem small = new JRadioButtonMenuItem("    Small");
-		small.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		small.setForeground(Color.BLACK);
-		small.setBackground(Color.decode("#dbdbdb"));
-		small.setOpaque(true);
-		JRadioButtonMenuItem medium = new JRadioButtonMenuItem("    Medium");
-		medium.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		medium.setForeground(Color.BLACK);
-		medium.setBackground(Color.decode("#dbdbdb"));
-		medium.setOpaque(true);
-		JRadioButtonMenuItem large = new JRadioButtonMenuItem("    Large");
-		large.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		large.setForeground(Color.BLACK);
-		large.setBackground(Color.decode("#dbdbdb"));
-		large.setOpaque(true);
+		BlueGreyRadioButtonMenuItem small = new BlueGreyRadioButtonMenuItem("    Small");
+		BlueGreyRadioButtonMenuItem medium = new BlueGreyRadioButtonMenuItem("    Medium");
+		BlueGreyRadioButtonMenuItem large = new BlueGreyRadioButtonMenuItem("    Large");
 		large.setSelected(true);
 
 		bg.add(small);
@@ -144,9 +132,9 @@ public class CreateMenuBar extends JMenuBar {
 				final JButton cancel = new JButton("cancel");
 				int optionType = JOptionPane.CANCEL_OPTION;
 				int messageType = JOptionPane.WARNING_MESSAGE;
-				String warningMessage = "This option will remove all custom messages you have created and restore everything to its original state";
-				String title = "Reset Messages";
-				Object[] selValues = { ok, cancel };
+				final String warningMessage = "This option will remove all custom messages you have created and restore everything to its original state";
+				final String title = "Reset Messages";
+				final Object[] selValues = { ok, cancel };
 
 				ok.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent ae) {
