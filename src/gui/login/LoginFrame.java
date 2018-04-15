@@ -32,8 +32,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 	public static final int W = 750, H = 750, minW = 700, minH = 700;
 	private final String tempPass = "MjMGqzdkMSs4K4PNkN454Ufc";
 	private JButton logo;
-	private JLabel registerLbl;
-	private JLabel errorLbl;
+	private JLabel registerLbl, errorLbl;
 	private RoundJTextField userTxt;
 	private RoundJPasswordField passTxt;
 	private JButton submitBtn, tempLoginBtn, registerBtn;
