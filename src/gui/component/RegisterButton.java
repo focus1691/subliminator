@@ -7,6 +7,7 @@ import javax.swing.JButton;
 
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class RegisterButton extends JButton {
 
 	public RegisterButton(String name) {

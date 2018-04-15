@@ -4,13 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class JRoundRectButton extends JButton {
-	// for mouse detection purposes
-	Shape shape;
 
 	public JRoundRectButton(String label) {
 		super(label);

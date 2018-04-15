@@ -18,6 +18,7 @@ import gui.settings.SettingsPanel;
 import model.User;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class UserProfileMenu extends JPopupMenu implements ActionListener, LoginListener {
 
 	private LoginFrame loginFrame;

@@ -2,9 +2,9 @@ package gui.category;
 
 import java.util.EventObject;
 
+@SuppressWarnings("serial")
 public class CategoryEvent extends EventObject {
 
-	private static final long serialVersionUID = 1L;
 	private int categoryIndex;
 
 	public CategoryEvent(Object source) {

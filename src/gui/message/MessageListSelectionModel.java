@@ -2,9 +2,9 @@ package gui.message;
 
 import javax.swing.DefaultListSelectionModel;
 
+@SuppressWarnings("serial")
 public class MessageListSelectionModel extends DefaultListSelectionModel {
 
-	private static final long serialVersionUID = 1L;
 	private int messageCount = 0;
 	private int activeMessages = 0;
 

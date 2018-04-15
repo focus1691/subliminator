@@ -24,9 +24,9 @@ import model.Message;
 import utility.FontPicker;
 import validation.MessageValidator;
 
+@SuppressWarnings("serial")
 public class AddMessage extends JInternalFrame {
 
-	private static final long serialVersionUID = 1447537632437945694L;
 	public static final int W = 600, H = 190;
 	private MessageController controller;
 	private JLabel errorMsg;

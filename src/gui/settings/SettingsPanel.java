@@ -23,9 +23,9 @@ import gui.component.PictureLabel;
 import gui.util.IconFetch;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class SettingsPanel extends JPanel implements ChangeListener {
 
-	private static final long serialVersionUID = -798661649041437371L;
 	public static boolean isUserPremium = false;
 	public static boolean limitedMessages;
 	public static final int maxMessages = 5;

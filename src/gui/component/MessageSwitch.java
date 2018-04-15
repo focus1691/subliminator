@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class MessageSwitch extends JPanel {
 	private Color activeColour;
 

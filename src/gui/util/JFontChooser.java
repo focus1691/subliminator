@@ -46,6 +46,7 @@ import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.Position;
 
+@SuppressWarnings("serial")
 public class JFontChooser extends JComponent {
 
 	// class variables

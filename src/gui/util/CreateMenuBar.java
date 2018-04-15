@@ -25,9 +25,9 @@ import gui.message.MessagePanel;
 import gui.subliminal.SubliminalFrame;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class CreateMenuBar extends JMenuBar {
 
-	private static final long serialVersionUID = 2825424567069068134L;
 	private MessageController messageController;
 	private MessagePanel messagePanel;
 	private ControlPanel controlPanel;

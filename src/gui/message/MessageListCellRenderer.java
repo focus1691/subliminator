@@ -16,9 +16,9 @@ import gui.settings.SettingsPanel;
 import gui.util.IconFetch;
 import model.Message;
 
+@SuppressWarnings("serial")
 public class MessageListCellRenderer extends DefaultListCellRenderer {
 
-	private static final long serialVersionUID = 5844001513309670611L;
 	private final Border greyFaintBorder = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode("#ecf1f5"));
 	private final CompoundBorder compoundBorder = new CompoundBorder(
 			BorderFactory.createMatteBorder(0, 0, 0, 4, Color.decode("#2388d9")),

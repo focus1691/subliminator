@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings("serial")
 public class Separator extends JSeparator {
 
 	public Separator() {

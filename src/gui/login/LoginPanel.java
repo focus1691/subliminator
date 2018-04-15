@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class LoginPanel extends JPanel {
 
 	private Image image;

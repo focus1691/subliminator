@@ -26,9 +26,9 @@ import gui.util.IconFetch;
 import gui.util.SetScreenLocation;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class LoginFrame extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 6685039386661838526L;
 	public static final int W = 750, H = 750, minW = 700, minH = 700;
 	private final String tempPass = "MjMGqzdkMSs4K4PNkN454Ufc";
 	private JButton logo;

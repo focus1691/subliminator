@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import gui.util.IconFetch;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class ProfileDropdownLabel extends JLabel {
 
 	public ProfileDropdownLabel() {

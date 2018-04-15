@@ -26,9 +26,9 @@ import gui.util.IconFetch;
 import gui.util.SetScreenLocation;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class PremiumReminderDialog extends JDialog {
-	
-	private static final long serialVersionUID = -5370326689494297072L;
+
 	private JLabel  title, subheading, description;
 	private PictureLabel logo, screen;
 	private OrderButton orderButton;

@@ -6,9 +6,9 @@ import java.util.List;
 import constants.MessageTense;
 import model.Message;
 
+@SuppressWarnings("serial")
 public class MessageSelectionEvent extends EventObject {
-
-	private static final long serialVersionUID = 1L;
+	
 	private MessageTense messageTense;
 	private List<Message> selectedMessages;
 

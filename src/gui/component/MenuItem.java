@@ -6,6 +6,7 @@ import javax.swing.JMenuItem;
 
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class MenuItem extends JMenuItem {
 
 	public MenuItem(String name) {

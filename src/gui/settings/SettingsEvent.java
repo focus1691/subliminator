@@ -2,9 +2,8 @@ package gui.settings;
 
 import java.util.EventObject;
 
+@SuppressWarnings("serial")
 public class SettingsEvent extends EventObject {
-
-	private static final long serialVersionUID = 1L;
 
 	private int messageSpeed;
 	private int messageInterval;

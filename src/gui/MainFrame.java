@@ -18,8 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Network.SocketBinder;
 import controller.MessageController;
-import controller.NetworkController;
 import controller.UserController;
 import database.Database;
 import gui.category.CategoryEvent;
@@ -50,9 +50,9 @@ import model.User;
 import utility.FontPicker;
 import validation.ArrayValidator;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener, LoginListener {
-
-	private static final long serialVersionUID = -4312454251947395385L;
+	
 	public static final String appName = "Subliminator";
 	private static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
 	private MessageController messageController;
@@ -72,7 +72,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 	public MainFrame() {
 
-		if (NetworkController.isApplicationRunning() == true) {
+		if (SocketBinder.isApplicationRunning() == true) {
 			JOptionPane.showMessageDialog(null, "More than one instance of this program is not supported",
 					"Two instances", JOptionPane.ERROR_MESSAGE);
 			dispose();

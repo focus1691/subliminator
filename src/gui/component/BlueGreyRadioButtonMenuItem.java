@@ -6,6 +6,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class BlueGreyRadioButtonMenuItem extends JRadioButtonMenuItem {
 	
 	public BlueGreyRadioButtonMenuItem(String name) {

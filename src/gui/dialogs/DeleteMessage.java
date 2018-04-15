@@ -17,9 +17,9 @@ import gui.component.JRoundRectButton;
 import gui.message.MessagePanel;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class DeleteMessage extends JInternalFrame {
 
-	private static final long serialVersionUID = 5549429493881002578L;
 	public static final int W = 600, H = 190;
 	private MessageController controller;
 	private JLabel errorMsg;

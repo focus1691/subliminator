@@ -12,17 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
-/**
- *
- * @author Thomas Otero H3R3T1C
- */
 public class UpdateInfo extends JFrame {
 
 	private static final long serialVersionUID = -622059982314112173L;
 	private JEditorPane infoPane;
 	private JScrollPane scp;
 	private JButton ok;
-	private JButton cancel;
+	private JButton cancelBtn;
 	private JPanel pan1;
 	private JPanel pan2;
 
@@ -55,15 +51,15 @@ public class UpdateInfo extends JFrame {
 			}
 		});
 
-		cancel = new JButton("Cancel");
-		cancel.addActionListener(new ActionListener() {
+		cancelBtn = new JButton("Cancel");
+		cancelBtn.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				UpdateInfo.this.dispose();
 			}
 		});
 		pan2.add(ok);
-		pan2.add(cancel);
+		pan2.add(cancelBtn);
 		pan1.add(pan2, BorderLayout.SOUTH);
 		pan1.add(scp, BorderLayout.CENTER);
 		this.add(pan1);

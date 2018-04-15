@@ -22,9 +22,9 @@ import gui.util.IconFetch;
 import utility.FontPicker;
 import validation.MessageValidator;
 
+@SuppressWarnings("serial")
 public class EditMessage extends JInternalFrame {
 
-	private static final long serialVersionUID = 5470112838506529493L;
 	public static final int W = 600, H = 190;
 	private MessageController controller;
 	private JLabel errorMsg;

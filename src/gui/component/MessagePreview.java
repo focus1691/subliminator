@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 public class MessagePreview extends JLabel {
 
 	public MessagePreview(String categoryName) {

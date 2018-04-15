@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class BlueGreyRadioItem extends RadioItem {
 	
 	public BlueGreyRadioItem(String name) {

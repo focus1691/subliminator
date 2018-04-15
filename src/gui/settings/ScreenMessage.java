@@ -28,9 +28,9 @@ import gui.premium.PremiumReminderDialog;
 import gui.util.JFontChooser;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class ScreenMessage extends JPanel {
 
-	private static final long serialVersionUID = -890456094498670386L;
 	private final String categoryName;
 	private Preferences prefs;
 	private JPopupMenu menu;

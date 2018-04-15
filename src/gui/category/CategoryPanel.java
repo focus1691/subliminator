@@ -22,9 +22,9 @@ import gui.component.BlueCurvedScrollBar;
 import model.Category;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class CategoryPanel extends JPanel {
 
-	private static final long serialVersionUID = 4919411682587534256L;
 	private MessageController controller;
 	private JScrollPane scroller;
 	private JLabel header;

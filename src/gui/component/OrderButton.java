@@ -12,6 +12,7 @@ import javax.swing.JButton;
 
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class OrderButton extends JButton {
 	
 	private Shape shape;

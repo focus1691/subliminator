@@ -13,9 +13,9 @@ import javax.swing.border.CompoundBorder;
 import constants.CustomColor;
 import model.Category;
 
+@SuppressWarnings("serial")
 public class CategoryListCellRenderer extends DefaultListCellRenderer {
 
-	private static final long serialVersionUID = 6638393449640171111L;
 	Border faintGreyBorder = BorderFactory.createMatteBorder(2, 0, 2, 0, Color.decode("#ecf1f5"));
 
 	CompoundBorder compoundBorder = new CompoundBorder(

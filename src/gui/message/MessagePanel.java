@@ -34,9 +34,9 @@ import gui.util.IconFetch;
 import model.Message;
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class MessagePanel extends JPanel implements ActionListener, MouseListener {
 
-	private static final long serialVersionUID = -2216564927731765772L;
 	private JLabel header;
 	private JScrollPane scroller;
 	private JList<Message> messageList;

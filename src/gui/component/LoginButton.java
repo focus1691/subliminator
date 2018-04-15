@@ -10,6 +10,7 @@ import javax.swing.JButton;
 
 import utility.FontPicker;
 
+@SuppressWarnings("serial")
 public class LoginButton extends JButton {
 	
 	private Color color;

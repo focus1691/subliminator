@@ -11,9 +11,9 @@ import gui.util.IconFetch;
 import gui.util.SetScreenLocation;
 import model.Message;
 
+@SuppressWarnings("serial")
 public class SubliminalFrame extends JDialog {
 
-	private static final long serialVersionUID = 2931841309711143361L;
 	private SubliminalMessage subliminalMessage;
 	private boolean active;
 	public static int height = 200;

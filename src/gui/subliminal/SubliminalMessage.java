@@ -16,9 +16,9 @@ import javax.swing.JPanel;
  *
  * @author Joshua
  */
+@SuppressWarnings("serial")
 public class SubliminalMessage extends JPanel {
 
-	private static final long serialVersionUID = -7806435918984466627L;
 	private String message;
 	private Image img;
 	private Font font;

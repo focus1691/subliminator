@@ -15,10 +15,6 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicSliderUI;
 
-/**
- *
- * @see http://stackoverflow.com/a/12297384/714968
- */
 public class CustomSliderUI extends BasicSliderUI {
 
 	private BasicStroke stroke = new BasicStroke(10f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0f,
