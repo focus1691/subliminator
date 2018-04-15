@@ -19,6 +19,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
 
 import controller.MessageController;
+import gui.component.BlueGreyMenuItem;
 import gui.controls.ControlPanel;
 import gui.message.MessagePanel;
 import gui.subliminal.SubliminalFrame;
@@ -117,29 +118,28 @@ public class CreateMenuBar extends JMenuBar {
 
 	private JMenuItem exitItem() {
 
-		JMenuItem fileMenu = new JMenuItem(new AbstractAction("Exit") {
-
-			private static final long serialVersionUID = -6305470444317273153L;
+		BlueGreyMenuItem fileMenu = new BlueGreyMenuItem("Exit");		
+		fileMenu.setAction(new AbstractAction("Exit") {
+			
+			private static final long serialVersionUID = -3143584007710624166L;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		fileMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		fileMenu.setForeground(Color.BLACK);
-		fileMenu.setBackground(Color.decode("#dbdbdb"));
-		fileMenu.setOpaque(true);
+		
 		return fileMenu;
 	}
 
 	private JMenuItem factoryResetItem() {
-		JMenuItem messageResetItem = new JMenuItem(new AbstractAction("    Restore Messages") {
-			private static final long serialVersionUID = -6305470444317273153L;
+		BlueGreyMenuItem messageResetItem = new BlueGreyMenuItem("    Restore Messages");
+		
+		messageResetItem.setAction(new AbstractAction("    Restore Messages") {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				final JButton ok = new JButton("ok");
 				final JButton cancel = new JButton("cancel");
 				int optionType = JOptionPane.CANCEL_OPTION;
@@ -162,7 +162,6 @@ public class CreateMenuBar extends JMenuBar {
 						}
 					}
 				});
-
 				cancel.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent ae) {
 						Window w = SwingUtilities.getWindowAncestor(cancel);
@@ -171,15 +170,10 @@ public class CreateMenuBar extends JMenuBar {
 						}
 					}
 				});
-
 				JOptionPane.showOptionDialog(null, warningMessage, title, optionType, messageType, null, selValues,
 						selValues[0]);
 			}
 		});
-		messageResetItem.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
-		messageResetItem.setForeground(Color.BLACK);
-		messageResetItem.setBackground(Color.decode("#dbdbdb"));
-		messageResetItem.setOpaque(true);
 		return messageResetItem;
 	}
 
