@@ -79,6 +79,7 @@ public class SubliminalMessage extends JPanel {
 		this.img = image;
 	}
 
+	@Override
 	public void setFont(Font font) {
 		this.font = font;
 	}

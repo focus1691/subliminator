@@ -189,6 +189,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 		add(changeBtn, gc);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == startBtn) {

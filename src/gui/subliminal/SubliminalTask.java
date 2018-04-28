@@ -26,6 +26,7 @@ public class SubliminalTask implements Runnable {
 		subliminal.setVisible(true);
 
 		ActionListener taskPerformer = new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent evt) {
 				subliminal.setVisible(false);
 			}

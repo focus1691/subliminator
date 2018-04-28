@@ -12,6 +12,7 @@ public class PremiumReminderTask extends Thread {
 		premiumReminderDialog = new PremiumReminderDialog();
 
 		premiumReminderDialog.addWindowListener(new WindowAdapter() {
+			@Override
 			public void windowClosing(WindowEvent evt) {
 				premiumReminderDialog.setVisible(false);
 			}

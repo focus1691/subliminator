@@ -17,6 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import gui.component.LoginButton;
 import gui.component.RegisterButton;
@@ -54,7 +56,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		setResizable(true);
 		pack();
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
 	private void initComponents() {
@@ -135,7 +137,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		gc.fill = GridBagConstraints.NONE;
 		loginPanel.add(logo, gc);
 		
-		JSeparator sep = new JSeparator(JSeparator.HORIZONTAL);
+		JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
 		sep.setBackground(Color.decode("#5d9ed3"));
 		sep.setForeground(Color.decode("#5d9ed3"));
 		

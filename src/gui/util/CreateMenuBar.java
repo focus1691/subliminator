@@ -137,6 +137,7 @@ public class CreateMenuBar extends JMenuBar {
 				final Object[] selValues = { ok, cancel };
 
 				ok.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent ae) {
 						System.out.println("Cancel");
 						messageController.loadInBuiltCategories();
@@ -151,6 +152,7 @@ public class CreateMenuBar extends JMenuBar {
 					}
 				});
 				cancel.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent ae) {
 						Window w = SwingUtilities.getWindowAncestor(cancel);
 						if (w != null) {

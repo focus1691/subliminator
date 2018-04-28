@@ -34,6 +34,7 @@ public class RoundJTextField extends JTextField {
 		setOpaque(false);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -53,11 +54,13 @@ public class RoundJTextField extends JTextField {
 		g2d.drawString(placeholder, getInsets().left, g2d.getFontMetrics().getMaxAscent() + getInsets().top);
 	}
 
+	@Override
 	protected void paintBorder(Graphics g) {
 		g.setColor(getForeground());
 		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
 	}
 
+	@Override
 	public boolean contains(int x, int y) {
 		if (shape == null || !shape.getBounds().equals(getBounds())) {
 			shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);

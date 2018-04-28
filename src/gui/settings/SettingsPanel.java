@@ -107,7 +107,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		speedSlider.setPaintLabels(true);
 		speedSlider.setPreferredSize(new Dimension(375, 75));
 		speedSlider.setValue(speed == 0 ? 50 : speed);
-		speedSlider.addChangeListener((ChangeListener) this);
+		speedSlider.addChangeListener(this);
 
 		intervalSlider = new JSlider(0, 20);
 		intervalSlider.setFont(FontPicker.getFont(FontPicker.latoBold, 16));
@@ -119,7 +119,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		intervalSlider.setMinimum(2);
 		intervalSlider.setPreferredSize(new Dimension(375, 75));
 		intervalSlider.setValue(interval == 0 ? 2 : interval);
-		intervalSlider.addChangeListener((ChangeListener) this);
+		intervalSlider.addChangeListener(this);
 
 		this.addComponentListener(new ComponentListener() {
 
@@ -127,8 +127,8 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 			public void componentResized(ComponentEvent e) {
 				Component c = e.getComponent();
 				if (containerRect != null) {
-					screenRect.setRect(0, 0, (double) screenToPanelWRatio * c.getWidth(),
-							(double) screenToPanelHRatio * c.getHeight());
+					screenRect.setRect(0, 0, screenToPanelWRatio * c.getWidth(),
+							screenToPanelHRatio * c.getHeight());
 					messageButtons[0].setAlignmentX(250);
 					screenPanel.setBounds(screenRect);
 					messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);

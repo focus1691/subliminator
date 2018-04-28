@@ -37,6 +37,7 @@ public class LoginButton extends JButton {
 		setPreferredSize(new Dimension(125, 50));
 	}
 	
+	@Override
 	protected void paintComponent(Graphics g) {
 		final int arcSize = getSize().height;
 		g.setColor(color);

@@ -18,6 +18,7 @@ public class MessageSwitch extends JPanel {
 		setMaximumSize(new Dimension(26, 26));
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(activeColour);

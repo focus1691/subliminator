@@ -1,6 +1,7 @@
 package gui.util;
 
 import java.awt.AWTException;
+import java.awt.Frame;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
@@ -42,8 +43,9 @@ public class MBSystemTray {
 		});
 
 		frame.addWindowStateListener(new WindowStateListener() {
+			@Override
 			public void windowStateChanged(WindowEvent e) {
-				if (e.getNewState() == JFrame.NORMAL) {
+				if (e.getNewState() == Frame.NORMAL) {
 					systemTray.remove(trayIcon);
 					frame.setVisible(true);
 				}

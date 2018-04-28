@@ -46,6 +46,7 @@ public class UpdateInfo extends JFrame {
 		ok = new JButton("Update");
 		ok.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				update();
 			}
@@ -54,6 +55,7 @@ public class UpdateInfo extends JFrame {
 		cancelBtn = new JButton("Cancel");
 		cancelBtn.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				UpdateInfo.this.dispose();
 			}

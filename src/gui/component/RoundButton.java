@@ -36,6 +36,7 @@ public class RoundButton extends JButton {
 		setContentAreaFilled(false);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) {
 		if (getModel().isArmed()) {
 			g.setColor(Color.decode("#efeff0"));
@@ -47,6 +48,7 @@ public class RoundButton extends JButton {
 		super.paintComponent(g);
 	}
 
+	@Override
 	public boolean contains(int x, int y) {
 		// If the button has changed size, make a new shape object.
 		if (shape == null || !shape.getBounds().equals(getBounds())) {

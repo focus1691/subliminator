@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 
 import javax.swing.JComponent;
 import javax.swing.JSlider;
@@ -81,7 +82,7 @@ public class CustomSliderUI extends BasicSliderUI {
 		int x2 = thumbRect.x + thumbRect.width - 2;
 		int width = thumbRect.width - 4;
 		int topY = thumbRect.y + thumbRect.height / 2 - thumbRect.width / 3;
-		GeneralPath shape = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+		GeneralPath shape = new GeneralPath(Path2D.WIND_EVEN_ODD);
 		shape.moveTo(x1, topY);
 		shape.lineTo(x2, topY);
 		shape.lineTo((x1 + x2) / 2, topY + width);

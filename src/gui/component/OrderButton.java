@@ -41,6 +41,7 @@ public class OrderButton extends JButton {
 		setContentAreaFilled(false);
 	}
 	
+	@Override
 	protected void paintComponent(Graphics g) {
 		final int arcSize = getSize().height - 20;
 		g.setColor(Color.decode("#2973c3"));
@@ -53,6 +54,7 @@ public class OrderButton extends JButton {
 		super.paintComponent(g);
 	}
 
+	@Override
 	public boolean contains(int x, int y) {
 		// If the button has changed size, make a new shape object.
 		if (shape == null || !shape.getBounds().equals(getBounds())) {

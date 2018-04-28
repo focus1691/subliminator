@@ -53,10 +53,12 @@ public class SubliminalFrame extends JDialog {
 		subliminalMessage.setIsTextOnly(message.getIsTextOnly());
 	}
 
+	@Override
 	public Font getFont() {
 		return font;
 	}
 
+	@Override
 	public void setFont(Font font) {
 		this.font = font;
 	}
@@ -85,6 +87,7 @@ public class SubliminalFrame extends JDialog {
 		this.isBackgroundSelected = isBackgroundSelected;
 	}
 
+	@Override
 	public boolean isActive() {
 		return active;
 	}

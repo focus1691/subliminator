@@ -15,9 +15,9 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.WindowConstants;
 
 import constants.CustomColor;
 import gui.component.BlueGreyMenuItem;
@@ -84,7 +84,7 @@ public class ScreenMessage extends JPanel {
 						} else {
 							PremiumReminderDialog premiumReminderDialog = new PremiumReminderDialog();
 							premiumReminderDialog.setVisible(true);
-							premiumReminderDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							premiumReminderDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 						}
 					} else if (SettingsPanel.numMessagesSelected == 0) {
 						if (isActive()) {
@@ -221,6 +221,7 @@ public class ScreenMessage extends JPanel {
 		return font;
 	}
 
+	@Override
 	public void setFont(Font font) {
 		this.font = font;
 	}

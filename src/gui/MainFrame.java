@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
@@ -101,6 +99,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setupUI();
 
 			this.addComponentListener(new ComponentAdapter() {
+				@Override
 				public void componentResized(ComponentEvent evt) {
 					container.setBounds(0, 0, (int) (getWidth() * 1.0), (int) (getHeight() * 1.0));
 					profileDropdownLabel.revalidate();
@@ -131,6 +130,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 		profileDropdownLabel = new ProfileDropdownLabel();
 		profileDropdownLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mousePressed(MouseEvent e) {
 				userProfileMenu.show(e.getComponent(), e.getX(), e.getY());
 			}
@@ -326,7 +326,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			errorMsg.setText("You need to select a message to edit");
 			errorMsg.setVisible(true);
 		} else {
-			Message message = (Message) messagePanel.getMessageList().getSelectedValue();
+			Message message = messagePanel.getMessageList().getSelectedValue();
 			EditImage editImage = new EditImage(messageController, message, messagePanel,
 					messagePanel.getMessageListSelectionModel().getLastSelection());
 			desktopPane.add(editImage);
