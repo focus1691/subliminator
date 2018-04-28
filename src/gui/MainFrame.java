@@ -111,9 +111,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			});
 			setTitle(appName);
 			setJMenuBar(new CreateMenuBar(messageController, controlPanel, messagePanel));
-			setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-					IconFetch.getInstance().getIcon("/images/cursor.png").getImage(), new Point(0, 0),
-					"custom cursor"));
 			setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
 			setPreferredSize(new Dimension(W, H));
 			setMinimumSize(new Dimension(minW, minH));

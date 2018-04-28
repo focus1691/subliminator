@@ -8,7 +8,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import gui.MainFrame;
 
 public class Application {
-	// test
 	public static void main(String[] args) {
 		try {
 			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
