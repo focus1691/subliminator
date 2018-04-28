@@ -77,8 +77,9 @@ public class UserController {
 		this.user.setUserPremium(premiumUser);
 	}
 
-	public void runPremiumPrompter() {
+	public void runPremiumPrompter() {	
 		if (!premiumCheckerTask.isAlive()) {
+			premiumCheckerTask = new PremiumCheckerTask(this);
 			premiumCheckerTask.start();
 			premiumCheckerTask.runPremiumReminder();
 		}
