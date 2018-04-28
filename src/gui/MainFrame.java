@@ -50,7 +50,7 @@ import validation.ArrayValidator;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener, LoginListener {
-	
+
 	public static final String appName = "Subliminator";
 	private static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
 	private MessageController messageController;
@@ -347,27 +347,27 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	@Override
 	public void loginEventOccurred(LoginEvent event) {
 
-		if (database.connect() == false) {
-			loginFrame.setErrorMessage("Unable to connect to the internet");
+		String email = event.getUser();
+		String pass = event.getPass();
+
+		if (userController.isTempUserSelected(email)) {
+
+			userController.setUserPremium(false);
+			userController.runPremiumPrompter();
+
+			settingsPanel.checkForActiveMessages();
+			settingsPanel.deactivateActiveMessages();
+
+			userProfileMenu.createMenuItemsForTempUser();
+
+			profileDropdownLabel.setToUnregistered();
+
+			setVisible(true);
+			loginFrame.dispose();
 		} else {
 
-			String email = event.getUser();
-			String pass = event.getPass();
-
-			if (userController.isTempUserSelected(email)) {
-
-				userController.setUserPremium(false);
-				userController.runPremiumPrompter();
-
-				settingsPanel.checkForActiveMessages();
-				settingsPanel.deactivateActiveMessages();
-
-				userProfileMenu.createMenuItemsForTempUser();
-
-				profileDropdownLabel.setToUnregistered();
-
-				setVisible(true);
-				loginFrame.dispose();
+			if (database.connect() == false) {
+				loginFrame.setErrorMessage("Unable to connect to the internet");
 			} else {
 				String errorMessage = userController.login(email, pass);
 
@@ -386,7 +386,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 						userProfileMenu.createMenuItemsForPremiumUser();
 
 						profileDropdownLabel.setToPremium();
-						
+
 						SettingsPanel.isUserPremium = true;
 						userController.setUserPremium(true);
 						userController.stopPremiumPrompter();
