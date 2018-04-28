@@ -39,9 +39,6 @@ public class PremiumReminderDialog extends JDialog {
 		
 		getContentPane().setBackground(Color.decode("#fefefe"));
 		setTitle(MainFrame.appName);
-		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-				IconFetch.getInstance().getIcon("/images/cursor.png").getImage(), new Point(0, 0),
-				"custom cursor"));
 		setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
 		setPreferredSize(new Dimension(900, 700));
 		setMinimumSize(new Dimension(800, 650));

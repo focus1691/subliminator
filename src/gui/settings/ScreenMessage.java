@@ -84,7 +84,7 @@ public class ScreenMessage extends JPanel {
 						} else {
 							PremiumReminderDialog premiumReminderDialog = new PremiumReminderDialog();
 							premiumReminderDialog.setVisible(true);
-							premiumReminderDialog.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+							premiumReminderDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						}
 					} else if (SettingsPanel.numMessagesSelected == 0) {
 						if (isActive()) {

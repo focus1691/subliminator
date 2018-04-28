@@ -71,9 +71,6 @@ public class AddMessage extends JInternalFrame {
 			}
 		});
 		getContentPane().setBackground(Color.decode("#1975bf"));
-		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-				IconFetch.getInstance().getIcon("/images/cursor.png").getImage(), new Point(0, 0), "custom cursor"));
-		setSize(W, H);
 		setPreferredSize(new Dimension(W, H));
 		pack();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
