@@ -1,5 +1,6 @@
 package gui.controls;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -126,6 +127,8 @@ public class ControlPanel extends JPanel implements ActionListener {
 
 	private void setupUI() {
 		setBackground(Color.decode("#1975bf"));
+		
+		JPanel container = new JPanel(new BorderLayout());
 
 		JPanel upperPane = new JPanel(new FlowLayout());
 		upperPane.setBackground(Color.decode("#1975bf"));
@@ -139,6 +142,9 @@ public class ControlPanel extends JPanel implements ActionListener {
 		lowerPane.add(editBtn);
 		lowerPane.add(new Separator());
 		lowerPane.add(deleteBtn);
+		
+		container.add(upperPane, BorderLayout.NORTH);
+		container.add(lowerPane, BorderLayout.CENTER);
 
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gc = new GridBagConstraints();
@@ -146,13 +152,13 @@ public class ControlPanel extends JPanel implements ActionListener {
 
 		gc.gridx = 0;
 		gc.gridy = 0;
-		gc.gridheight = 2;
+		gc.gridheight = 1;
 		gc.gridwidth = 1;
 		gc.weightx = 0.3;
 		gc.weighty = 1;
-		gc.insets = new Insets(0, 40, 0, 0);
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.fill = GridBagConstraints.VERTICAL;
+		gc.insets = new Insets(20, 0, 0, 0);
+		gc.anchor = GridBagConstraints.NORTH;
+		gc.fill = GridBagConstraints.NONE;
 		add(startBtn, gc);
 
 		gc.gridx = 1;
@@ -162,28 +168,17 @@ public class ControlPanel extends JPanel implements ActionListener {
 		gc.weightx = 1;
 		gc.weighty = 1;
 		gc.insets = new Insets(0, 30, 0, 0);
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.fill = GridBagConstraints.NONE;
-		add(upperPane, gc);
+		gc.anchor = GridBagConstraints.NORTH;
+		gc.fill = GridBagConstraints.VERTICAL;
+		add(container, gc);
 
-		gc.gridx = 1;
-		gc.gridy = 1;
+		gc.gridx = 2;
+		gc.gridy = 0;
 		gc.gridheight = 1;
 		gc.gridwidth = 1;
 		gc.weightx = 1;
 		gc.weighty = 1;
-		gc.insets = new Insets(0, 15, 0, 0);
-		gc.anchor = GridBagConstraints.NORTHWEST;
-		gc.fill = GridBagConstraints.NONE;
-		add(lowerPane, gc);
-
-		gc.gridx = 1;
-		gc.gridy = 1;
-		gc.gridheight = 1;
-		gc.gridwidth = 1;
-		gc.weightx = 1;
-		gc.weighty = 1;
-		gc.insets = new Insets(0, 15, 0, 0);
+		gc.insets = new Insets(10, 15, 0, 0);
 		gc.anchor = GridBagConstraints.NORTHEAST;
 		gc.fill = GridBagConstraints.NONE;
 		add(changeBtn, gc);

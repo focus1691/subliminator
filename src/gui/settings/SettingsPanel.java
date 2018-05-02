@@ -26,6 +26,8 @@ import utility.FontPicker;
 @SuppressWarnings("serial")
 public class SettingsPanel extends JPanel implements ChangeListener {
 
+	public static final int screenX = 0, screenY = 0, screenW = 600, screenH = 420;
+	public static final int messageW = 161, messageH = 70;
 	public static boolean isUserPremium = false;
 	public static boolean limitedMessages;
 	public static final int maxMessages = 5;
@@ -48,7 +50,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	}
 
 	public void initComponents(int speed, int interval) {
-		screenRect = new Rectangle(0, 0, 800, 560);
+		screenRect = new Rectangle(0, 0, screenW, screenH);
 
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new BorderLayout());
@@ -57,25 +59,25 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 
 		messageButtons = new ScreenMessage[5];
 		messageButtons[0] = new ScreenMessage("Top Left");
-		messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
+		messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, messageW, messageH);
 		messageButtons[0].setToolTipText("Message top left of screen");
 
 		messageButtons[1] = new ScreenMessage("Top Right");
-		messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
-				screenPanel.getHeight() / 8, 215, 80);
+		messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - messageW,
+				screenPanel.getHeight() / 8, messageW, messageH);
 		messageButtons[1].setToolTipText("Message top right of screen");
 
 		messageButtons[2] = new ScreenMessage("Bot Left");
-		messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
+		messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), messageW, messageH);
 		messageButtons[2].setToolTipText("Message bottom left of screen");
 
 		messageButtons[3] = new ScreenMessage("Bot Right");
-		messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
-				(screenPanel.getHeight() / 2), 215, 80);
+		messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - messageW,
+				(screenPanel.getHeight() / 2), messageW, messageH);
 		messageButtons[3].setToolTipText("Message bottom right of screen");
 
 		messageButtons[4] = new ScreenMessage("Center");
-		messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, 215, 80);
+		messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, messageW, messageH);
 		messageButtons[4].setToolTipText("Message center of screen");
 
 		screenContainer = new JLayeredPane();
@@ -131,14 +133,14 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 							screenToPanelHRatio * c.getHeight());
 					messageButtons[0].setAlignmentX(250);
 					screenPanel.setBounds(screenRect);
-					messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, 215, 80);
-					messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
-							screenPanel.getHeight() / 8, 215, 80);
-					messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), 215, 80);
-					messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - 215,
-							(screenPanel.getHeight() / 2), 215, 80);
+					messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, messageW, messageH);
+					messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - messageW,
+							screenPanel.getHeight() / 8, messageW, messageH);
+					messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), messageW, messageH);
+					messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - messageW,
+							(screenPanel.getHeight() / 2), messageW, messageH);
 					messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85,
-							215, 80);
+							messageW, messageH);
 					c.revalidate();
 					c.repaint();
 				} else {

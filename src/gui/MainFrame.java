@@ -52,7 +52,6 @@ import validation.ArrayValidator;
 public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener, LoginListener {
 
 	public static final String appName = "Subliminator";
-	private static final int W = 1800, H = 1100, minW = 1400, minH = 1000;
 	private MessageController messageController;
 	private UserController userController;
 	private Database database;
@@ -111,8 +110,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setTitle(appName);
 			setJMenuBar(new CreateMenuBar(messageController, controlPanel, messagePanel));
 			setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
-			setPreferredSize(new Dimension(W, H));
-			setMinimumSize(new Dimension(minW, minH));
+			setPreferredSize(new Dimension((int) (SetScreenLocation.screenSize.width * 0.95), (int) (SetScreenLocation.screenSize.height * 0.9)));
+			setMinimumSize(new Dimension(new Dimension((int) (SetScreenLocation.screenSize.width * 0.85), (int) (SetScreenLocation.screenSize.height * 0.88))));
 			pack();
 			SetScreenLocation.centerFrame(this);
 			setVisible(false);
@@ -163,7 +162,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 0.3;
-		gbc.weighty = 0.8;
+		gbc.weighty = 0.65;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -174,7 +173,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 0.1;
-		gbc.weighty = 0.8;
+		gbc.weighty = 0.65;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		container.add(messagePanel, gbc);
 
@@ -194,7 +193,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 1;
-		gbc.weighty = 0.8;
+		gbc.weighty = 0.65;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(20, 0, 0, 0);
@@ -206,7 +205,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		gbc.gridwidth = 3;
 		gbc.gridheight = 1;
 		gbc.weightx = 1;
-		gbc.weighty = 0.2;
+		gbc.weighty = 0.35;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		container.add(controlPanel, gbc);
 
