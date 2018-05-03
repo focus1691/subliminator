@@ -3,6 +3,7 @@ package gui.subliminal;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.util.prefs.Preferences;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -14,6 +15,7 @@ import model.Message;
 @SuppressWarnings("serial")
 public class SubliminalFrame extends JDialog {
 
+	private Preferences prefs;
 	private SubliminalMessage subliminalMessage;
 	private boolean active;
 	public static int height = 200;
@@ -24,6 +26,9 @@ public class SubliminalFrame extends JDialog {
 	private boolean isBackgroundSelected;
 
 	public SubliminalFrame() {
+		prefs = Preferences.userRoot().node(this.getClass().getName());
+		SubliminalFrame.width = prefs.getInt("messageW", SetScreenLocation.screenSize.width / 4);
+		SubliminalFrame.height = prefs.getInt("messageW", SetScreenLocation.screenSize.height / 4);
 		subliminalMessage = new SubliminalMessage();
 		setContentPane(subliminalMessage);
 
@@ -94,5 +99,11 @@ public class SubliminalFrame extends JDialog {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	public void changeMessageSize(int W, int H) {
+		prefs.putInt("messageW", W);
+		prefs.putInt("messageH", H);
+		SubliminalFrame.width = W;
+		SubliminalFrame.height = H;
 	}
 }

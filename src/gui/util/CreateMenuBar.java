@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -28,6 +29,7 @@ import utility.FontPicker;
 @SuppressWarnings("serial")
 public class CreateMenuBar extends JMenuBar {
 
+	private Preferences prefs;
 	private MessageController messageController;
 	private MessagePanel messagePanel;
 	private ControlPanel controlPanel;
@@ -37,6 +39,8 @@ public class CreateMenuBar extends JMenuBar {
 		this.messageController = messageController;
 		this.controlPanel = controlPanel;
 		this.messagePanel = messagePanel;
+
+		prefs = Preferences.userRoot().node(this.getClass().getName());
 
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setFont(FontPicker.getFont(FontPicker.latoRegular, 20));
@@ -60,7 +64,18 @@ public class CreateMenuBar extends JMenuBar {
 		BlueGreyRadioButtonMenuItem small = new BlueGreyRadioButtonMenuItem("    Small");
 		BlueGreyRadioButtonMenuItem medium = new BlueGreyRadioButtonMenuItem("    Medium");
 		BlueGreyRadioButtonMenuItem large = new BlueGreyRadioButtonMenuItem("    Large");
-		large.setSelected(true);
+
+		switch (prefs.get("MESSAGE_SIZE", medium.getText())) {
+		case "    Small":
+			small.setSelected(true);
+			break;
+		case "    Medium":
+			medium.setSelected(true);
+			break;
+		case "    Large":
+			large.setSelected(true);
+			break;
+		}
 
 		bg.add(small);
 		bg.add(medium);
@@ -80,7 +95,8 @@ public class CreateMenuBar extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SubliminalFrame.width = SetScreenLocation.screenSize.width / 4;
-				SubliminalFrame.height = SetScreenLocation.screenSize.height / 4;;
+				SubliminalFrame.height = SetScreenLocation.screenSize.height / 4;
+				;
 			}
 		});
 
@@ -106,9 +122,9 @@ public class CreateMenuBar extends JMenuBar {
 
 	private JMenuItem exitItem() {
 
-		BlueGreyMenuItem fileMenu = new BlueGreyMenuItem("Exit");		
+		BlueGreyMenuItem fileMenu = new BlueGreyMenuItem("Exit");
 		fileMenu.setAction(new AbstractAction("Exit") {
-			
+
 			private static final long serialVersionUID = -3143584007710624166L;
 
 			@Override
@@ -116,13 +132,13 @@ public class CreateMenuBar extends JMenuBar {
 				System.exit(0);
 			}
 		});
-		
+
 		return fileMenu;
 	}
 
 	private JMenuItem factoryResetItem() {
 		BlueGreyMenuItem messageResetItem = new BlueGreyMenuItem("    Restore Messages");
-		
+
 		messageResetItem.setAction(new AbstractAction("    Restore Messages") {
 			private static final long serialVersionUID = 1L;
 
