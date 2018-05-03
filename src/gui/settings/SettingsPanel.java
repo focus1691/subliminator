@@ -77,7 +77,8 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 		messageButtons[3].setToolTipText("Message bottom right of screen");
 
 		messageButtons[4] = new ScreenMessage("Center");
-		messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, messageW, messageH);
+		messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85, messageW,
+				messageH);
 		messageButtons[4].setToolTipText("Message center of screen");
 
 		screenContainer = new JLayeredPane();
@@ -129,14 +130,15 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 			public void componentResized(ComponentEvent e) {
 				Component c = e.getComponent();
 				if (containerRect != null) {
-					screenRect.setRect(0, 0, screenToPanelWRatio * c.getWidth(),
-							screenToPanelHRatio * c.getHeight());
+					screenRect.setRect(0, 0, screenToPanelWRatio * c.getWidth(), screenToPanelHRatio * c.getHeight());
 					messageButtons[0].setAlignmentX(250);
 					screenPanel.setBounds(screenRect);
-					messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, messageW, messageH);
+					messageButtons[0].setBounds(screenPanel.getWidth() / 8, screenPanel.getHeight() / 8, messageW,
+							messageH);
 					messageButtons[1].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - messageW,
 							screenPanel.getHeight() / 8, messageW, messageH);
-					messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), messageW, messageH);
+					messageButtons[2].setBounds(screenPanel.getWidth() / 8, (screenPanel.getHeight() / 2), messageW,
+							messageH);
 					messageButtons[3].setBounds(screenPanel.getWidth() - (screenPanel.getWidth() / 8) - messageW,
 							(screenPanel.getHeight() / 2), messageW, messageH);
 					messageButtons[4].setBounds((screenPanel.getWidth() / 2) - 100, (screenPanel.getHeight() / 2) - 85,
@@ -274,8 +276,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	}
 
 	/**
-	 * Used by anonymous class in MainFrame to listen for settings changed
-	 * Events
+	 * Used by anonymous class in MainFrame to listen for settings changed Events
 	 * 
 	 * @param settingsListener
 	 *            interface object used to alert anonymous class in MainFrame
@@ -327,6 +328,11 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 	}
 
 	public void deactivateActiveMessages() {
+
+		if (SettingsPanel.numMessagesSelected <= 1) {
+			return;
+		}
+
 		for (int i = 0; i < maxMessages; i++) {
 
 			if (messageButtons[i].isActive()) {
@@ -335,7 +341,7 @@ public class SettingsPanel extends JPanel implements ChangeListener {
 			}
 		}
 	}
-	
+
 	public int getSpeed() {
 		return speedSlider.getValue();
 	}

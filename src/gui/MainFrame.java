@@ -110,8 +110,8 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setTitle(appName);
 			setJMenuBar(new CreateMenuBar(messageController, controlPanel, messagePanel));
 			setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
-			setPreferredSize(new Dimension((int) (SetScreenLocation.screenSize.width * 0.95), (int) (SetScreenLocation.screenSize.height * 0.9)));
-			setMinimumSize(new Dimension(new Dimension((int) (SetScreenLocation.screenSize.width * 0.85), (int) (SetScreenLocation.screenSize.height * 0.88))));
+			setPreferredSize(new Dimension((int) (SetScreenLocation.screenSize.width * 0.85), (int) (SetScreenLocation.screenSize.height * 0.9)));
+			setMinimumSize(new Dimension((int) (SetScreenLocation.screenSize.width * 0.85), (int) (SetScreenLocation.screenSize.height * 0.9)));
 			pack();
 			SetScreenLocation.centerFrame(this);
 			setVisible(false);
@@ -247,6 +247,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 								userController.showPremiumPopup();
 								controlPanel.showStartButton();
 							} else {
+								controlPanel.showStopButton();
 								runMessageActivity(settingsPanel.getSelectedScreenPositions());
 							}
 						}
@@ -255,6 +256,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			} else if (messageController.isMessagesOn() == true) {
 				messageController.stopMessageActivity();
 				messageController.setMessagesOn(false);
+				controlPanel.showStartButton();
 			}
 		} catch (InterruptedException e) {
 			System.err.println("Failed to play messages");
@@ -275,6 +277,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		messagePanel.removeMessages();
 		messageController.setCategoryIndex(e.getCategoryIndex());
 		messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
+		messagePanel.getMessageListSelectionModel().clearSelection();
 		controlPanel.resetSelection();
 	}
 

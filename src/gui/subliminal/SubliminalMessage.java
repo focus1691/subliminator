@@ -12,6 +12,8 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
+import gui.util.SetScreenLocation;
+
 /**
  *
  * @author Joshua
@@ -28,7 +30,8 @@ public class SubliminalMessage extends JPanel {
 	private boolean isTextOnly;
 
 	public SubliminalMessage() {
-		setPreferredSize(new Dimension(900, 450));
+		setPreferredSize(new Dimension(new Dimension((int) (SetScreenLocation.screenSize.width * 0.5),
+				(int) (SetScreenLocation.screenSize.height * 0.5))));
 	}
 
 	static int count = 0;
@@ -40,6 +43,7 @@ public class SubliminalMessage extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setBackground(new Color(0, 0, 0, 0));
 		g2d.clearRect(0, 0, getWidth(), getHeight());
+		repaint();
 
 		FontMetrics metrics = g2d.getFontMetrics(font);
 
@@ -52,19 +56,21 @@ public class SubliminalMessage extends JPanel {
 		g2d.setColor(isBackgroundSelected ? activeBackground
 				: new Color(color.getRed(), color.getGreen(), color.getBlue(), 0));
 		g2d.setBackground(new Color(0, 0, 0, 0));
+		g2d.clearRect(0, 0, getWidth(), getHeight());
 		g2d.fillRect(x, 40 - metrics.getAscent(), (int) rect.getWidth(), (int) rect.getHeight());
 		g2d.setColor(color);
 
-		g2d.drawString(message, x, 40);
-		repaint();
-
 		if (img != null && !isTextOnly) {
+			g2d.drawString(message, x, 40);
 			x = (getWidth() - img.getWidth(null)) / 2;
 			y = (getHeight() - img.getHeight(null)) / 2;
 			g2d.drawImage(img, x, y, this);
+		} else {
+			y = getHeight() / 2;
+			g2d.drawString(message, x, 40);
 		}
+		repaint();
 	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}

@@ -139,7 +139,6 @@ public class CreateMenuBar extends JMenuBar {
 				ok.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
-						System.out.println("Cancel");
 						messageController.loadInBuiltCategories();
 						messageController.save();
 						messagePanel.removeMessages();

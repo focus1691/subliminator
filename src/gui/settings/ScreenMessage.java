@@ -189,13 +189,9 @@ public class ScreenMessage extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFontChooser fontChooser = new JFontChooser();
-				fontChooser.setSelectedFontFamily(font.getFamily());
-				fontChooser.setSelectedFontSize(font.getSize());
-				fontChooser.setSelectedFontStyle(font.getStyle());
 				int result = fontChooser.showDialog(null);
 				if (result == JFontChooser.OK_OPTION) {
 					setFont(fontChooser.getSelectedFont());
-					messagePreview.setFont(font);
 				}
 			}
 		});

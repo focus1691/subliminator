@@ -23,15 +23,15 @@ import validation.MessageValidator;
 public class EditMessage extends JInternalFrame {
 
 	public static final int W = 600, H = 190;
-	private MessageController controller;
+	private MessageController messageController;
 	private JLabel errorMsg;
 	private JLabel firstPersonLbl, secondPersonLbl;
 	private JTextField firstPersonMsg, secondPersonMsg;
 	private JRoundRectButton submitBtn;
 
-	public EditMessage(final MessageController controller, final MessagePanel messagePanel, final int index) {
+	public EditMessage(final MessageController messageController, final MessagePanel messagePanel, final int index) {
 		super("Edit Message", false, true, false, false);
-		this.controller = controller;
+		this.messageController = messageController;
 		initComponents(index, messagePanel);
 		setupUI();
 
@@ -56,14 +56,14 @@ public class EditMessage extends JInternalFrame {
 		firstPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		firstPersonMsg.setToolTipText("First Person Message");
 		firstPersonMsg
-				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
+				.setText(messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.FIRST_PERSON)
 						.get(index).getMessage());
 
 		secondPersonMsg = new JTextField(30);
 		secondPersonMsg.setFont(FontPicker.getFont(FontPicker.latoRegular, 16.71f));
 		secondPersonMsg.setToolTipText("Second Person Message");
 		secondPersonMsg
-				.setText(controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
+				.setText(messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.SECOND_PERSON)
 						.get(index).getMessage());
 
 		submitBtn = new JRoundRectButton("Change");
@@ -77,27 +77,32 @@ public class EditMessage extends JInternalFrame {
 
 				if (MessageValidator.isMoreThanThreeChars(msg1) && MessageValidator.isMoreThanThreeChars(msg2)) {
 
-					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
+					messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.FIRST_PERSON)
 							.get(index).setMessage(msg1);
-					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
+					messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.SECOND_PERSON)
 							.get(index).setMessage(msg2);
 
-					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
+					messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.FIRST_PERSON)
 							.get(index).setIsTextOnly(false);
 					;
-					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
+					messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.SECOND_PERSON)
 							.get(index).setIsTextOnly(false);
+					
+					messageController.save();					
 
 					messagePanel.removeMessages();
-					messagePanel.setMessageList(controller.getMessagesFromActiveTenseCategory());
+					messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
 					dispose();
+				} else {
+					errorMsg.setText("Enter a Message with More than 3 Characters");
+					errorMsg.setVisible(true);
 				}
 			}
 		});
 
 		errorMsg = new JLabel("Error message");
 		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBlack, 19.18f));
-		errorMsg.setForeground(Color.RED);
+		errorMsg.setForeground(Color.ORANGE);
 		errorMsg.setVisible(false);
 	}
 

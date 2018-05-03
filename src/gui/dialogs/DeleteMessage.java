@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -21,16 +22,16 @@ import utility.FontPicker;
 public class DeleteMessage extends JInternalFrame {
 
 	public static final int W = 600, H = 190;
-	private MessageController controller;
+	private MessageController messageController;
 	private JLabel errorMsg;
 	private JLabel firstPersonLbl, secondPersonLbl;
 	private JTextField firstPersonMsg, secondPersonMsg;
 	private JRoundRectButton deleteBtn;
 
-	public DeleteMessage(final MessageController controller, final MessagePanel messagePanel, final int selectedMsg) {
+	public DeleteMessage(final MessageController messageController, final MessagePanel messagePanel, final int selectedMsg) {
 		super("Delete Messages", false, true, false, false);
-		this.controller = controller;
-		initComponents(controller, messagePanel, selectedMsg);
+		this.messageController = messageController;
+		initComponents(messageController, messagePanel, selectedMsg);
 		setupUI();
 		getContentPane().setBackground(Color.decode("#1975bf"));
 		setSize(W, H);
@@ -78,7 +79,7 @@ public class DeleteMessage extends JInternalFrame {
 
 		errorMsg = new JLabel("Error message");
 		errorMsg.setFont(FontPicker.getFont(FontPicker.latoBlack, 19.18f));
-		errorMsg.setForeground(Color.RED);
+		errorMsg.setForeground(Color.ORANGE);
 		errorMsg.setVisible(false);
 	}
 
@@ -117,9 +118,14 @@ public class DeleteMessage extends JInternalFrame {
 	}
 
 	public void deleteMessages(int selectedMsg) {
-		controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
+		messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.FIRST_PERSON)
 				.remove(selectedMsg);
-		controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.SECOND_PERSON)
+		messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.SECOND_PERSON)
 				.remove(selectedMsg);
+		messageController.save();
+		JOptionPane.showMessageDialog(null,
+				"The messages have been removed from the Subliminator.",
+				"Messages deleted", JOptionPane.INFORMATION_MESSAGE);
+		dispose();
 	}
 }
