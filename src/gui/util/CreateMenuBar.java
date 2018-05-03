@@ -70,8 +70,8 @@ public class CreateMenuBar extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubliminalFrame.width = 200;
-				SubliminalFrame.height = 200;
+				SubliminalFrame.width = SetScreenLocation.screenSize.width / 8;
+				SubliminalFrame.height = SetScreenLocation.screenSize.height / 8;
 			}
 		});
 
@@ -79,8 +79,8 @@ public class CreateMenuBar extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubliminalFrame.width = 300;
-				SubliminalFrame.height = 300;
+				SubliminalFrame.width = SetScreenLocation.screenSize.width / 4;
+				SubliminalFrame.height = SetScreenLocation.screenSize.height / 4;;
 			}
 		});
 
@@ -88,8 +88,8 @@ public class CreateMenuBar extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubliminalFrame.width = 500;
-				SubliminalFrame.height = 500;
+				SubliminalFrame.width = SetScreenLocation.screenSize.width / 3;
+				SubliminalFrame.height = SetScreenLocation.screenSize.height / 3;
 			}
 		});
 
