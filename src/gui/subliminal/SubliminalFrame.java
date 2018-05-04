@@ -45,17 +45,22 @@ public class SubliminalFrame extends JDialog {
 	}
 
 	public void setMessage(Message message) {
+		ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
+		if (icon != null) {
+			Image img = IconFetch.getInstance().getScaledImage(icon.getImage(), width, height);
+			subliminalMessage.setImage(img);
+		} else {
+			subliminalMessage.setImage(null);
+		}
+		subliminalMessage.setIsTextOnly(message.getIsTextOnly());
 		subliminalMessage.setMessage(message.getMessage());
 		subliminalMessage.setFont(font);
 		subliminalMessage.setColor(color == null ? new Color(0, 0, 0) : color);
 		subliminalMessage.setActiveBackground(activeBackground);
 		subliminalMessage.setBackgroundSelected(isBackgroundSelected);
-		ImageIcon icon = IconFetch.getInstance().getIcon(message.getImagePath());
-		if (icon != null) {
-			Image img = IconFetch.getInstance().getScaledImage(icon.getImage(), width, height);
-			subliminalMessage.setImage(img);
-		}
-		subliminalMessage.setIsTextOnly(message.getIsTextOnly());
+		subliminalMessage.repaint();
+		System.out.println(message);
+		System.out.println();
 	}
 
 	@Override

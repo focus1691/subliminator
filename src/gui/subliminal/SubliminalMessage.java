@@ -34,16 +34,13 @@ public class SubliminalMessage extends JPanel {
 				(int) (SetScreenLocation.screenSize.height * 0.5))));
 	}
 
-	static int count = 0;
-
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponents(g);
+		super.paintComponent(g);
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setBackground(new Color(0, 0, 0, 0));
 		g2d.clearRect(0, 0, getWidth(), getHeight());
-		repaint();
 
 		FontMetrics metrics = g2d.getFontMetrics(font);
 
@@ -71,6 +68,7 @@ public class SubliminalMessage extends JPanel {
 		}
 		repaint();
 	}
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
