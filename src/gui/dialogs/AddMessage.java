@@ -19,7 +19,6 @@ import gui.component.JRoundRectButton;
 import gui.message.MessagePanel;
 import model.Message;
 import utility.FontPicker;
-import validation.MessageValidator;
 
 @SuppressWarnings("serial")
 public class AddMessage extends JInternalFrame {
@@ -46,7 +45,18 @@ public class AddMessage extends JInternalFrame {
 				boolean is_text_only1 = false;
 				boolean is_text_only2 = false;
 
-				if (MessageValidator.isMoreThanThreeChars(msg1) && MessageValidator.isMoreThanThreeChars(msg2)) {
+				if ((msg1.length() < 5) || (msg2.length() < 5)) {
+
+					errorMsg.setText("Longer messages are better > 5 Characters");
+					errorMsg.setVisible(true);
+					
+					
+				} else if (msg1.length() > 50 || msg2.length() > 50) {
+					errorMsg.setText("Keep your messages short and sweet < 50 characters");
+					errorMsg.setVisible(true);
+					
+				} else {
+
 					errorMsg.setVisible(false);
 					controller.getMessagesFromCategory(controller.getCategoryIndex(), MessageTense.FIRST_PERSON)
 							.add(new Message(msg1, "/Images/7.jpg", is_text_only1));
@@ -61,9 +71,6 @@ public class AddMessage extends JInternalFrame {
 							"\"" + msg1 + "\"" + " and " + "\"" + msg2 + "\"" + "\n" + "Successfully Added.",
 							"Congratulations", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
-				} else {
-					errorMsg.setText("Enter a Message with More than 3 Characters");
-					errorMsg.setVisible(true);
 				}
 			}
 		});

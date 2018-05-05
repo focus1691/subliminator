@@ -17,7 +17,6 @@ import controller.MessageController;
 import gui.component.JRoundRectButton;
 import gui.message.MessagePanel;
 import utility.FontPicker;
-import validation.MessageValidator;
 
 @SuppressWarnings("serial")
 public class EditMessage extends JInternalFrame {
@@ -75,7 +74,17 @@ public class EditMessage extends JInternalFrame {
 				String msg1 = firstPersonMsg.getText();
 				String msg2 = secondPersonMsg.getText();
 
-				if (MessageValidator.isMoreThanThreeChars(msg1) && MessageValidator.isMoreThanThreeChars(msg2)) {
+				if ((msg1.length() < 5) || (msg2.length() < 5)) {
+
+					errorMsg.setText("Longer messages are better > 5 Characters");
+					errorMsg.setVisible(true);
+					
+					
+				} else if (msg1.length() > 50 || msg2.length() > 50) {
+					errorMsg.setText("Keep your messages short and sweet < 50 characters");
+					errorMsg.setVisible(true);
+					
+				} else {
 
 					messageController.getMessagesFromCategory(messageController.getCategoryIndex(), MessageTense.FIRST_PERSON)
 							.get(index).setMessage(msg1);
@@ -93,9 +102,6 @@ public class EditMessage extends JInternalFrame {
 					messagePanel.removeMessages();
 					messagePanel.setMessageList(messageController.getMessagesFromActiveTenseCategory());
 					dispose();
-				} else {
-					errorMsg.setText("Enter a Message with More than 3 Characters");
-					errorMsg.setVisible(true);
 				}
 			}
 		});
