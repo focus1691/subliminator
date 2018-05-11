@@ -30,7 +30,7 @@ public class MBSystemTray {
 		trayPopupMenu = new PopupMenu();
 		systemTray = SystemTray.getSystemTray();
 
-		trayIcon = new TrayIcon(IconFetch.getInstance().getIcon("/images/editItem.png").getImage(), MainFrame.appName,
+		trayIcon = new TrayIcon(IconFetch.getInstance().getIcon("/images/icon-16x16.png").getImage(), MainFrame.appName,
 				trayPopupMenu);
 		trayIcon.addMouseListener(new MouseAdapter() {
 			@Override

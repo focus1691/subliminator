@@ -12,12 +12,12 @@ import model.User;
 public class Database {
 
 	private static Connection con;
-//	 private static String url = "jdbc:mysql://160.153.128.45/PsychoTechnology?verifyServerCertificate=false&useSSL=true&?zeroDateTimeBehavior=convertToNull";
-	private static String url = "jdbc:mysql://localhost/PsychoTechnology";
-	private static final String user = "root";
-	private static final String password = "";
-//	private static final String user = "mindbooster";
-//	private static final String password = "QqZqXrk5YAX3JuBGjCmT";
+	// private static String url = "jdbc:mysql://localhost/PsychoTechnology";
+	// private static final String user = "root";
+	// private static final String password = "";
+	private static String url = "jdbc:mysql://160.153.128.45/PsychoTechnology?verifyServerCertificate=false&useSSL=true&?zeroDateTimeBehavior=convertToNull";
+	private static final String user = "mindbooster";
+	private static final String password = "QqZqXrk5YAX3JuBGjCmT";
 
 	public boolean connect() {
 		try {

@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 
 import gui.component.LoginButton;
 import gui.component.RegisterButton;
@@ -56,7 +55,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		setResizable(true);
 		pack();
 		setVisible(true);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	private void initComponents() {
