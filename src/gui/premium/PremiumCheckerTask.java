@@ -16,7 +16,7 @@ public class PremiumCheckerTask extends Thread {
 
 	@Override
 	public void run() {
-		if (userController.isUserPremium()) {
+		if (userController.isPremium()) {
 			userController.setUserPremium(true);
 			premiumReminderDialog.setVisible(false);
 			premiumReminderTask.interrupt();

@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import Network.SocketBinder;
 import controller.MessageController;
 import controller.UserController;
-import database.Database;
 import gui.category.CategoryEvent;
 import gui.category.CategoryListener;
 import gui.category.CategoryPanel;
@@ -54,7 +53,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public static final String appName = "Subliminator";
 	private MessageController messageController;
 	private UserController userController;
-	private Database database;
 	private LoginFrame loginFrame;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
@@ -74,13 +72,12 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 					"Two instances", JOptionPane.ERROR_MESSAGE);
 			dispose();
 		} else {
-			database = new Database();
 
 			loginFrame = new LoginFrame();
 			loginFrame.setLoginListener(this);
 
 			messageController = new MessageController();
-			userController = new UserController(database);
+			userController = new UserController();
 
 			categoryPanel = new CategoryPanel(messageController);
 			categoryPanel.setCategorySelectionListener(this);
@@ -110,8 +107,10 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setTitle(appName);
 			setJMenuBar(new CreateMenuBar(messageController, controlPanel, messagePanel));
 			setIconImage(IconFetch.getInstance().getIcon("/images/icon.png").getImage());
-			setPreferredSize(new Dimension((int) (SetScreenLocation.screenSize.width * 0.85), (int) (SetScreenLocation.screenSize.height * 0.9)));
-			setMinimumSize(new Dimension((int) (SetScreenLocation.screenSize.width * 0.85), (int) (SetScreenLocation.screenSize.height * 0.9)));
+			setPreferredSize(new Dimension((int) (SetScreenLocation.screenSize.width * 0.85),
+					(int) (SetScreenLocation.screenSize.height * 0.9)));
+			setMinimumSize(new Dimension((int) (SetScreenLocation.screenSize.width * 0.85),
+					(int) (SetScreenLocation.screenSize.height * 0.9)));
 			pack();
 			SetScreenLocation.centerFrame(this);
 			setVisible(false);
@@ -240,9 +239,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 						errorMsg.setVisible(true);
 						controlPanel.showStartButton();
 					} else {
-						if (userController.isUserPremium() == true) {
+						if (userController.isPremium() == true) {
 							runMessageActivity(settingsPanel.getSelectedScreenPositions());
-						} else if (userController.isUserPremium() == false) {
+						} else {
 							if (ArrayValidator.isMoreThanOneTrue(settingsPanel.getSelectedScreenPositions())) {
 								userController.showPremiumPopup();
 								controlPanel.showStartButton();
@@ -354,7 +353,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 
 		if (userController.isTempUserSelected(email)) {
 
-			userController.setUserPremium(false);
+//			userController.setUserPremium(false);
 			userController.runPremiumPrompter();
 
 			settingsPanel.checkForActiveMessages();
@@ -367,48 +366,43 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 			setVisible(true);
 			loginFrame.dispose();
 		} else {
+			String errorMessage = userController.authenticateUser(email, pass);
 
-			if (database.connect() == false) {
-				loginFrame.setErrorMessage("Unable to connect to the internet");
+			if (userController.isAuthenticated() == false) {
+
+				loginFrame.setErrorMessage(errorMessage);
+
 			} else {
-				String errorMessage = userController.login(email, pass);
+				User user = userController.getUser();
+				profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
 
-				if (userController.isLoggedIn() == false) {
+				settingsPanel.checkForActiveMessages();
 
-					loginFrame.setErrorMessage(errorMessage);
+				if (user.isUserPremium() == true) {
 
-				} else if (userController.isLoggedIn() == true) {
-					User user = userController.getUser();
-					profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
+					userProfileMenu.createMenuItemsForPremiumUser();
 
-					settingsPanel.checkForActiveMessages();
+					profileDropdownLabel.setToPremium();
 
-					if (user.isUserPremium() == true) {
+					SettingsPanel.isUserPremium = true;
+					userController.setUserPremium(true);
+					userController.stopPremiumPrompter();
 
-						userProfileMenu.createMenuItemsForPremiumUser();
+				} else {
 
-						profileDropdownLabel.setToPremium();
+					profileDropdownLabel.setToBasic();
 
-						SettingsPanel.isUserPremium = true;
-						userController.setUserPremium(true);
-						userController.stopPremiumPrompter();
+					SettingsPanel.isUserPremium = false;
+					userController.runPremiumPrompter();
 
-					} else if (user.isUserPremium() == false) {
+					userProfileMenu.createMenuItemsForBasicUser();
 
-						profileDropdownLabel.setToBasic();
-
-						SettingsPanel.isUserPremium = false;
-						userController.runPremiumPrompter();
-
-						userProfileMenu.createMenuItemsForBasicUser();
-
-						if (settingsPanel.isMoreThanOneMsgSelected() == true) {
-							settingsPanel.deactivateActiveMessages();
-						}
+					if (settingsPanel.isMoreThanOneMsgSelected() == true) {
+						settingsPanel.deactivateActiveMessages();
 					}
-					setVisible(true);
-					loginFrame.dispose();
 				}
+				setVisible(true);
+				loginFrame.dispose();
 			}
 		}
 	}
@@ -417,7 +411,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void logoutEventOccurred(LogoutEvent event) {
 		dispose();
 
-		userController.setLoggedIn(false);
+		userController.handleLogout();
 
 		userProfileMenu.removeAll();
 

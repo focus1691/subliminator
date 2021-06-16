@@ -47,7 +47,7 @@ public class UserProfileMenu extends JPopupMenu implements ActionListener, Login
 		styleMenuItem(logoutItem);
 		logoutItem.addActionListener(this);
 
-		if (userController.isUserPremium() == false) {
+		if (userController.isPremium() == false) {
 			add(premiumItem);
 		}
 		add(logoutItem);
@@ -60,7 +60,7 @@ public class UserProfileMenu extends JPopupMenu implements ActionListener, Login
 		styleMenuItem(logoutItem);
 		logoutItem.addActionListener(this);
 
-		if (userController.isUserPremium() == false) {
+		if (userController.isPremium() == false) {
 			add(premiumItem);
 		}
 		add(logoutItem);
@@ -113,21 +113,21 @@ public class UserProfileMenu extends JPopupMenu implements ActionListener, Login
 			loginFrame.setErrorMessage("Already logged in as temp user");
 		} else {
 
-			String errorMessage = userController.login(event.getUser(), event.getPass());
+			String errorMessage = userController.authenticateUser(event.getUser(), event.getPass());
 
-			if (userController.isLoggedIn() == false) {
+			if (userController.isAuthenticated() == false) {
 				loginFrame.setErrorMessage(errorMessage);
-			} else if (userController.isLoggedIn() == true) {
+			} else {
 				loginFrame.dispose();
 				removeMenuItems();
 
 				User user = userController.getUser();
 				profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
 
-				if (userController.isUserPremium() == true) {
+				if (userController.isPremium() == true) {
 					profileDropdownLabel.setToPremium();
 					createMenuItemsForPremiumUser();
-				} else if (userController.isUserPremium() == false) {
+				} else {
 					if (settingsPanelReference.isMoreThanOneMsgSelected() == true) {
 						settingsPanelReference.deactivateActiveMessages();
 					}
