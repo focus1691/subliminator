@@ -119,7 +119,11 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	}
 
 	private void initComponents() {
-		hideToSystemTray = new MBSystemTray(this);
+		try {
+			hideToSystemTray = new MBSystemTray(this);
+		} catch (UnsupportedOperationException e) {
+			System.out.println("The system tray is not supported on the current platform");
+		}
 
 		errorMsg = new JLabel();
 		errorMsg.setForeground(Color.RED);
@@ -215,7 +219,9 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	}
 
 	private void runMessageActivity(boolean[] screenPositions) throws InterruptedException {
-		hideToSystemTray.hide();
+		if (hideToSystemTray != null) {
+			hideToSystemTray.hide();
+		}
 		messageController.setSpeed(settingsPanel.getSpeed());
 		messageController.setInterval(settingsPanel.getInterval());
 		messageController.setActiveMessages(messagePanel.getSelectedMessages());
