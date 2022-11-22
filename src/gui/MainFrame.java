@@ -7,8 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -18,7 +16,6 @@ import javax.swing.JPanel;
 
 import Network.SocketBinder;
 import controller.MessageController;
-import controller.UserController;
 import gui.category.CategoryEvent;
 import gui.category.CategoryListener;
 import gui.category.CategoryPanel;
@@ -30,10 +27,6 @@ import gui.dialogs.AddMessage;
 import gui.dialogs.DeleteMessage;
 import gui.dialogs.EditImage;
 import gui.dialogs.EditMessage;
-import gui.login.LoginEvent;
-import gui.login.LoginFrame;
-import gui.login.LoginListener;
-import gui.login.LogoutEvent;
 import gui.message.MessagePanel;
 import gui.settings.SettingsEvent;
 import gui.settings.SettingsListener;
@@ -43,17 +36,14 @@ import gui.util.IconFetch;
 import gui.util.MBSystemTray;
 import gui.util.SetScreenLocation;
 import model.Message;
-import model.User;
 import utility.FontPicker;
 import validation.ArrayValidator;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener, LoginListener {
+public class MainFrame extends JFrame implements CategoryListener, MessageListener, SettingsListener {
 
 	public static final String appName = "Subliminator";
 	private MessageController messageController;
-	private UserController userController;
-	private LoginFrame loginFrame;
 	private CategoryPanel categoryPanel;
 	private MessagePanel messagePanel;
 	private SettingsPanel settingsPanel;
@@ -63,7 +53,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	private MBSystemTray hideToSystemTray;
 	private ProfileDropdownLabel profileDropdownLabel;
 	private JLabel errorMsg;
-	private UserProfileMenu userProfileMenu;
 
 	public MainFrame() {
 
@@ -72,12 +61,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 					"Two instances", JOptionPane.ERROR_MESSAGE);
 			dispose();
 		} else {
-
-			loginFrame = new LoginFrame();
-			loginFrame.setLoginListener(this);
-
 			messageController = new MessageController();
-			userController = new UserController();
 
 			categoryPanel = new CategoryPanel(messageController);
 			categoryPanel.setCategorySelectionListener(this);
@@ -113,7 +97,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 					(int) (SetScreenLocation.screenSize.height * 0.9)));
 			pack();
 			SetScreenLocation.centerFrame(this);
-			setVisible(false);
+			setVisible(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 	}
@@ -131,15 +115,6 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 		errorMsg.setVisible(false);
 
 		profileDropdownLabel = new ProfileDropdownLabel();
-		profileDropdownLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				userProfileMenu.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-
-		userProfileMenu = new UserProfileMenu(userController, profileDropdownLabel, settingsPanel);
-		userProfileMenu.setLoginListener(this);
 	}
 
 	private void setupUI() {
@@ -245,17 +220,7 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 						errorMsg.setVisible(true);
 						controlPanel.showStartButton();
 					} else {
-						if (userController.isPremium() == true) {
-							runMessageActivity(settingsPanel.getSelectedScreenPositions());
-						} else {
-							if (ArrayValidator.isMoreThanOneTrue(settingsPanel.getSelectedScreenPositions())) {
-								userController.showPremiumPopup();
-								controlPanel.showStartButton();
-							} else {
-								controlPanel.showStopButton();
-								runMessageActivity(settingsPanel.getSelectedScreenPositions());
-							}
-						}
+						runMessageActivity(settingsPanel.getSelectedScreenPositions());
 					}
 				}
 			} else if (messageController.isMessagesOn() == true) {
@@ -349,85 +314,5 @@ public class MainFrame extends JFrame implements CategoryListener, MessageListen
 	public void settingsEventOccurred(SettingsEvent e) {
 		messageController.setSpeed(e.getMessageSpeed());
 		messageController.setInterval(e.getMessageInterval());
-	}
-
-	@Override
-	public void loginEventOccurred(LoginEvent event) {
-
-		String email = event.getUser();
-		String pass = event.getPass();
-
-		if (userController.isTempUserSelected(email)) {
-
-//			userController.setUserPremium(false);
-			userController.runPremiumPrompter();
-
-			settingsPanel.checkForActiveMessages();
-			settingsPanel.deactivateActiveMessages();
-
-			userProfileMenu.createMenuItemsForTempUser();
-
-			profileDropdownLabel.setToUnregistered();
-
-			setVisible(true);
-			loginFrame.dispose();
-		} else {
-			String errorMessage = userController.authenticateUser(email, pass);
-
-			if (userController.isAuthenticated() == false) {
-
-				loginFrame.setErrorMessage(errorMessage);
-
-			} else {
-				User user = userController.getUser();
-				profileDropdownLabel.setText(user.getFirstName() + " " + user.getLastName());
-
-				settingsPanel.checkForActiveMessages();
-
-				if (user.isUserPremium() == true) {
-
-					userProfileMenu.createMenuItemsForPremiumUser();
-
-					profileDropdownLabel.setToPremium();
-
-					SettingsPanel.isUserPremium = true;
-					userController.setUserPremium(true);
-					userController.stopPremiumPrompter();
-
-				} else {
-
-					profileDropdownLabel.setToBasic();
-
-					SettingsPanel.isUserPremium = false;
-					userController.runPremiumPrompter();
-
-					userProfileMenu.createMenuItemsForBasicUser();
-
-					if (settingsPanel.isMoreThanOneMsgSelected() == true) {
-						settingsPanel.deactivateActiveMessages();
-					}
-				}
-				setVisible(true);
-				loginFrame.dispose();
-			}
-		}
-	}
-
-	@Override
-	public void logoutEventOccurred(LogoutEvent event) {
-		dispose();
-
-		userController.handleLogout();
-
-		userProfileMenu.removeAll();
-
-		SettingsPanel.isUserPremium = false;
-		userController.setUserPremium(false);
-
-		userController.stopPremiumPrompter();
-
-		loginFrame = new LoginFrame();
-		loginFrame.setUserAndPassFields(userController.getUser().getEmail(), userController.getUser().getPassword());
-		loginFrame.setLoginListener(this);
 	}
 }

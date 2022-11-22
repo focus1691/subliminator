@@ -17,14 +17,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.WindowConstants;
 
 import constants.CustomColor;
 import gui.component.BlueGreyMenuItem;
 import gui.component.BlueGreyRadioItem;
 import gui.component.MessagePreview;
 import gui.component.MessageSwitch;
-import gui.premium.PremiumReminderDialog;
 import gui.util.JFontChooser;
 import utility.FontPicker;
 
@@ -75,34 +73,12 @@ public class ScreenMessage extends JPanel {
 		messageSwitch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (SettingsPanel.isUserPremium == false) {
-
-					if (SettingsPanel.numMessagesSelected == 1) {
-						if (isActive()) {
-							switchMessageOff();
-							SettingsPanel.numMessagesSelected--;
-						} else {
-							PremiumReminderDialog premiumReminderDialog = new PremiumReminderDialog();
-							premiumReminderDialog.setVisible(true);
-							premiumReminderDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-						}
-					} else if (SettingsPanel.numMessagesSelected == 0) {
-						if (isActive()) {
-							switchMessageOff();
-							SettingsPanel.numMessagesSelected--;
-						} else {
-							switchMessageOn();
-							SettingsPanel.numMessagesSelected++;
-						}
-					}
-				} else if (SettingsPanel.isUserPremium == true) {
-					if (isActive()) {
-						switchMessageOff();
-						SettingsPanel.numMessagesSelected--;
-					} else {
-						switchMessageOn();
-						SettingsPanel.numMessagesSelected++;
-					}
+				if (isActive()) {
+					switchMessageOff();
+					SettingsPanel.numMessagesSelected--;
+				} else {
+					switchMessageOn();
+					SettingsPanel.numMessagesSelected++;
 				}
 			}
 		});

@@ -59,8 +59,6 @@ public class SubliminalFrame extends JDialog {
 		subliminalMessage.setActiveBackground(activeBackground);
 		subliminalMessage.setBackgroundSelected(isBackgroundSelected);
 		subliminalMessage.repaint();
-		System.out.println(message);
-		System.out.println();
 	}
 
 	@Override
