@@ -2,6 +2,8 @@
 
 # Subliminator
 
+[Blog Post](https://www.joshuaali.com/blog/the-power-of-the-mind)
+
 A desktop program that displays subliminal messages *>50ms* onto your computer screen. The program is built with Java Swing. The method used to create these messages was a combination of `JFrames` and multithreading.
 
 Multithreading was used because up to 5 frames can be displayed at once, and this was a good way to manage their executions, as the CPU may not be able to process them all at the same time.
