@@ -1,4 +1,8 @@
-[![Subliminator Logo](https://github.com/traderjosh/subliminator/blob/master/Images/ss.png)](https://www.psychotechnology.com/subliminator)
+<p align="center">
+  <a href="#">
+    <img src="src/images/icon-1024.png" title="subliminator" width="50%">
+  </a>
+</p>
 
 # Subliminator
 
