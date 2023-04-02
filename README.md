@@ -8,7 +8,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Language-Java-blue" alt="Language">
   <img src="https://img.shields.io/badge/Library-Swing-orange" alt="Library">
-  <img src="https://img.shields.io/github/license/your_username/repo_name" alt="License">
+  <img src="https://img.shields.io/github/license/focus1691/subliminator" alt="License">
 </p>
 <h2 align="center">Instructions</h2>
 <p align="center">
