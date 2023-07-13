@@ -6,9 +6,9 @@
 <h1 align="center">Subliminator</h1>
 <p align="center">A desktop program that displays subliminal messages *>50ms* onto your computer screen. The program is built with Java Swing. The method used to create these messages was a combination of `JFrames` and multithreading.</p>
 <p align="center">
-  <img src="https://img.shields.io/badge/Language-Java-blue" alt="Language">
-  <img src="https://img.shields.io/badge/Library-Swing-orange" alt="Library">
-  <img src="https://img.shields.io/github/license/focus1691/subliminator" alt="License">
+  <img src="https://github.com/focus1691/subliminator/blob/master/Images/1.png" alt="">
+  <img src="https://github.com/focus1691/subliminator/blob/master/Images/2.png" alt="">
+  <img src="https://github.com/focus1691/subliminator/blob/master/Images/3.png" alt="">
 </p>
 <h2 align="center">Instructions</h2>
 <p align="center">
