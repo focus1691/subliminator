@@ -5,7 +5,7 @@
 </p>
 <h1 align="center">Subliminator</h1>
 <p align="center">A desktop program to show subliminal messages onto your computer screen in the background. They will draw on top of your current windows. You can modify the interval and duration of these messages. They can be shown as quick as 50ms for a subliminal effect.</p>
-<p align="center">The GUI is built with Java Swing. The method used to build the functionality was `JFrame` pooling and it uses multithreading to handle the scheduling and displaying of multiple messages at once.</p>
+<p align="center">The GUI is built with Java Swing. The method used to build the functionality was JFrame pooling for the message containers, and it uses multithreading to handle the scheduling and displaying of multiple messages at once.</p>
 <p align="center">
   <img src="https://img.shields.io/badge/Language-Java-blue" alt="Language">
   <img src="https://img.shields.io/badge/Library-Swing-orange" alt="Library">
